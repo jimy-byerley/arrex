@@ -7,6 +7,7 @@ The elements must be extension-types (eg. class created in compiled modules) and
 
 ### basic usage:
 
+```python
 	>>> from arrex import *
 	>>> a = typedlist([
 				myclass(...), 
@@ -14,22 +15,28 @@ The elements must be extension-types (eg. class created in compiled modules) and
 				], dtype=myclass)
 	>>> a[0]
 	myclass(...)
+```
 
 in that example, `myclass` can be a primitive numpy type, like `np.float64`
 
+```python
 	>>> import typedlist.numpy		# this is enabling numpy dtypes for arrex
 	>>> typedlist(dtype=np.float64)
+```
 	
 it can be a more complex type, from module `pyglm` for instance
 
+```python
 	>>> import typedlist.glm		# this is enabling glm dtypes for arrex
 	>>> typedlist(dtype=glm.vec4)
+```
 
 	
 `typedlist` is a dynamically sized, borrowing array, which mean the internal buffer of data is reallocated on insertion, but can be used to view and extract from any buffer.
 		
 ### Use it as a list:
 
+```python
 	>>> a = typedlist(dtype=vec3)
 	
 	# build from an iterable
@@ -46,22 +53,29 @@ it can be a more complex type, from module `pyglm` for instance
 	
 	>>> a.owner	# the current data buffer
 	b'.........'
+```
 	
 ### Use it as a slice:
 
+```python
 	>>> myslice = a[:5]		# no data is copied
 	typedlist(....)
+```
 	
 ### Use it as a view on top of a random buffer
 
+```python
 	>>> a = np.ones((6,3), dtype='f4')
 	>>> myslice = typedlist(a, dtype=vec3)
+```
 	
 ### buffer protocol
 
 It does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy
 
+```python
 	>>> np.array(typedlist([....]))
+```
 	
 	
 ## performances
