@@ -13,26 +13,7 @@ cdef extern from "Python.h":
 	char *PyBytes_AS_STRING(object)
 	int PySlice_Unpack(object slice, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t *step)
 	Py_ssize_t PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t step)
-	
-	#cdef enum:
-		#T_SHORT
-		#T_INT
-		#T_LONG
-		#T_FLOAT
-		#T_DOUBLE
-		#T_STRING
-		#T_OBJECT
-		#T_OBJECT_EX
-		#T_CHAR
-		#T_BYTE
-		#T_UBYTE
-		#T_UINT
-		#T_USHORT
-		#T_ULONG
-		#T_BOOL
-		#T_LONGLONG
-		#T_ULONGLONG
-		#T_PYSSIZET
+
 
 # this is to avoid the issue around Py_buffer.obj = pyobject, which in cython would try to decref the initially NULL value
 # so the value needs to be set using that function when set the first time
@@ -45,7 +26,11 @@ cdef extern from *:
 	"""
 	void assign_buffer_obj(Py_buffer* buf, object o)
 
-	
+
+
+
+
+
 # dictionnary of compatible packed types
 cdef dict _declared = {}	# {type: (constructor, format, dsize)}
 
@@ -121,6 +106,43 @@ cdef tuple _empty = ()
 cdef class xarray:
 	''' list-like array that stores objects as packed data. 
 		The objects added must necessarily be packed objects (builtin objects with no references).
+		
+		This is a dynamically sized, borrowing array, which mean the internal buffer of data is reallocated on insertion, but can be used to view and extract from any buffer.
+		
+		Use it as a list:
+		
+			>>> a = xarray(dtype=vec3)
+			
+			# build from an iterable
+			>>> a = xarray([], dtype=vec3)
+			
+			# append some data
+			>>> a.append(vec3(1,2,3))
+			
+			# extend with an iterable
+			>>> a.extend(vec3(i)  for i in range(5))
+			
+			>>> len(a)	# the current number of elements
+			6
+			
+			>>> a.owner	# the current data buffer
+			b'.........'
+			
+		Use it as a slice:
+		
+			# no data is copied
+			>>> myslice = a[:5]
+			xarray(....)
+			
+		Use it as a view on top of a random buffer
+		
+			>>> a = np.ones((6,3), dtype='f4')
+			>>> myslice = xarray(a, dtype=vec3)
+			
+		It does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy
+		
+			>>> np.array(xarray([....]))
+		
 	'''
 
 	cdef void *ptr
