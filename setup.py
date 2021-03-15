@@ -13,6 +13,8 @@ setup(
     version = '0.1',
     tests_require = [
 		'nprint>=0.1',
+		'pyglm>=1.2',
+		'numpy>=1.1',
 		],
     packages = ["arrex"],
     package_data = {
