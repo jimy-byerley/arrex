@@ -1,14 +1,14 @@
 Arrex
 -----
 
-Arrex is a module that allows to create type arrays much like `numpy.ndarray` and `array.array`, but resizeable and using any kind of element, not only numbers.
+Arrex is a module that allows to create typed arrays much like `numpy.ndarray` and `array.array`, but resizeable and using any kind of element, not only numbers.
 
 The elements must be extension-types (eg. class created in compiled modules) and must have a packed and copyable content: a fixed size and no reference or pointers.
 
 ### basic usage:
 
 	>>> from arrex import *
-	>>> a = xarray([
+	>>> a = typedlist([
 				myclass(...), 
 				myclass(...),
 				], dtype=myclass)
@@ -17,23 +17,23 @@ The elements must be extension-types (eg. class created in compiled modules) and
 
 in that example, `myclass` can be a primitive numpy type, like `np.float64`
 
-	>>> import xarray.numpy		# this is enabling numpy dtypes for arrex
-	>>> xarray(dtype=np.float64)
+	>>> import typedlist.numpy		# this is enabling numpy dtypes for arrex
+	>>> typedlist(dtype=np.float64)
 	
 it can be a more complex type, from module `pyglm` for instance
 
-	>>> import xarray.glm		# this is enabling glm dtypes for arrex
-	>>> xarray(dtype=glm.vec4)
+	>>> import typedlist.glm		# this is enabling glm dtypes for arrex
+	>>> typedlist(dtype=glm.vec4)
 
 	
-`xarray` is a dynamically sized, borrowing array, which mean the internal buffer of data is reallocated on insertion, but can be used to view and extract from any buffer.
+`typedlist` is a dynamically sized, borrowing array, which mean the internal buffer of data is reallocated on insertion, but can be used to view and extract from any buffer.
 		
 ### Use it as a list:
 
-	>>> a = xarray(dtype=vec3)
+	>>> a = typedlist(dtype=vec3)
 	
 	# build from an iterable
-	>>> a = xarray([], dtype=vec3)
+	>>> a = typedlist([], dtype=vec3)
 	
 	# append some data
 	>>> a.append(vec3(1,2,3))
@@ -50,20 +50,38 @@ it can be a more complex type, from module `pyglm` for instance
 ### Use it as a slice:
 
 	>>> myslice = a[:5]		# no data is copied
-	xarray(....)
+	typedlist(....)
 	
 ### Use it as a view on top of a random buffer
 
 	>>> a = np.ones((6,3), dtype='f4')
-	>>> myslice = xarray(a, dtype=vec3)
+	>>> myslice = typedlist(a, dtype=vec3)
 	
 ### buffer protocol
 
 It does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy
 
-	>>> np.array(xarray([....]))
-
+	>>> np.array(typedlist([....]))
 	
+	
+## performances
+
+Time performances comparison between `list`,  `numpy.ndarray`,  and `arrex.typedlist`  (see [benchmark](benchmark_typedlist.py) )
+
+execution time (s) for 10k elements (dvec3)
+
+```
+set item
+  list:         2.31e-03
+  numpy:        8.29e-03
+  arrex:        2.29e-03  (3x faster then numpy)
+
+get item
+  list:         5.47e-04
+  numpy:        1.54e-03
+  arrex:        7.47e-04  (2x faster than numpy)
+```
+
 	
 ## Roadmap
 
@@ -86,3 +104,8 @@ This module is currently a 4 days first draft, but there is additionnal features
 
 	current dtypes are extension types (written in C), it could great to create dtypes from python also
 	
+	
+- maybe 
+
+	even extend to the complete API of [numcy](https://github.com/jimy-byerley/numcy/blob/master/proposal.md)
+

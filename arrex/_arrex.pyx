@@ -107,7 +107,7 @@ cdef tuple _empty = ()
 
 
 
-cdef class xarray:
+cdef class typedlist:
 	''' list-like array that stores objects as packed data. 
 		The objects added must necessarily be packed objects (builtin objects with no references).
 		
@@ -115,10 +115,10 @@ cdef class xarray:
 		
 		Use it as a list:
 		
-			>>> a = xarray(dtype=vec3)
+			>>> a = typedlist(dtype=vec3)
 			
 			# build from an iterable
-			>>> a = xarray([], dtype=vec3)
+			>>> a = typedlist([], dtype=vec3)
 			
 			# append some data
 			>>> a.append(vec3(1,2,3))
@@ -136,24 +136,24 @@ cdef class xarray:
 		
 			# no data is copied
 			>>> myslice = a[:5]
-			xarray(....)
+			typedlist(....)
 			
 		Use it as a view on top of a random buffer
 		
 			>>> a = np.ones((6,3), dtype='f4')
-			>>> myslice = xarray(a, dtype=vec3)
+			>>> myslice = typedlist(a, dtype=vec3)
 			
 		It does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy
 		
-			>>> np.array(xarray([....]))
+			>>> np.array(typedlist([....]))
 		
 		
 		Constructors:
 		
-			xarray()
-			xarray(dtype, reserve=None)
-			xarray(iterable, dtype, reserve=None)
-			xarray(buffer, dtype)
+			typedlist()
+			typedlist(dtype, reserve=None)
+			typedlist(iterable, dtype, reserve=None)
+			typedlist(buffer, dtype)
 	'''
 
 	cdef void *ptr
@@ -318,15 +318,15 @@ cdef class xarray:
 		self.extend(other)
 		return self
 		
-	def __add__(xarray self, other):
-		cdef xarray result
+	def __add__(typedlist self, other):
+		cdef typedlist result
 		cdef Py_buffer view
 		
 		if PyObject_CheckBuffer(other):
 			assign_buffer_obj(&view, None)
 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)
 			
-			result = xarray.__new__(xarray)
+			result = typedlist.__new__(typedlist)
 			result.dtype = self.dtype
 			result.dsize = self.dsize
 			result._reallocate(self.size + view.len)
@@ -338,7 +338,7 @@ cdef class xarray:
 			return result
 			
 		elif hasattr(other, '__iter__'):
-			result = xarray(None, self.dtype)
+			result = typedlist(None, self.dtype)
 			result.extend(self)
 			result.extend(other)
 			return result
@@ -372,7 +372,7 @@ cdef class xarray:
 		return self._len()
 		
 	def __getitem__(self, index):
-		cdef xarray view
+		cdef typedlist view
 		cdef Py_ssize_t start, stop, step
 		
 		if isinstance(index, int):
@@ -385,7 +385,7 @@ cdef class xarray:
 				raise IndexError('slice step is not supported')
 			PySlice_AdjustIndices(self._len(), &start, &stop, step)
 			
-			view = xarray.__new__(xarray)
+			view = typedlist.__new__(typedlist)
 			view.ptr = self.ptr + start*self.dsize
 			view.size = (stop-start)*self.dsize
 			view.owner = self.owner
@@ -413,7 +413,7 @@ cdef class xarray:
 	def __repr__(self):
 		cdef size_t i
 		item = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
-		text = 'xarray(['
+		text = 'typedlist(['
 		for i in range(self._len()):
 			if i:	text += ', '
 			memcpy(
@@ -468,7 +468,7 @@ cdef class arrayexposer:
 
 
 cdef class arrayiter:
-	cdef xarray array
+	cdef typedlist array
 	cdef size_t position
 	
 	def __init__(self):
