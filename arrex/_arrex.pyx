@@ -147,6 +147,13 @@ cdef class xarray:
 		
 			>>> np.array(xarray([....]))
 		
+		
+		Constructors:
+		
+			xarray()
+			xarray(dtype, reserve=None)
+			xarray(iterable, dtype, reserve=None)
+			xarray(buffer, dtype)
 	'''
 
 	cdef void *ptr
@@ -235,7 +242,9 @@ cdef class xarray:
 	# python interface
 	
 	def reserve(self, amount):
-		''' Make sure there is enough allocated memory to append the given amount of elements. 
+		''' reserve(amount: int)
+		
+			Make sure there is enough allocated memory to append the given amount of elements. 
 		
 			if there is not enough of allocated memory, the memory is reallocated immediately.
 		'''
@@ -338,11 +347,17 @@ cdef class xarray:
 			return NotImplemented
 		
 	def capacity(self):
-		''' return the total number of elements that can be stored with the current allocated memory '''
+		''' capacity()
+		
+			return the total number of elements that can be stored with the current allocated memory 
+		'''
 		return self.allocated // self.dsize
 		
 	def shrink(self):
-		''' reallocate the array to have allocated the exact current size of the array '''
+		''' shrink()
+		
+			reallocate the array to have allocated the exact current size of the array 
+		'''
 		if self.size == 0:
 			if self.hooks:
 				raise RuntimeError('cannot free memory while a view is opened on')
