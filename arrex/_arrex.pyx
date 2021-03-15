@@ -36,7 +36,7 @@ cdef dict _declared = {}	# {type: (constructor, format, dsize)}
 
 
 cpdef into(obj, target):
-	''' convert an object into the target type '''
+	''' convert an object into the target type, using the declared constructor '''
 	if type(obj) is target:		return obj
 	
 	converter = _declared[target][0]
@@ -52,13 +52,16 @@ cpdef declare(dtype, constructor=None, format=None):
 	
 		:constructor:	
 		
-			a callable used to convert objects into dtype (eg for append to an array)
+			A callable used to convert objects into dtype (eg for append to an array).
+			The constructor will allow to insert any kind of input object the constructor does support and convert into the proper type
 			
 			leave it to None to disallow implicit conversions
+			
+			Note that the constructor MUST return an instance of the dtype, or bad things will happen
 		
 		:format:		
 		
-			the internal format of the dtype as describes in the `struct` module
+			The internal format of the dtype as describes in the `struct` module.
 			
 			if the given format is too small for the dtype size, padding bytes will be added at the beginning of it
 			
@@ -99,6 +102,7 @@ cdef class _head:
 	''' implementation purpose only '''
 	pass
 
+# empty tuple, reused to fasten some calls
 cdef tuple _empty = ()
 
 
