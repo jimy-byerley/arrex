@@ -844,7 +844,7 @@ static const char *__pyx_f[] = {
 
 /*--- Type declarations ---*/
 struct __pyx_obj_5arrex_6_arrex__head;
-struct __pyx_obj_5arrex_6_arrex_xarray;
+struct __pyx_obj_5arrex_6_arrex_typedlist;
 struct __pyx_obj_5arrex_6_arrex_arrayexposer;
 struct __pyx_obj_5arrex_6_arrex_arrayiter;
 struct __pyx_opt_args_5arrex_6_arrex_declare;
@@ -877,13 +877,13 @@ struct __pyx_obj_5arrex_6_arrex__head {
 /* "arrex/_arrex.pyx":110
  * 
  * 
- * cdef class xarray:             # <<<<<<<<<<<<<<
+ * cdef class typedlist:             # <<<<<<<<<<<<<<
  * 	''' list-like array that stores objects as packed data.
  * 		The objects added must necessarily be packed objects (builtin objects with no references).
  */
-struct __pyx_obj_5arrex_6_arrex_xarray {
+struct __pyx_obj_5arrex_6_arrex_typedlist {
   PyObject_HEAD
-  struct __pyx_vtabstruct_5arrex_6_arrex_xarray *__pyx_vtab;
+  struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *__pyx_vtab;
   void *ptr;
   size_t size;
   size_t allocated;
@@ -911,12 +911,12 @@ struct __pyx_obj_5arrex_6_arrex_arrayexposer {
  * 
  * 
  * cdef class arrayiter:             # <<<<<<<<<<<<<<
- * 	cdef xarray array
+ * 	cdef typedlist array
  * 	cdef size_t position
  */
 struct __pyx_obj_5arrex_6_arrex_arrayiter {
   PyObject_HEAD
-  struct __pyx_obj_5arrex_6_arrex_xarray *array;
+  struct __pyx_obj_5arrex_6_arrex_typedlist *array;
   size_t position;
 };
 
@@ -925,22 +925,22 @@ struct __pyx_obj_5arrex_6_arrex_arrayiter {
 /* "arrex/_arrex.pyx":110
  * 
  * 
- * cdef class xarray:             # <<<<<<<<<<<<<<
+ * cdef class typedlist:             # <<<<<<<<<<<<<<
  * 	''' list-like array that stores objects as packed data.
  * 		The objects added must necessarily be packed objects (builtin objects with no references).
  */
 
-struct __pyx_vtabstruct_5arrex_6_arrex_xarray {
-  int (*_use)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *);
-  int (*_reallocate)(struct __pyx_obj_5arrex_6_arrex_xarray *, size_t);
-  size_t (*_len)(struct __pyx_obj_5arrex_6_arrex_xarray *);
-  Py_ssize_t (*_index)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *);
-  PyObject *(*_getitem)(struct __pyx_obj_5arrex_6_arrex_xarray *, void *);
-  void (*_setitem)(struct __pyx_obj_5arrex_6_arrex_xarray *, void *, PyObject *);
-  void (*append)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *, int __pyx_skip_dispatch);
-  void (*extend)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *, int __pyx_skip_dispatch);
+struct __pyx_vtabstruct_5arrex_6_arrex_typedlist {
+  int (*_use)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *);
+  int (*_reallocate)(struct __pyx_obj_5arrex_6_arrex_typedlist *, size_t);
+  size_t (*_len)(struct __pyx_obj_5arrex_6_arrex_typedlist *);
+  Py_ssize_t (*_index)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *);
+  PyObject *(*_getitem)(struct __pyx_obj_5arrex_6_arrex_typedlist *, void *);
+  void (*_setitem)(struct __pyx_obj_5arrex_6_arrex_typedlist *, void *, PyObject *);
+  void (*append)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *, int __pyx_skip_dispatch);
+  void (*extend)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *, int __pyx_skip_dispatch);
 };
-static struct __pyx_vtabstruct_5arrex_6_arrex_xarray *__pyx_vtabptr_5arrex_6_arrex_xarray;
+static struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *__pyx_vtabptr_5arrex_6_arrex_typedlist;
 
 /* --- Runtime support code (head) --- */
 /* Refnanny.proto */
@@ -1392,14 +1392,14 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static int __pyx_f_5arrex_6_arrex_6xarray__use(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_buffer); /* proto*/
-static int __pyx_f_5arrex_6_arrex_6xarray__reallocate(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, size_t __pyx_v_size); /* proto*/
-static size_t __pyx_f_5arrex_6_arrex_6xarray__len(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto*/
-static Py_ssize_t __pyx_f_5arrex_6_arrex_6xarray__index(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index); /* proto*/
-static PyObject *__pyx_f_5arrex_6_arrex_6xarray__getitem(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, void *__pyx_v_ptr); /* proto*/
-static void __pyx_f_5arrex_6_arrex_6xarray__setitem(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, void *__pyx_v_ptr, PyObject *__pyx_v_value); /* proto*/
-static void __pyx_f_5arrex_6_arrex_6xarray_append(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_value, int __pyx_skip_dispatch); /* proto*/
-static void __pyx_f_5arrex_6_arrex_6xarray_extend(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_skip_dispatch); /* proto*/
+static int __pyx_f_5arrex_6_arrex_9typedlist__use(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_buffer); /* proto*/
+static int __pyx_f_5arrex_6_arrex_9typedlist__reallocate(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, size_t __pyx_v_size); /* proto*/
+static size_t __pyx_f_5arrex_6_arrex_9typedlist__len(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto*/
+static Py_ssize_t __pyx_f_5arrex_6_arrex_9typedlist__index(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index); /* proto*/
+static PyObject *__pyx_f_5arrex_6_arrex_9typedlist__getitem(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, void *__pyx_v_ptr); /* proto*/
+static void __pyx_f_5arrex_6_arrex_9typedlist__setitem(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, void *__pyx_v_ptr, PyObject *__pyx_v_value); /* proto*/
+static void __pyx_f_5arrex_6_arrex_9typedlist_append(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_value, int __pyx_skip_dispatch); /* proto*/
+static void __pyx_f_5arrex_6_arrex_9typedlist_extend(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_skip_dispatch); /* proto*/
 
 /* Module declarations from 'cython' */
 
@@ -1488,7 +1488,7 @@ static PyTypeObject *__pyx_ptype_7cpython_7complex_complex = 0;
 
 /* Module declarations from 'arrex._arrex' */
 static PyTypeObject *__pyx_ptype_5arrex_6_arrex__head = 0;
-static PyTypeObject *__pyx_ptype_5arrex_6_arrex_xarray = 0;
+static PyTypeObject *__pyx_ptype_5arrex_6_arrex_typedlist = 0;
 static PyTypeObject *__pyx_ptype_5arrex_6_arrex_arrayexposer = 0;
 static PyTypeObject *__pyx_ptype_5arrex_6_arrex_arrayiter = 0;
 static PyObject *__pyx_v_5arrex_6_arrex__declared = 0;
@@ -1541,7 +1541,6 @@ static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_target[] = "target";
 static const char __pyx_k_update[] = "update";
-static const char __pyx_k_xarray[] = "xarray([";
 static const char __pyx_k_reserve[] = "reserve";
 static const char __pyx_k_calcsize[] = "calcsize";
 static const char __pyx_k_declared[] = "declared";
@@ -1549,18 +1548,19 @@ static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_iterable[] = "iterable";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_setstate[] = "__setstate__";
-static const char __pyx_k_xarray_2[] = "xarray";
 static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_arrayiter[] = "arrayiter";
 static const char __pyx_k_enumerate[] = "enumerate";
 static const char __pyx_k_pyx_state[] = "__pyx_state";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
+static const char __pyx_k_typedlist[] = "typedlist([";
 static const char __pyx_k_IndexError[] = "IndexError";
 static const char __pyx_k_ValueError[] = "ValueError";
 static const char __pyx_k_pyx_result[] = "__pyx_result";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_constructor[] = "constructor";
+static const char __pyx_k_typedlist_2[] = "typedlist";
 static const char __pyx_k_RuntimeError[] = "RuntimeError";
 static const char __pyx_k_arrayexposer[] = "arrayexposer";
 static const char __pyx_k_arrex__arrex[] = "arrex._arrex";
@@ -1669,39 +1669,39 @@ static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_s_struct;
 static PyObject *__pyx_n_s_target;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_kp_u_typedlist;
+static PyObject *__pyx_n_s_typedlist_2;
 static PyObject *__pyx_n_s_update;
 static PyObject *__pyx_n_s_value;
-static PyObject *__pyx_kp_u_xarray;
-static PyObject *__pyx_n_s_xarray_2;
 static PyObject *__pyx_pf_5arrex_6_arrex_into(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_obj, PyObject *__pyx_v_target); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_2declare(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_dtype, PyObject *__pyx_v_constructor, PyObject *__pyx_v_format); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_4declared(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_dtype); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_5_head___reduce_cython__(struct __pyx_obj_5arrex_6_arrex__head *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_5_head_2__setstate_cython__(struct __pyx_obj_5arrex_6_arrex__head *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_iterable, PyTypeObject *__pyx_v_dtype, size_t __pyx_v_reserve); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_2reserve(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_amount); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4append(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_6pop(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_8insert(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_10extend(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_12__iadd__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_16capacity(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_18shrink(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static Py_ssize_t __pyx_pf_5arrex_6_arrex_6xarray_20__len__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index); /* proto */
-static int __pyx_pf_5arrex_6_arrex_6xarray_24__setitem__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_26__iter__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_28__repr__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static int __pyx_pf_5arrex_6_arrex_6xarray_30__getbuffer__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags); /* proto */
-static void __pyx_pf_5arrex_6_arrex_6xarray_32__releasebuffer__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_view); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4size___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_9allocated___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5dtype___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5dsize___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5owner___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_34__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_36__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_5arrex_6_arrex_9typedlist___init__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_iterable, PyTypeObject *__pyx_v_dtype, size_t __pyx_v_reserve); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_2reserve(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_amount); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_4append(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_6pop(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_8insert(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_10extend(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_12__iadd__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_14__add__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_16capacity(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_18shrink(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static Py_ssize_t __pyx_pf_5arrex_6_arrex_9typedlist_20__len__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_22__getitem__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index); /* proto */
+static int __pyx_pf_5arrex_6_arrex_9typedlist_24__setitem__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_26__iter__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_28__repr__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static int __pyx_pf_5arrex_6_arrex_9typedlist_30__getbuffer__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags); /* proto */
+static void __pyx_pf_5arrex_6_arrex_9typedlist_32__releasebuffer__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_view); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_4size___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_9allocated___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_5dtype___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_5dsize___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_5owner___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_34__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_36__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_12arrayexposer_5owner___get__(struct __pyx_obj_5arrex_6_arrex_arrayexposer *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_12arrayexposer___reduce_cython__(struct __pyx_obj_5arrex_6_arrex_arrayexposer *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_12arrayexposer_2__setstate_cython__(struct __pyx_obj_5arrex_6_arrex_arrayexposer *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
@@ -1714,7 +1714,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6__pyx_unpickle__head(CYTHON_UNUSED PyO
 static PyObject *__pyx_pf_5arrex_6_arrex_8__pyx_unpickle_arrayexposer(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_5arrex_6_arrex_10__pyx_unpickle_arrayiter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_5arrex_6_arrex__head(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5arrex_6_arrex_xarray(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_5arrex_6_arrex_typedlist(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_5arrex_6_arrex_arrayexposer(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_5arrex_6_arrex_arrayiter(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_get = {0, &__pyx_n_s_get, 0, 0, 0};
@@ -2951,8 +2951,8 @@ static PyObject *__pyx_pf_5arrex_6_arrex_5_head_2__setstate_cython__(struct __py
  */
 
 /* Python wrapper */
-static int __pyx_pw_5arrex_6_arrex_6xarray_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5arrex_6_arrex_6xarray_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_5arrex_6_arrex_9typedlist_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_5arrex_6_arrex_9typedlist_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_iterable = 0;
   PyTypeObject *__pyx_v_dtype = 0;
   size_t __pyx_v_reserve;
@@ -3027,12 +3027,12 @@ static int __pyx_pw_5arrex_6_arrex_6xarray_1__init__(PyObject *__pyx_v_self, PyO
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 169, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("arrex._arrex.xarray.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_dtype), (&PyType_Type), 1, "dtype", 1))) __PYX_ERR(0, 169, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray___init__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), __pyx_v_iterable, __pyx_v_dtype, __pyx_v_reserve);
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist___init__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), __pyx_v_iterable, __pyx_v_dtype, __pyx_v_reserve);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3043,7 +3043,7 @@ static int __pyx_pw_5arrex_6_arrex_6xarray_1__init__(PyObject *__pyx_v_self, PyO
   return __pyx_r;
 }
 
-static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_iterable, PyTypeObject *__pyx_v_dtype, size_t __pyx_v_reserve) {
+static int __pyx_pf_5arrex_6_arrex_9typedlist___init__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_iterable, PyTypeObject *__pyx_v_dtype, size_t __pyx_v_reserve) {
   PyObject *__pyx_v_decl = 0;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -3181,7 +3181,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_ar
  * 			self.size = self.allocated
  * 			if reserve:
  */
-    __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_use(__pyx_v_self, __pyx_v_iterable); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_use(__pyx_v_self, __pyx_v_iterable); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 181, __pyx_L1_error)
 
     /* "arrex/_arrex.pyx":182
  * 		if PyObject_CheckBuffer(iterable):
@@ -3210,7 +3210,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_ar
  * 
  * 		else:
  */
-      __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, (__pyx_v_reserve * __pyx_v_self->dsize)); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 184, __pyx_L1_error)
+      __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, (__pyx_v_reserve * __pyx_v_self->dsize)); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 184, __pyx_L1_error)
 
       /* "arrex/_arrex.pyx":183
  * 			self._use(iterable)
@@ -3249,7 +3249,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_ar
  * 			if iterable is not None:
  * 				self.extend(iterable)
  */
-      __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, (__pyx_v_reserve * __pyx_v_self->dsize)); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 188, __pyx_L1_error)
+      __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, (__pyx_v_reserve * __pyx_v_self->dsize)); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 188, __pyx_L1_error)
 
       /* "arrex/_arrex.pyx":187
  * 
@@ -3278,7 +3278,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_ar
  * 
  * 	# convenient internal functions
  */
-      ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->extend(__pyx_v_self, __pyx_v_iterable, 0);
+      ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->extend(__pyx_v_self, __pyx_v_iterable, 0);
 
       /* "arrex/_arrex.pyx":189
  * 			if reserve:
@@ -3304,7 +3304,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_ar
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_decl);
@@ -3320,7 +3320,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray___init__(struct __pyx_obj_5arrex_6_ar
  * 
  */
 
-static int __pyx_f_5arrex_6_arrex_6xarray__use(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_buffer) {
+static int __pyx_f_5arrex_6_arrex_9typedlist__use(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_buffer) {
   Py_buffer __pyx_v_view;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -3412,7 +3412,7 @@ static int __pyx_f_5arrex_6_arrex_6xarray__use(struct __pyx_obj_5arrex_6_arrex_x
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("arrex._arrex.xarray._use", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist._use", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -3427,7 +3427,7 @@ static int __pyx_f_5arrex_6_arrex_6xarray__use(struct __pyx_obj_5arrex_6_arrex_x
  * 		lastptr = self.ptr
  */
 
-static int __pyx_f_5arrex_6_arrex_6xarray__reallocate(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, size_t __pyx_v_size) {
+static int __pyx_f_5arrex_6_arrex_9typedlist__reallocate(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, size_t __pyx_v_size) {
   CYTHON_UNUSED PyObject *__pyx_v_lastowner = NULL;
   void *__pyx_v_lastptr;
   int __pyx_r;
@@ -3551,7 +3551,7 @@ static int __pyx_f_5arrex_6_arrex_6xarray__reallocate(struct __pyx_obj_5arrex_6_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("arrex._arrex.xarray._reallocate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist._reallocate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_lastowner);
@@ -3567,7 +3567,7 @@ static int __pyx_f_5arrex_6_arrex_6xarray__reallocate(struct __pyx_obj_5arrex_6_
  * 
  */
 
-static size_t __pyx_f_5arrex_6_arrex_6xarray__len(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static size_t __pyx_f_5arrex_6_arrex_9typedlist__len(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   size_t __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_len", 0);
@@ -3604,7 +3604,7 @@ static size_t __pyx_f_5arrex_6_arrex_6xarray__len(struct __pyx_obj_5arrex_6_arre
  * 		cdef size_t i = index
  */
 
-static Py_ssize_t __pyx_f_5arrex_6_arrex_6xarray__index(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index) {
+static Py_ssize_t __pyx_f_5arrex_6_arrex_9typedlist__index(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index) {
   size_t __pyx_v_i;
   size_t __pyx_v_l;
   Py_ssize_t __pyx_r;
@@ -3635,7 +3635,7 @@ static Py_ssize_t __pyx_f_5arrex_6_arrex_6xarray__index(struct __pyx_obj_5arrex_
  * 		if i < 0:	i += l
  * 		if i < 0 or i > l:
  */
-  __pyx_v_l = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
+  __pyx_v_l = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
 
   /* "arrex/_arrex.pyx":225
  * 		cdef size_t i = index
@@ -3710,7 +3710,7 @@ static Py_ssize_t __pyx_f_5arrex_6_arrex_6xarray__index(struct __pyx_obj_5arrex_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("arrex._arrex.xarray._index", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist._index", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1L;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -3725,7 +3725,7 @@ static Py_ssize_t __pyx_f_5arrex_6_arrex_6xarray__index(struct __pyx_obj_5arrex_
  * 		#item = PyType_GenericAlloc(<PyTypeObject*><PyObject*>self.dtype, 0)
  */
 
-static PyObject *__pyx_f_5arrex_6_arrex_6xarray__getitem(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, void *__pyx_v_ptr) {
+static PyObject *__pyx_f_5arrex_6_arrex_9typedlist__getitem(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, void *__pyx_v_ptr) {
   PyObject *__pyx_v_item = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3789,7 +3789,7 @@ static PyObject *__pyx_f_5arrex_6_arrex_6xarray__getitem(struct __pyx_obj_5arrex
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("arrex._arrex.xarray._getitem", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist._getitem", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_item);
@@ -3806,7 +3806,7 @@ static PyObject *__pyx_f_5arrex_6_arrex_6xarray__getitem(struct __pyx_obj_5arrex
  * 		memcpy(ptr, (<void*><PyObject*> value) + (<PyTypeObject*>self.dtype).tp_basicsize - self.dsize, self.dsize)
  */
 
-static void __pyx_f_5arrex_6_arrex_6xarray__setitem(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, void *__pyx_v_ptr, PyObject *__pyx_v_value) {
+static void __pyx_f_5arrex_6_arrex_9typedlist__setitem(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, void *__pyx_v_ptr, PyObject *__pyx_v_value) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_setitem", 0);
 
@@ -3840,20 +3840,20 @@ static void __pyx_f_5arrex_6_arrex_6xarray__setitem(struct __pyx_obj_5arrex_6_ar
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_3reserve(PyObject *__pyx_v_self, PyObject *__pyx_v_amount); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_2reserve[] = " reserve(amount: int)\n\t\t\n\t\t\tMake sure there is enough allocated memory to append the given amount of elements. \n\t\t\n\t\t\tif there is not enough of allocated memory, the memory is reallocated immediately.\n\t\t";
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_3reserve(PyObject *__pyx_v_self, PyObject *__pyx_v_amount) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_3reserve(PyObject *__pyx_v_self, PyObject *__pyx_v_amount); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_2reserve[] = " reserve(amount: int)\n\t\t\n\t\t\tMake sure there is enough allocated memory to append the given amount of elements. \n\t\t\n\t\t\tif there is not enough of allocated memory, the memory is reallocated immediately.\n\t\t";
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_3reserve(PyObject *__pyx_v_self, PyObject *__pyx_v_amount) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("reserve (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_2reserve(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v_amount));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_2reserve(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v_amount));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_2reserve(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_amount) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_2reserve(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_amount) {
   size_t __pyx_v_asked;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3927,7 +3927,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_2reserve(struct __pyx_obj_5arre
  * 
  * 	cpdef void append(self, value):
  */
-    __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_v_asked); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 255, __pyx_L1_error)
+    __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_v_asked); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 255, __pyx_L1_error)
 
     /* "arrex/_arrex.pyx":254
  * 			raise ValueError('amount must be positive')
@@ -3951,7 +3951,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_2reserve(struct __pyx_obj_5arre
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.reserve", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.reserve", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3967,8 +3967,8 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_2reserve(struct __pyx_obj_5arre
  * 
  */
 
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5append(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static void __pyx_f_5arrex_6_arrex_6xarray_append(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_value, int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5append(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static void __pyx_f_5arrex_6_arrex_9typedlist_append(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_value, int __pyx_skip_dispatch) {
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -3994,7 +3994,7 @@ static void __pyx_f_5arrex_6_arrex_6xarray_append(struct __pyx_obj_5arrex_6_arre
       #endif
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_append); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 257, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_5arrex_6_arrex_6xarray_5append)) {
+      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_5arrex_6_arrex_9typedlist_5append)) {
         __Pyx_INCREF(__pyx_t_1);
         __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4068,7 +4068,7 @@ static void __pyx_f_5arrex_6_arrex_6xarray_append(struct __pyx_obj_5arrex_6_arre
     }
     __pyx_t_6 = __pyx_v_self->dsize;
     __pyx_L4_bool_binop_done:;
-    __pyx_t_8 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_6); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 265, __pyx_L1_error)
+    __pyx_t_8 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_6); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 265, __pyx_L1_error)
 
     /* "arrex/_arrex.pyx":264
  * 		value = into(value, self.dtype)
@@ -4086,7 +4086,7 @@ static void __pyx_f_5arrex_6_arrex_6xarray_append(struct __pyx_obj_5arrex_6_arre
  * 		self.size += self.dsize
  * 
  */
-  ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_setitem(__pyx_v_self, (__pyx_v_self->ptr + __pyx_v_self->size), __pyx_v_value);
+  ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_setitem(__pyx_v_self, (__pyx_v_self->ptr + __pyx_v_self->size), __pyx_v_value);
 
   /* "arrex/_arrex.pyx":268
  * 
@@ -4112,27 +4112,27 @@ static void __pyx_f_5arrex_6_arrex_6xarray_append(struct __pyx_obj_5arrex_6_arre
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_WriteUnraisable("arrex._arrex.xarray.append", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("arrex._arrex.typedlist.append", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_value);
   __Pyx_RefNannyFinishContext();
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5append(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_4append[] = " append the given object at the end of the array\n\t\t\n\t\t\tif there is not enough allocated memory, reallocate enough to amortize the realocation time over the multiple appends\n\t\t";
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5append(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5append(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_4append[] = " append the given object at the end of the array\n\t\t\n\t\t\tif there is not enough allocated memory, reallocate enough to amortize the realocation time over the multiple appends\n\t\t";
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5append(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("append (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_4append(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_4append(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4append(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_value) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_4append(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_value) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4141,7 +4141,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4append(struct __pyx_obj_5arrex
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("append", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5arrex_6_arrex_6xarray_append(__pyx_v_self, __pyx_v_value, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5arrex_6_arrex_9typedlist_append(__pyx_v_self, __pyx_v_value, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4150,7 +4150,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4append(struct __pyx_obj_5arrex
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.append", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.append", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4167,9 +4167,9 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4append(struct __pyx_obj_5arrex
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_7pop(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_6pop[] = " remove the element at index, returning it. If no index is specified, it will pop the last one ";
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_7pop(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_7pop(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_6pop[] = " remove the element at index, returning it. If no index is specified, it will pop the last one ";
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_7pop(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_index = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -4215,18 +4215,18 @@ static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_7pop(PyObject *__pyx_v_self, Py
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("pop", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 270, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("arrex._arrex.xarray.pop", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.pop", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_6pop(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), __pyx_v_index);
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_6pop(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), __pyx_v_index);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_6pop(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_6pop(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index) {
   size_t __pyx_v_i;
   void *__pyx_v_start;
   PyObject *__pyx_v_e = NULL;
@@ -4250,10 +4250,10 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_6pop(struct __pyx_obj_5arrex_6_
  */
   __pyx_t_2 = (__pyx_v_index != Py_None);
   if ((__pyx_t_2 != 0)) {
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 273, __pyx_L1_error)
+    __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 273, __pyx_L1_error)
     __pyx_t_1 = __pyx_t_3;
   } else {
-    __pyx_t_1 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
+    __pyx_t_1 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
   }
   __pyx_v_i = __pyx_t_1;
 
@@ -4273,7 +4273,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_6pop(struct __pyx_obj_5arrex_6_
  * 		memmove(start, start + self.dsize, self.size-(i-1)*self.dsize)
  * 		self.size -= self.dsize
  */
-  __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_getitem(__pyx_v_self, __pyx_v_start); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_getitem(__pyx_v_self, __pyx_v_start); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 276, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_v_e = __pyx_t_4;
   __pyx_t_4 = 0;
@@ -4319,7 +4319,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_6pop(struct __pyx_obj_5arrex_6_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("arrex._arrex.xarray.pop", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.pop", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_e);
@@ -4337,9 +4337,9 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_6pop(struct __pyx_obj_5arrex_6_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_9insert(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_8insert[] = " insert value at index ";
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_9insert(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_9insert(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_8insert[] = " insert value at index ";
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_9insert(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_index = 0;
   PyObject *__pyx_v_value = 0;
   int __pyx_lineno = 0;
@@ -4390,18 +4390,18 @@ static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_9insert(PyObject *__pyx_v_self,
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("insert", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 281, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("arrex._arrex.xarray.insert", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.insert", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_8insert(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), __pyx_v_index, __pyx_v_value);
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_8insert(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), __pyx_v_index, __pyx_v_value);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_8insert(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_8insert(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value) {
   size_t __pyx_v_i;
   void *__pyx_v_start;
   PyObject *__pyx_r = NULL;
@@ -4441,7 +4441,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_8insert(struct __pyx_obj_5arrex
  * 
  * 		if self.allocated - self.size < self.dsize:
  */
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 284, __pyx_L1_error)
+  __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 284, __pyx_L1_error)
   __pyx_v_i = __pyx_t_3;
 
   /* "arrex/_arrex.pyx":286
@@ -4469,7 +4469,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_8insert(struct __pyx_obj_5arrex
     }
     __pyx_t_5 = __pyx_v_self->dsize;
     __pyx_L4_bool_binop_done:;
-    __pyx_t_7 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_5); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 287, __pyx_L1_error)
+    __pyx_t_7 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_5); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 287, __pyx_L1_error)
 
     /* "arrex/_arrex.pyx":286
  * 		cdef size_t i = self._index(index)
@@ -4505,7 +4505,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_8insert(struct __pyx_obj_5arrex
  * 		self.size += self.dsize
  * 
  */
-  ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_setitem(__pyx_v_self, __pyx_v_start, __pyx_v_value);
+  ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_setitem(__pyx_v_self, __pyx_v_start, __pyx_v_value);
 
   /* "arrex/_arrex.pyx":292
  * 		memmove(start+self.dsize, start, self.size-i*self.dsize)
@@ -4530,7 +4530,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_8insert(struct __pyx_obj_5arrex
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("arrex._arrex.xarray.insert", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.insert", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_value);
@@ -4547,8 +4547,8 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_8insert(struct __pyx_obj_5arrex
  * 		cdef Py_buffer view
  */
 
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_11extend(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static void __pyx_f_5arrex_6_arrex_6xarray_extend(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_11extend(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static void __pyx_f_5arrex_6_arrex_9typedlist_extend(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_skip_dispatch) {
   Py_buffer __pyx_v_view;
   Py_ssize_t __pyx_v_l;
   PyObject *__pyx_v_o = NULL;
@@ -4580,7 +4580,7 @@ static void __pyx_f_5arrex_6_arrex_6xarray_extend(struct __pyx_obj_5arrex_6_arre
       #endif
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_extend); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_5arrex_6_arrex_6xarray_11extend)) {
+      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_5arrex_6_arrex_9typedlist_11extend)) {
         __Pyx_INCREF(__pyx_t_1);
         __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4666,7 +4666,7 @@ static void __pyx_f_5arrex_6_arrex_6xarray_extend(struct __pyx_obj_5arrex_6_arre
       } else {
         __pyx_t_9 = __pyx_t_8;
       }
-      __pyx_t_6 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_9); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_9); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 304, __pyx_L1_error)
 
       /* "arrex/_arrex.pyx":303
  * 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)
@@ -4757,7 +4757,7 @@ static void __pyx_f_5arrex_6_arrex_6xarray_extend(struct __pyx_obj_5arrex_6_arre
       } else {
         __pyx_t_8 = __pyx_t_7;
       }
-      __pyx_t_6 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_8); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 313, __pyx_L1_error)
+      __pyx_t_6 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_t_8); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 313, __pyx_L1_error)
 
       /* "arrex/_arrex.pyx":312
  * 		else:
@@ -4824,7 +4824,7 @@ static void __pyx_f_5arrex_6_arrex_6xarray_extend(struct __pyx_obj_5arrex_6_arre
  * 
  * 	def __iadd__(self, other):
  */
-      ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->append(__pyx_v_self, __pyx_v_o, 0);
+      ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->append(__pyx_v_self, __pyx_v_o, 0);
 
       /* "arrex/_arrex.pyx":314
  * 			if l >= 0 and l*self.dsize > self.allocated - self.size:
@@ -4853,27 +4853,27 @@ static void __pyx_f_5arrex_6_arrex_6xarray_extend(struct __pyx_obj_5arrex_6_arre
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_WriteUnraisable("arrex._arrex.xarray.extend", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("arrex._arrex.typedlist.extend", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_o);
   __Pyx_RefNannyFinishContext();
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_11extend(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_10extend[] = " append all elements from the other array ";
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_11extend(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_11extend(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_10extend[] = " append all elements from the other array ";
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_11extend(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("extend (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_10extend(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v_other));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_10extend(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v_other));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_10extend(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_10extend(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4882,7 +4882,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_10extend(struct __pyx_obj_5arre
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("extend", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5arrex_6_arrex_6xarray_extend(__pyx_v_self, __pyx_v_other, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_5arrex_6_arrex_9typedlist_extend(__pyx_v_self, __pyx_v_other, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4891,7 +4891,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_10extend(struct __pyx_obj_5arre
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.extend", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.extend", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4908,19 +4908,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_10extend(struct __pyx_obj_5arre
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_13__iadd__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_13__iadd__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_13__iadd__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_13__iadd__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__iadd__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_12__iadd__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v_other));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_12__iadd__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v_other));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_12__iadd__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_12__iadd__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__iadd__", 0);
@@ -4932,14 +4932,14 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_12__iadd__(struct __pyx_obj_5ar
  * 		return self
  * 
  */
-  ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->extend(__pyx_v_self, __pyx_v_other, 0);
+  ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->extend(__pyx_v_self, __pyx_v_other, 0);
 
   /* "arrex/_arrex.pyx":319
  * 	def __iadd__(self, other):
  * 		self.extend(other)
  * 		return self             # <<<<<<<<<<<<<<
  * 
- * 	def __add__(xarray self, other):
+ * 	def __add__(typedlist self, other):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
@@ -4964,22 +4964,22 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_12__iadd__(struct __pyx_obj_5ar
 /* "arrex/_arrex.pyx":321
  * 		return self
  * 
- * 	def __add__(xarray self, other):             # <<<<<<<<<<<<<<
- * 		cdef xarray result
+ * 	def __add__(typedlist self, other):             # <<<<<<<<<<<<<<
+ * 		cdef typedlist result
  * 		cdef Py_buffer view
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_15__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_15__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_15__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_15__add__(PyObject *__pyx_v_self, PyObject *__pyx_v_other) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__add__ (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_self), __pyx_ptype_5arrex_6_arrex_xarray, 1, "self", 0))) __PYX_ERR(0, 321, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_14__add__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v_other));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_self), __pyx_ptype_5arrex_6_arrex_typedlist, 1, "self", 0))) __PYX_ERR(0, 321, __pyx_L1_error)
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_14__add__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v_other));
 
   /* function exit code */
   goto __pyx_L0;
@@ -4990,8 +4990,8 @@ static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_15__add__(PyObject *__pyx_v_sel
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_other) {
-  struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_result = 0;
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_14__add__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_other) {
+  struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_result = 0;
   Py_buffer __pyx_v_view;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -5030,25 +5030,25 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
  * 			assign_buffer_obj(&view, None)
  * 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)             # <<<<<<<<<<<<<<
  * 
- * 			result = xarray.__new__(xarray)
+ * 			result = typedlist.__new__(typedlist)
  */
     __pyx_t_2 = PyObject_GetBuffer(__pyx_v_other, (&__pyx_v_view), PyBUF_SIMPLE); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 327, __pyx_L1_error)
 
     /* "arrex/_arrex.pyx":329
  * 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)
  * 
- * 			result = xarray.__new__(xarray)             # <<<<<<<<<<<<<<
+ * 			result = typedlist.__new__(typedlist)             # <<<<<<<<<<<<<<
  * 			result.dtype = self.dtype
  * 			result.dsize = self.dsize
  */
-    __pyx_t_3 = ((PyObject *)__pyx_tp_new_5arrex_6_arrex_xarray(((PyTypeObject *)__pyx_ptype_5arrex_6_arrex_xarray), __pyx_empty_tuple, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_3 = ((PyObject *)__pyx_tp_new_5arrex_6_arrex_typedlist(((PyTypeObject *)__pyx_ptype_5arrex_6_arrex_typedlist), __pyx_empty_tuple, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(((PyObject *)__pyx_t_3));
-    __pyx_v_result = ((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_t_3);
+    __pyx_v_result = ((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_t_3);
     __pyx_t_3 = 0;
 
     /* "arrex/_arrex.pyx":330
  * 
- * 			result = xarray.__new__(xarray)
+ * 			result = typedlist.__new__(typedlist)
  * 			result.dtype = self.dtype             # <<<<<<<<<<<<<<
  * 			result.dsize = self.dsize
  * 			result._reallocate(self.size + view.len)
@@ -5062,7 +5062,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
     __pyx_t_3 = 0;
 
     /* "arrex/_arrex.pyx":331
- * 			result = xarray.__new__(xarray)
+ * 			result = typedlist.__new__(typedlist)
  * 			result.dtype = self.dtype
  * 			result.dsize = self.dsize             # <<<<<<<<<<<<<<
  * 			result._reallocate(self.size + view.len)
@@ -5078,7 +5078,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
  * 			memcpy(result.ptr, self.ptr, self.size)
  * 			memcpy(result.ptr+self.size, view.buf, view.len)
  */
-    __pyx_t_2 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_result->__pyx_vtab)->_reallocate(__pyx_v_result, (__pyx_v_self->size + __pyx_v_view.len)); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 332, __pyx_L1_error)
+    __pyx_t_2 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_result->__pyx_vtab)->_reallocate(__pyx_v_result, (__pyx_v_self->size + __pyx_v_view.len)); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 332, __pyx_L1_error)
 
     /* "arrex/_arrex.pyx":333
  * 			result.dsize = self.dsize
@@ -5142,7 +5142,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
  * 			return result
  * 
  * 		elif hasattr(other, '__iter__'):             # <<<<<<<<<<<<<<
- * 			result = xarray(None, self.dtype)
+ * 			result = typedlist(None, self.dtype)
  * 			result.extend(self)
  */
   __pyx_t_1 = __Pyx_HasAttr(__pyx_v_other, __pyx_n_u_iter); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 340, __pyx_L1_error)
@@ -5152,7 +5152,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
     /* "arrex/_arrex.pyx":341
  * 
  * 		elif hasattr(other, '__iter__'):
- * 			result = xarray(None, self.dtype)             # <<<<<<<<<<<<<<
+ * 			result = typedlist(None, self.dtype)             # <<<<<<<<<<<<<<
  * 			result.extend(self)
  * 			result.extend(other)
  */
@@ -5164,29 +5164,29 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
     __Pyx_INCREF(((PyObject *)__pyx_v_self->dtype));
     __Pyx_GIVEREF(((PyObject *)__pyx_v_self->dtype));
     PyTuple_SET_ITEM(__pyx_t_3, 1, ((PyObject *)__pyx_v_self->dtype));
-    __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5arrex_6_arrex_xarray), __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 341, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5arrex_6_arrex_typedlist), __pyx_t_3, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 341, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_result = ((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_t_6);
+    __pyx_v_result = ((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_t_6);
     __pyx_t_6 = 0;
 
     /* "arrex/_arrex.pyx":342
  * 		elif hasattr(other, '__iter__'):
- * 			result = xarray(None, self.dtype)
+ * 			result = typedlist(None, self.dtype)
  * 			result.extend(self)             # <<<<<<<<<<<<<<
  * 			result.extend(other)
  * 			return result
  */
-    ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_result->__pyx_vtab)->extend(__pyx_v_result, ((PyObject *)__pyx_v_self), 0);
+    ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_result->__pyx_vtab)->extend(__pyx_v_result, ((PyObject *)__pyx_v_self), 0);
 
     /* "arrex/_arrex.pyx":343
- * 			result = xarray(None, self.dtype)
+ * 			result = typedlist(None, self.dtype)
  * 			result.extend(self)
  * 			result.extend(other)             # <<<<<<<<<<<<<<
  * 			return result
  * 
  */
-    ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_result->__pyx_vtab)->extend(__pyx_v_result, __pyx_v_other, 0);
+    ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_result->__pyx_vtab)->extend(__pyx_v_result, __pyx_v_other, 0);
 
     /* "arrex/_arrex.pyx":344
  * 			result.extend(self)
@@ -5204,7 +5204,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
  * 			return result
  * 
  * 		elif hasattr(other, '__iter__'):             # <<<<<<<<<<<<<<
- * 			result = xarray(None, self.dtype)
+ * 			result = typedlist(None, self.dtype)
  * 			result.extend(self)
  */
   }
@@ -5226,8 +5226,8 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
   /* "arrex/_arrex.pyx":321
  * 		return self
  * 
- * 	def __add__(xarray self, other):             # <<<<<<<<<<<<<<
- * 		cdef xarray result
+ * 	def __add__(typedlist self, other):             # <<<<<<<<<<<<<<
+ * 		cdef typedlist result
  * 		cdef Py_buffer view
  */
 
@@ -5235,7 +5235,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__add__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__add__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_result);
@@ -5253,20 +5253,20 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_14__add__(struct __pyx_obj_5arr
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_17capacity(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_16capacity[] = " capacity()\n\t\t\n\t\t\treturn the total number of elements that can be stored with the current allocated memory \n\t\t";
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_17capacity(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_17capacity(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_16capacity[] = " capacity()\n\t\t\n\t\t\treturn the total number of elements that can be stored with the current allocated memory \n\t\t";
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_17capacity(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("capacity (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_16capacity(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_16capacity(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_16capacity(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_16capacity(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5300,7 +5300,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_16capacity(struct __pyx_obj_5ar
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.capacity", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.capacity", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5317,20 +5317,20 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_16capacity(struct __pyx_obj_5ar
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_19shrink(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_18shrink[] = " shrink()\n\t\t\n\t\t\treallocate the array to have allocated the exact current size of the array \n\t\t";
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_19shrink(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_19shrink(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_18shrink[] = " shrink()\n\t\t\n\t\t\treallocate the array to have allocated the exact current size of the array \n\t\t";
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_19shrink(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("shrink (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_18shrink(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_18shrink(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_18shrink(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_18shrink(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -5431,7 +5431,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_18shrink(struct __pyx_obj_5arre
  * 	def __len__(self):
  */
   /*else*/ {
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_v_self->size); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 368, __pyx_L1_error)
+    __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_reallocate(__pyx_v_self, __pyx_v_self->size); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 368, __pyx_L1_error)
   }
   __pyx_L3:;
 
@@ -5448,7 +5448,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_18shrink(struct __pyx_obj_5arre
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("arrex._arrex.xarray.shrink", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.shrink", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5465,23 +5465,23 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_18shrink(struct __pyx_obj_5arre
  */
 
 /* Python wrapper */
-static Py_ssize_t __pyx_pw_5arrex_6_arrex_6xarray_21__len__(PyObject *__pyx_v_self); /*proto*/
-static char __pyx_doc_5arrex_6_arrex_6xarray_20__len__[] = " return the current amount of elements inserted ";
+static Py_ssize_t __pyx_pw_5arrex_6_arrex_9typedlist_21__len__(PyObject *__pyx_v_self); /*proto*/
+static char __pyx_doc_5arrex_6_arrex_9typedlist_20__len__[] = " return the current amount of elements inserted ";
 #if CYTHON_COMPILING_IN_CPYTHON
-struct wrapperbase __pyx_wrapperbase_5arrex_6_arrex_6xarray_20__len__;
+struct wrapperbase __pyx_wrapperbase_5arrex_6_arrex_9typedlist_20__len__;
 #endif
-static Py_ssize_t __pyx_pw_5arrex_6_arrex_6xarray_21__len__(PyObject *__pyx_v_self) {
+static Py_ssize_t __pyx_pw_5arrex_6_arrex_9typedlist_21__len__(PyObject *__pyx_v_self) {
   Py_ssize_t __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__len__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_20__len__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_20__len__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static Py_ssize_t __pyx_pf_5arrex_6_arrex_6xarray_20__len__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static Py_ssize_t __pyx_pf_5arrex_6_arrex_9typedlist_20__len__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   Py_ssize_t __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__len__", 0);
@@ -5493,7 +5493,7 @@ static Py_ssize_t __pyx_pf_5arrex_6_arrex_6xarray_20__len__(struct __pyx_obj_5ar
  * 
  * 	def __getitem__(self, index):
  */
-  __pyx_r = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
+  __pyx_r = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
   goto __pyx_L0;
 
   /* "arrex/_arrex.pyx":370
@@ -5514,25 +5514,25 @@ static Py_ssize_t __pyx_pf_5arrex_6_arrex_6xarray_20__len__(struct __pyx_obj_5ar
  * 		return self._len()
  * 
  * 	def __getitem__(self, index):             # <<<<<<<<<<<<<<
- * 		cdef xarray view
+ * 		cdef typedlist view
  * 		cdef Py_ssize_t start, stop, step
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_23__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_23__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_23__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_23__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getitem__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v_index));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_22__getitem__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v_index));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index) {
-  struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_view = 0;
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_22__getitem__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index) {
+  struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_view = 0;
   Py_ssize_t __pyx_v_start;
   Py_ssize_t __pyx_v_stop;
   Py_ssize_t __pyx_v_step;
@@ -5567,8 +5567,8 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(struct __pyx_obj_
  * 		elif isinstance(index, slice):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 379, __pyx_L1_error)
-    __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_getitem(__pyx_v_self, (__pyx_v_self->ptr + (__pyx_t_3 * __pyx_v_self->dsize))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_3 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_getitem(__pyx_v_self, (__pyx_v_self->ptr + (__pyx_t_3 * __pyx_v_self->dsize))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 379, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
@@ -5663,25 +5663,25 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(struct __pyx_obj_
  * 				raise IndexError('slice step is not supported')
  * 			PySlice_AdjustIndices(self._len(), &start, &stop, step)             # <<<<<<<<<<<<<<
  * 
- * 			view = xarray.__new__(xarray)
+ * 			view = typedlist.__new__(typedlist)
  */
-    (void)(PySlice_AdjustIndices(((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self), (&__pyx_v_start), (&__pyx_v_stop), __pyx_v_step));
+    (void)(PySlice_AdjustIndices(((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self), (&__pyx_v_start), (&__pyx_v_stop), __pyx_v_step));
 
     /* "arrex/_arrex.pyx":388
  * 			PySlice_AdjustIndices(self._len(), &start, &stop, step)
  * 
- * 			view = xarray.__new__(xarray)             # <<<<<<<<<<<<<<
+ * 			view = typedlist.__new__(typedlist)             # <<<<<<<<<<<<<<
  * 			view.ptr = self.ptr + start*self.dsize
  * 			view.size = (stop-start)*self.dsize
  */
-    __pyx_t_4 = ((PyObject *)__pyx_tp_new_5arrex_6_arrex_xarray(((PyTypeObject *)__pyx_ptype_5arrex_6_arrex_xarray), __pyx_empty_tuple, NULL)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 388, __pyx_L1_error)
+    __pyx_t_4 = ((PyObject *)__pyx_tp_new_5arrex_6_arrex_typedlist(((PyTypeObject *)__pyx_ptype_5arrex_6_arrex_typedlist), __pyx_empty_tuple, NULL)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 388, __pyx_L1_error)
     __Pyx_GOTREF(((PyObject *)__pyx_t_4));
-    __pyx_v_view = ((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_t_4);
+    __pyx_v_view = ((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_t_4);
     __pyx_t_4 = 0;
 
     /* "arrex/_arrex.pyx":389
  * 
- * 			view = xarray.__new__(xarray)
+ * 			view = typedlist.__new__(typedlist)
  * 			view.ptr = self.ptr + start*self.dsize             # <<<<<<<<<<<<<<
  * 			view.size = (stop-start)*self.dsize
  * 			view.owner = self.owner
@@ -5689,7 +5689,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(struct __pyx_obj_
     __pyx_v_view->ptr = (__pyx_v_self->ptr + (__pyx_v_start * __pyx_v_self->dsize));
 
     /* "arrex/_arrex.pyx":390
- * 			view = xarray.__new__(xarray)
+ * 			view = typedlist.__new__(typedlist)
  * 			view.ptr = self.ptr + start*self.dsize
  * 			view.size = (stop-start)*self.dsize             # <<<<<<<<<<<<<<
  * 			view.owner = self.owner
@@ -5777,14 +5777,14 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(struct __pyx_obj_
  * 		return self._len()
  * 
  * 	def __getitem__(self, index):             # <<<<<<<<<<<<<<
- * 		cdef xarray view
+ * 		cdef typedlist view
  * 		cdef Py_ssize_t start, stop, step
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__getitem__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__getitem__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_view);
@@ -5802,19 +5802,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_22__getitem__(struct __pyx_obj_
  */
 
 /* Python wrapper */
-static int __pyx_pw_5arrex_6_arrex_6xarray_25__setitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_5arrex_6_arrex_6xarray_25__setitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value) {
+static int __pyx_pw_5arrex_6_arrex_9typedlist_25__setitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_5arrex_6_arrex_9typedlist_25__setitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setitem__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_24__setitem__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v_index), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_24__setitem__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v_index), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5arrex_6_arrex_6xarray_24__setitem__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value) {
+static int __pyx_pf_5arrex_6_arrex_9typedlist_24__setitem__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, PyObject *__pyx_v_index, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -5861,8 +5861,8 @@ static int __pyx_pf_5arrex_6_arrex_6xarray_24__setitem__(struct __pyx_obj_5arrex
  * 
  * 		else:
  */
-    __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 402, __pyx_L1_error)
-    ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_setitem(__pyx_v_self, (__pyx_v_self->ptr + (__pyx_t_5 * __pyx_v_self->dsize)), __pyx_v_value);
+    __pyx_t_5 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_index(__pyx_v_self, __pyx_v_index); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1L))) __PYX_ERR(0, 402, __pyx_L1_error)
+    ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_setitem(__pyx_v_self, (__pyx_v_self->ptr + (__pyx_t_5 * __pyx_v_self->dsize)), __pyx_v_value);
 
     /* "arrex/_arrex.pyx":400
  * 
@@ -5904,7 +5904,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray_24__setitem__(struct __pyx_obj_5arrex
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__setitem__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__setitem__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_value);
@@ -5921,19 +5921,19 @@ static int __pyx_pf_5arrex_6_arrex_6xarray_24__setitem__(struct __pyx_obj_5arrex
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_27__iter__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_27__iter__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_27__iter__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_27__iter__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__iter__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_26__iter__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_26__iter__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_26__iter__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_26__iter__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   struct __pyx_obj_5arrex_6_arrex_arrayiter *__pyx_v_it = 0;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6000,7 +6000,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_26__iter__(struct __pyx_obj_5ar
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__iter__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__iter__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_it);
@@ -6018,19 +6018,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_26__iter__(struct __pyx_obj_5ar
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_29__repr__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_29__repr__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_29__repr__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_29__repr__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__repr__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_28__repr__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_28__repr__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_28__repr__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_28__repr__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   size_t __pyx_v_i;
   PyObject *__pyx_v_item = NULL;
   PyObject *__pyx_v_text = NULL;
@@ -6052,7 +6052,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_28__repr__(struct __pyx_obj_5ar
  * 	def __repr__(self):
  * 		cdef size_t i
  * 		item = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)             # <<<<<<<<<<<<<<
- * 		text = 'xarray(['
+ * 		text = 'typedlist(['
  * 		for i in range(self._len()):
  */
   __pyx_t_1 = ((PyObject *)__pyx_v_self->dtype);
@@ -6069,27 +6069,27 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_28__repr__(struct __pyx_obj_5ar
   /* "arrex/_arrex.pyx":416
  * 		cdef size_t i
  * 		item = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
- * 		text = 'xarray(['             # <<<<<<<<<<<<<<
+ * 		text = 'typedlist(['             # <<<<<<<<<<<<<<
  * 		for i in range(self._len()):
  * 			if i:	text += ', '
  */
-  __Pyx_INCREF(__pyx_kp_u_xarray);
-  __pyx_v_text = __pyx_kp_u_xarray;
+  __Pyx_INCREF(__pyx_kp_u_typedlist);
+  __pyx_v_text = __pyx_kp_u_typedlist;
 
   /* "arrex/_arrex.pyx":417
  * 		item = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
- * 		text = 'xarray(['
+ * 		text = 'typedlist(['
  * 		for i in range(self._len()):             # <<<<<<<<<<<<<<
  * 			if i:	text += ', '
  * 			memcpy(
  */
-  __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
+  __pyx_t_4 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
   __pyx_t_5 = __pyx_t_4;
   for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
     __pyx_v_i = __pyx_t_6;
 
     /* "arrex/_arrex.pyx":418
- * 		text = 'xarray(['
+ * 		text = 'typedlist(['
  * 		for i in range(self._len()):
  * 			if i:	text += ', '             # <<<<<<<<<<<<<<
  * 			memcpy(
@@ -6165,7 +6165,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_28__repr__(struct __pyx_obj_5ar
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__repr__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__repr__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_item);
@@ -6184,19 +6184,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_28__repr__(struct __pyx_obj_5ar
  */
 
 /* Python wrapper */
-static CYTHON_UNUSED int __pyx_pw_5arrex_6_arrex_6xarray_31__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags); /*proto*/
-static CYTHON_UNUSED int __pyx_pw_5arrex_6_arrex_6xarray_31__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags) {
+static CYTHON_UNUSED int __pyx_pw_5arrex_6_arrex_9typedlist_31__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags); /*proto*/
+static CYTHON_UNUSED int __pyx_pw_5arrex_6_arrex_9typedlist_31__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getbuffer__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_30__getbuffer__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((Py_buffer *)__pyx_v_view), ((int)__pyx_v_flags));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_30__getbuffer__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((Py_buffer *)__pyx_v_view), ((int)__pyx_v_flags));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5arrex_6_arrex_6xarray_30__getbuffer__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags) {
+static int __pyx_pf_5arrex_6_arrex_9typedlist_30__getbuffer__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, Py_buffer *__pyx_v_view, int __pyx_v_flags) {
   struct __pyx_obj_5arrex_6_arrex_arrayexposer *__pyx_v_exp = 0;
   PyObject *__pyx_v_fmt = NULL;
   int __pyx_r;
@@ -6253,7 +6253,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray_30__getbuffer__(struct __pyx_obj_5arr
  * 
  * 		view.obj = exp
  */
-  (__pyx_v_exp->shape[0]) = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
+  (__pyx_v_exp->shape[0]) = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->__pyx_vtab)->_len(__pyx_v_self);
 
   /* "arrex/_arrex.pyx":434
  * 		exp.shape[0] = self._len()
@@ -6492,7 +6492,7 @@ static int __pyx_pf_5arrex_6_arrex_6xarray_30__getbuffer__(struct __pyx_obj_5arr
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__getbuffer__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__getbuffer__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   if (__pyx_v_view->obj != NULL) {
     __Pyx_GOTREF(__pyx_v_view->obj);
@@ -6520,17 +6520,17 @@ static int __pyx_pf_5arrex_6_arrex_6xarray_30__getbuffer__(struct __pyx_obj_5arr
  */
 
 /* Python wrapper */
-static CYTHON_UNUSED void __pyx_pw_5arrex_6_arrex_6xarray_33__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view); /*proto*/
-static CYTHON_UNUSED void __pyx_pw_5arrex_6_arrex_6xarray_33__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view) {
+static CYTHON_UNUSED void __pyx_pw_5arrex_6_arrex_9typedlist_33__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view); /*proto*/
+static CYTHON_UNUSED void __pyx_pw_5arrex_6_arrex_9typedlist_33__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_view) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__releasebuffer__ (wrapper)", 0);
-  __pyx_pf_5arrex_6_arrex_6xarray_32__releasebuffer__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((Py_buffer *)__pyx_v_view));
+  __pyx_pf_5arrex_6_arrex_9typedlist_32__releasebuffer__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((Py_buffer *)__pyx_v_view));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_5arrex_6_arrex_6xarray_32__releasebuffer__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_view) {
+static void __pyx_pf_5arrex_6_arrex_9typedlist_32__releasebuffer__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_view) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__releasebuffer__", 0);
 
@@ -6547,19 +6547,19 @@ static void __pyx_pf_5arrex_6_arrex_6xarray_32__releasebuffer__(CYTHON_UNUSED st
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_4size_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_4size_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_4size_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_4size_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_4size___get__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_4size___get__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4size___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_4size___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6577,7 +6577,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4size___get__(struct __pyx_obj_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.size.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.size.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6594,19 +6594,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_4size___get__(struct __pyx_obj_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_9allocated_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_9allocated_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_9allocated_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_9allocated_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_9allocated___get__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_9allocated___get__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_9allocated___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_9allocated___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6624,7 +6624,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_9allocated___get__(struct __pyx
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.allocated.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.allocated.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6641,19 +6641,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_9allocated___get__(struct __pyx
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5dtype_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5dtype_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5dtype_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5dtype_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_5dtype___get__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_5dtype___get__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5dtype___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_5dtype___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
@@ -6678,19 +6678,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5dtype___get__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5dsize_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5dsize_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5dsize_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5dsize_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_5dsize___get__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_5dsize___get__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5dsize___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_5dsize___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6708,7 +6708,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5dsize___get__(struct __pyx_obj
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.dsize.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.dsize.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6725,19 +6725,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5dsize___get__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5owner_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_5owner_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5owner_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_5owner_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_5owner___get__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_5owner___get__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5owner___get__(struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_5owner___get__(struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
@@ -6760,19 +6760,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_5owner___get__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_35__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_35__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_35__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_35__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_34__reduce_cython__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_34__reduce_cython__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_34__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_34__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6802,7 +6802,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_34__reduce_cython__(CYTHON_UNUS
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -6817,19 +6817,19 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_34__reduce_cython__(CYTHON_UNUS
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_37__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_5arrex_6_arrex_6xarray_37__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_37__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_5arrex_6_arrex_9typedlist_37__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5arrex_6_arrex_6xarray_36__setstate_cython__(((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_5arrex_6_arrex_9typedlist_36__setstate_cython__(((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_36__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_xarray *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_5arrex_6_arrex_9typedlist_36__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_5arrex_6_arrex_typedlist *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6859,7 +6859,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_6xarray_36__setstate_cython__(CYTHON_UN
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("arrex._arrex.xarray.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("arrex._arrex.typedlist.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -7388,7 +7388,7 @@ static PyObject *__pyx_pf_5arrex_6_arrex_9arrayiter_4__next__(struct __pyx_obj_5
  * 		self.position += self.array.dsize
  * 		return item
  */
-  __pyx_t_2 = ((struct __pyx_vtabstruct_5arrex_6_arrex_xarray *)__pyx_v_self->array->__pyx_vtab)->_getitem(__pyx_v_self->array, (__pyx_v_self->array->ptr + __pyx_v_self->position)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 483, __pyx_L1_error)
+  __pyx_t_2 = ((struct __pyx_vtabstruct_5arrex_6_arrex_typedlist *)__pyx_v_self->array->__pyx_vtab)->_getitem(__pyx_v_self->array, (__pyx_v_self->array->ptr + __pyx_v_self->position)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 483, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_item = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -8817,11 +8817,11 @@ static PyObject *__pyx_f_5arrex_6_arrex___pyx_unpickle_arrayiter__set_state(stru
   }
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5arrex_6_arrex_xarray))))) __PYX_ERR(1, 12, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5arrex_6_arrex_typedlist))))) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v___pyx_result->array);
   __Pyx_DECREF(((PyObject *)__pyx_v___pyx_result->array));
-  __pyx_v___pyx_result->array = ((struct __pyx_obj_5arrex_6_arrex_xarray *)__pyx_t_1);
+  __pyx_v___pyx_result->array = ((struct __pyx_obj_5arrex_6_arrex_typedlist *)__pyx_t_1);
   __pyx_t_1 = 0;
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -9564,10 +9564,10 @@ static PyTypeObject __pyx_type_5arrex_6_arrex__head = {
   0, /*tp_print*/
   #endif
 };
-static struct __pyx_vtabstruct_5arrex_6_arrex_xarray __pyx_vtable_5arrex_6_arrex_xarray;
+static struct __pyx_vtabstruct_5arrex_6_arrex_typedlist __pyx_vtable_5arrex_6_arrex_typedlist;
 
-static PyObject *__pyx_tp_new_5arrex_6_arrex_xarray(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_5arrex_6_arrex_xarray *p;
+static PyObject *__pyx_tp_new_5arrex_6_arrex_typedlist(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_5arrex_6_arrex_typedlist *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -9575,15 +9575,15 @@ static PyObject *__pyx_tp_new_5arrex_6_arrex_xarray(PyTypeObject *t, CYTHON_UNUS
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5arrex_6_arrex_xarray *)o);
-  p->__pyx_vtab = __pyx_vtabptr_5arrex_6_arrex_xarray;
+  p = ((struct __pyx_obj_5arrex_6_arrex_typedlist *)o);
+  p->__pyx_vtab = __pyx_vtabptr_5arrex_6_arrex_typedlist;
   p->dtype = ((PyTypeObject*)Py_None); Py_INCREF(Py_None);
   p->owner = Py_None; Py_INCREF(Py_None);
   return o;
 }
 
-static void __pyx_tp_dealloc_5arrex_6_arrex_xarray(PyObject *o) {
-  struct __pyx_obj_5arrex_6_arrex_xarray *p = (struct __pyx_obj_5arrex_6_arrex_xarray *)o;
+static void __pyx_tp_dealloc_5arrex_6_arrex_typedlist(PyObject *o) {
+  struct __pyx_obj_5arrex_6_arrex_typedlist *p = (struct __pyx_obj_5arrex_6_arrex_typedlist *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -9595,9 +9595,9 @@ static void __pyx_tp_dealloc_5arrex_6_arrex_xarray(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_5arrex_6_arrex_xarray(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_5arrex_6_arrex_typedlist(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_5arrex_6_arrex_xarray *p = (struct __pyx_obj_5arrex_6_arrex_xarray *)o;
+  struct __pyx_obj_5arrex_6_arrex_typedlist *p = (struct __pyx_obj_5arrex_6_arrex_typedlist *)o;
   if (p->dtype) {
     e = (*v)(((PyObject *)p->dtype), a); if (e) return e;
   }
@@ -9607,9 +9607,9 @@ static int __pyx_tp_traverse_5arrex_6_arrex_xarray(PyObject *o, visitproc v, voi
   return 0;
 }
 
-static int __pyx_tp_clear_5arrex_6_arrex_xarray(PyObject *o) {
+static int __pyx_tp_clear_5arrex_6_arrex_typedlist(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_5arrex_6_arrex_xarray *p = (struct __pyx_obj_5arrex_6_arrex_xarray *)o;
+  struct __pyx_obj_5arrex_6_arrex_typedlist *p = (struct __pyx_obj_5arrex_6_arrex_typedlist *)o;
   tmp = ((PyObject*)p->dtype);
   p->dtype = ((PyTypeObject*)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
@@ -9618,7 +9618,7 @@ static int __pyx_tp_clear_5arrex_6_arrex_xarray(PyObject *o) {
   Py_XDECREF(tmp);
   return 0;
 }
-static PyObject *__pyx_sq_item_5arrex_6_arrex_xarray(PyObject *o, Py_ssize_t i) {
+static PyObject *__pyx_sq_item_5arrex_6_arrex_typedlist(PyObject *o, Py_ssize_t i) {
   PyObject *r;
   PyObject *x = PyInt_FromSsize_t(i); if(!x) return 0;
   r = Py_TYPE(o)->tp_as_mapping->mp_subscript(o, x);
@@ -9626,9 +9626,9 @@ static PyObject *__pyx_sq_item_5arrex_6_arrex_xarray(PyObject *o, Py_ssize_t i) 
   return r;
 }
 
-static int __pyx_mp_ass_subscript_5arrex_6_arrex_xarray(PyObject *o, PyObject *i, PyObject *v) {
+static int __pyx_mp_ass_subscript_5arrex_6_arrex_typedlist(PyObject *o, PyObject *i, PyObject *v) {
   if (v) {
-    return __pyx_pw_5arrex_6_arrex_6xarray_25__setitem__(o, i, v);
+    return __pyx_pw_5arrex_6_arrex_9typedlist_25__setitem__(o, i, v);
   }
   else {
     PyErr_Format(PyExc_NotImplementedError,
@@ -9637,50 +9637,50 @@ static int __pyx_mp_ass_subscript_5arrex_6_arrex_xarray(PyObject *o, PyObject *i
   }
 }
 
-static PyObject *__pyx_getprop_5arrex_6_arrex_6xarray_size(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5arrex_6_arrex_6xarray_4size_1__get__(o);
+static PyObject *__pyx_getprop_5arrex_6_arrex_9typedlist_size(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_5arrex_6_arrex_9typedlist_4size_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5arrex_6_arrex_6xarray_allocated(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5arrex_6_arrex_6xarray_9allocated_1__get__(o);
+static PyObject *__pyx_getprop_5arrex_6_arrex_9typedlist_allocated(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_5arrex_6_arrex_9typedlist_9allocated_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5arrex_6_arrex_6xarray_dtype(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5arrex_6_arrex_6xarray_5dtype_1__get__(o);
+static PyObject *__pyx_getprop_5arrex_6_arrex_9typedlist_dtype(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_5arrex_6_arrex_9typedlist_5dtype_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5arrex_6_arrex_6xarray_dsize(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5arrex_6_arrex_6xarray_5dsize_1__get__(o);
+static PyObject *__pyx_getprop_5arrex_6_arrex_9typedlist_dsize(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_5arrex_6_arrex_9typedlist_5dsize_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5arrex_6_arrex_6xarray_owner(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5arrex_6_arrex_6xarray_5owner_1__get__(o);
+static PyObject *__pyx_getprop_5arrex_6_arrex_9typedlist_owner(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_5arrex_6_arrex_9typedlist_5owner_1__get__(o);
 }
 
-static PyMethodDef __pyx_methods_5arrex_6_arrex_xarray[] = {
-  {"reserve", (PyCFunction)__pyx_pw_5arrex_6_arrex_6xarray_3reserve, METH_O, __pyx_doc_5arrex_6_arrex_6xarray_2reserve},
-  {"append", (PyCFunction)__pyx_pw_5arrex_6_arrex_6xarray_5append, METH_O, __pyx_doc_5arrex_6_arrex_6xarray_4append},
-  {"pop", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5arrex_6_arrex_6xarray_7pop, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5arrex_6_arrex_6xarray_6pop},
-  {"insert", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5arrex_6_arrex_6xarray_9insert, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5arrex_6_arrex_6xarray_8insert},
-  {"extend", (PyCFunction)__pyx_pw_5arrex_6_arrex_6xarray_11extend, METH_O, __pyx_doc_5arrex_6_arrex_6xarray_10extend},
-  {"capacity", (PyCFunction)__pyx_pw_5arrex_6_arrex_6xarray_17capacity, METH_NOARGS, __pyx_doc_5arrex_6_arrex_6xarray_16capacity},
-  {"shrink", (PyCFunction)__pyx_pw_5arrex_6_arrex_6xarray_19shrink, METH_NOARGS, __pyx_doc_5arrex_6_arrex_6xarray_18shrink},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_5arrex_6_arrex_6xarray_35__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_5arrex_6_arrex_6xarray_37__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_5arrex_6_arrex_typedlist[] = {
+  {"reserve", (PyCFunction)__pyx_pw_5arrex_6_arrex_9typedlist_3reserve, METH_O, __pyx_doc_5arrex_6_arrex_9typedlist_2reserve},
+  {"append", (PyCFunction)__pyx_pw_5arrex_6_arrex_9typedlist_5append, METH_O, __pyx_doc_5arrex_6_arrex_9typedlist_4append},
+  {"pop", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5arrex_6_arrex_9typedlist_7pop, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5arrex_6_arrex_9typedlist_6pop},
+  {"insert", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5arrex_6_arrex_9typedlist_9insert, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5arrex_6_arrex_9typedlist_8insert},
+  {"extend", (PyCFunction)__pyx_pw_5arrex_6_arrex_9typedlist_11extend, METH_O, __pyx_doc_5arrex_6_arrex_9typedlist_10extend},
+  {"capacity", (PyCFunction)__pyx_pw_5arrex_6_arrex_9typedlist_17capacity, METH_NOARGS, __pyx_doc_5arrex_6_arrex_9typedlist_16capacity},
+  {"shrink", (PyCFunction)__pyx_pw_5arrex_6_arrex_9typedlist_19shrink, METH_NOARGS, __pyx_doc_5arrex_6_arrex_9typedlist_18shrink},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_5arrex_6_arrex_9typedlist_35__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_5arrex_6_arrex_9typedlist_37__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_5arrex_6_arrex_xarray[] = {
-  {(char *)"size", __pyx_getprop_5arrex_6_arrex_6xarray_size, 0, (char *)0, 0},
-  {(char *)"allocated", __pyx_getprop_5arrex_6_arrex_6xarray_allocated, 0, (char *)0, 0},
-  {(char *)"dtype", __pyx_getprop_5arrex_6_arrex_6xarray_dtype, 0, (char *)0, 0},
-  {(char *)"dsize", __pyx_getprop_5arrex_6_arrex_6xarray_dsize, 0, (char *)0, 0},
-  {(char *)"owner", __pyx_getprop_5arrex_6_arrex_6xarray_owner, 0, (char *)0, 0},
+static struct PyGetSetDef __pyx_getsets_5arrex_6_arrex_typedlist[] = {
+  {(char *)"size", __pyx_getprop_5arrex_6_arrex_9typedlist_size, 0, (char *)0, 0},
+  {(char *)"allocated", __pyx_getprop_5arrex_6_arrex_9typedlist_allocated, 0, (char *)0, 0},
+  {(char *)"dtype", __pyx_getprop_5arrex_6_arrex_9typedlist_dtype, 0, (char *)0, 0},
+  {(char *)"dsize", __pyx_getprop_5arrex_6_arrex_9typedlist_dsize, 0, (char *)0, 0},
+  {(char *)"owner", __pyx_getprop_5arrex_6_arrex_9typedlist_owner, 0, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
-static PyNumberMethods __pyx_tp_as_number_xarray = {
-  __pyx_pw_5arrex_6_arrex_6xarray_15__add__, /*nb_add*/
+static PyNumberMethods __pyx_tp_as_number_typedlist = {
+  __pyx_pw_5arrex_6_arrex_9typedlist_15__add__, /*nb_add*/
   0, /*nb_subtract*/
   0, /*nb_multiply*/
   #if PY_MAJOR_VERSION < 3 || (CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX < 0x03050000)
@@ -9715,7 +9715,7 @@ static PyNumberMethods __pyx_tp_as_number_xarray = {
   #if PY_MAJOR_VERSION < 3 || (CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX < 0x03050000)
   0, /*nb_hex*/
   #endif
-  __pyx_pw_5arrex_6_arrex_6xarray_13__iadd__, /*nb_inplace_add*/
+  __pyx_pw_5arrex_6_arrex_9typedlist_13__iadd__, /*nb_inplace_add*/
   0, /*nb_inplace_subtract*/
   0, /*nb_inplace_multiply*/
   #if PY_MAJOR_VERSION < 3 || (CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX < 0x03050000)
@@ -9741,11 +9741,11 @@ static PyNumberMethods __pyx_tp_as_number_xarray = {
   #endif
 };
 
-static PySequenceMethods __pyx_tp_as_sequence_xarray = {
-  __pyx_pw_5arrex_6_arrex_6xarray_21__len__, /*sq_length*/
+static PySequenceMethods __pyx_tp_as_sequence_typedlist = {
+  __pyx_pw_5arrex_6_arrex_9typedlist_21__len__, /*sq_length*/
   0, /*sq_concat*/
   0, /*sq_repeat*/
-  __pyx_sq_item_5arrex_6_arrex_xarray, /*sq_item*/
+  __pyx_sq_item_5arrex_6_arrex_typedlist, /*sq_item*/
   0, /*sq_slice*/
   0, /*sq_ass_item*/
   0, /*sq_ass_slice*/
@@ -9754,13 +9754,13 @@ static PySequenceMethods __pyx_tp_as_sequence_xarray = {
   0, /*sq_inplace_repeat*/
 };
 
-static PyMappingMethods __pyx_tp_as_mapping_xarray = {
-  __pyx_pw_5arrex_6_arrex_6xarray_21__len__, /*mp_length*/
-  __pyx_pw_5arrex_6_arrex_6xarray_23__getitem__, /*mp_subscript*/
-  __pyx_mp_ass_subscript_5arrex_6_arrex_xarray, /*mp_ass_subscript*/
+static PyMappingMethods __pyx_tp_as_mapping_typedlist = {
+  __pyx_pw_5arrex_6_arrex_9typedlist_21__len__, /*mp_length*/
+  __pyx_pw_5arrex_6_arrex_9typedlist_23__getitem__, /*mp_subscript*/
+  __pyx_mp_ass_subscript_5arrex_6_arrex_typedlist, /*mp_ass_subscript*/
 };
 
-static PyBufferProcs __pyx_tp_as_buffer_xarray = {
+static PyBufferProcs __pyx_tp_as_buffer_typedlist = {
   #if PY_MAJOR_VERSION < 3
   0, /*bf_getreadbuffer*/
   #endif
@@ -9773,16 +9773,16 @@ static PyBufferProcs __pyx_tp_as_buffer_xarray = {
   #if PY_MAJOR_VERSION < 3
   0, /*bf_getcharbuffer*/
   #endif
-  __pyx_pw_5arrex_6_arrex_6xarray_31__getbuffer__, /*bf_getbuffer*/
-  __pyx_pw_5arrex_6_arrex_6xarray_33__releasebuffer__, /*bf_releasebuffer*/
+  __pyx_pw_5arrex_6_arrex_9typedlist_31__getbuffer__, /*bf_getbuffer*/
+  __pyx_pw_5arrex_6_arrex_9typedlist_33__releasebuffer__, /*bf_releasebuffer*/
 };
 
-static PyTypeObject __pyx_type_5arrex_6_arrex_xarray = {
+static PyTypeObject __pyx_type_5arrex_6_arrex_typedlist = {
   PyVarObject_HEAD_INIT(0, 0)
-  "arrex._arrex.xarray", /*tp_name*/
-  sizeof(struct __pyx_obj_5arrex_6_arrex_xarray), /*tp_basicsize*/
+  "arrex._arrex.typedlist", /*tp_name*/
+  sizeof(struct __pyx_obj_5arrex_6_arrex_typedlist), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5arrex_6_arrex_xarray, /*tp_dealloc*/
+  __pyx_tp_dealloc_5arrex_6_arrex_typedlist, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -9797,35 +9797,35 @@ static PyTypeObject __pyx_type_5arrex_6_arrex_xarray = {
   #if PY_MAJOR_VERSION >= 3
   0, /*tp_as_async*/
   #endif
-  __pyx_pw_5arrex_6_arrex_6xarray_29__repr__, /*tp_repr*/
-  &__pyx_tp_as_number_xarray, /*tp_as_number*/
-  &__pyx_tp_as_sequence_xarray, /*tp_as_sequence*/
-  &__pyx_tp_as_mapping_xarray, /*tp_as_mapping*/
+  __pyx_pw_5arrex_6_arrex_9typedlist_29__repr__, /*tp_repr*/
+  &__pyx_tp_as_number_typedlist, /*tp_as_number*/
+  &__pyx_tp_as_sequence_typedlist, /*tp_as_sequence*/
+  &__pyx_tp_as_mapping_typedlist, /*tp_as_mapping*/
   0, /*tp_hash*/
   0, /*tp_call*/
   0, /*tp_str*/
   0, /*tp_getattro*/
   0, /*tp_setattro*/
-  &__pyx_tp_as_buffer_xarray, /*tp_as_buffer*/
+  &__pyx_tp_as_buffer_typedlist, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  " list-like array that stores objects as packed data. \n\t\tThe objects added must necessarily be packed objects (builtin objects with no references).\n\t\t\n\t\tThis is a dynamically sized, borrowing array, which mean the internal buffer of data is reallocated on insertion, but can be used to view and extract from any buffer.\n\t\t\n\t\tUse it as a list:\n\t\t\n\t\t\t>>> a = xarray(dtype=vec3)\n\t\t\t\n\t\t\t# build from an iterable\n\t\t\t>>> a = xarray([], dtype=vec3)\n\t\t\t\n\t\t\t# append some data\n\t\t\t>>> a.append(vec3(1,2,3))\n\t\t\t\n\t\t\t# extend with an iterable\n\t\t\t>>> a.extend(vec3(i)  for i in range(5))\n\t\t\t\n\t\t\t>>> len(a)\t# the current number of elements\n\t\t\t6\n\t\t\t\n\t\t\t>>> a.owner\t# the current data buffer\n\t\t\tb'.........'\n\t\t\t\n\t\tUse it as a slice:\n\t\t\n\t\t\t# no data is copied\n\t\t\t>>> myslice = a[:5]\n\t\t\txarray(....)\n\t\t\t\n\t\tUse it as a view on top of a random buffer\n\t\t\n\t\t\t>>> a = np.ones((6,3), dtype='f4')\n\t\t\t>>> myslice = xarray(a, dtype=vec3)\n\t\t\t\n\t\tIt does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy\n\t\t\n\t\t\t>>> np.array(xarray([....]))\n\t\t\n\t\t\n\t\tConstructors:\n\t\t\n\t\t\txarray()\n\t\t\txarray(dtype, reserve=None)\n\t\t\txarray(iterable, dtype, reserve=None)\n\t\t\txarray(buffer, dtype)\n\t", /*tp_doc*/
-  __pyx_tp_traverse_5arrex_6_arrex_xarray, /*tp_traverse*/
-  __pyx_tp_clear_5arrex_6_arrex_xarray, /*tp_clear*/
+  " list-like array that stores objects as packed data. \n\t\tThe objects added must necessarily be packed objects (builtin objects with no references).\n\t\t\n\t\tThis is a dynamically sized, borrowing array, which mean the internal buffer of data is reallocated on insertion, but can be used to view and extract from any buffer.\n\t\t\n\t\tUse it as a list:\n\t\t\n\t\t\t>>> a = typedlist(dtype=vec3)\n\t\t\t\n\t\t\t# build from an iterable\n\t\t\t>>> a = typedlist([], dtype=vec3)\n\t\t\t\n\t\t\t# append some data\n\t\t\t>>> a.append(vec3(1,2,3))\n\t\t\t\n\t\t\t# extend with an iterable\n\t\t\t>>> a.extend(vec3(i)  for i in range(5))\n\t\t\t\n\t\t\t>>> len(a)\t# the current number of elements\n\t\t\t6\n\t\t\t\n\t\t\t>>> a.owner\t# the current data buffer\n\t\t\tb'.........'\n\t\t\t\n\t\tUse it as a slice:\n\t\t\n\t\t\t# no data is copied\n\t\t\t>>> myslice = a[:5]\n\t\t\ttypedlist(....)\n\t\t\t\n\t\tUse it as a view on top of a random buffer\n\t\t\n\t\t\t>>> a = np.ones((6,3), dtype='f4')\n\t\t\t>>> myslice = typedlist(a, dtype=vec3)\n\t\t\t\n\t\tIt does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy\n\t\t\n\t\t\t>>> np.array(typedlist([....]))\n\t\t\n\t\t\n\t\tConstructors:\n\t\t\n\t\t\ttypedlist()\n\t\t\ttypedlist(dtype, reserve=None)\n\t\t\ttypedlist(iterable, dtype, reserve=None)\n\t\t\ttypedlist(buffer, dtype)\n\t", /*tp_doc*/
+  __pyx_tp_traverse_5arrex_6_arrex_typedlist, /*tp_traverse*/
+  __pyx_tp_clear_5arrex_6_arrex_typedlist, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
-  __pyx_pw_5arrex_6_arrex_6xarray_27__iter__, /*tp_iter*/
+  __pyx_pw_5arrex_6_arrex_9typedlist_27__iter__, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5arrex_6_arrex_xarray, /*tp_methods*/
+  __pyx_methods_5arrex_6_arrex_typedlist, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_5arrex_6_arrex_xarray, /*tp_getset*/
+  __pyx_getsets_5arrex_6_arrex_typedlist, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_5arrex_6_arrex_6xarray_1__init__, /*tp_init*/
+  __pyx_pw_5arrex_6_arrex_9typedlist_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5arrex_6_arrex_xarray, /*tp_new*/
+  __pyx_tp_new_5arrex_6_arrex_typedlist, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -9984,7 +9984,7 @@ static PyObject *__pyx_tp_new_5arrex_6_arrex_arrayiter(PyTypeObject *t, CYTHON_U
   }
   if (unlikely(!o)) return 0;
   p = ((struct __pyx_obj_5arrex_6_arrex_arrayiter *)o);
-  p->array = ((struct __pyx_obj_5arrex_6_arrex_xarray *)Py_None); Py_INCREF(Py_None);
+  p->array = ((struct __pyx_obj_5arrex_6_arrex_typedlist *)Py_None); Py_INCREF(Py_None);
   return o;
 }
 
@@ -10013,7 +10013,7 @@ static int __pyx_tp_clear_5arrex_6_arrex_arrayiter(PyObject *o) {
   PyObject* tmp;
   struct __pyx_obj_5arrex_6_arrex_arrayiter *p = (struct __pyx_obj_5arrex_6_arrex_arrayiter *)o;
   tmp = ((PyObject*)p->array);
-  p->array = ((struct __pyx_obj_5arrex_6_arrex_xarray *)Py_None); Py_INCREF(Py_None);
+  p->array = ((struct __pyx_obj_5arrex_6_arrex_typedlist *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   return 0;
 }
@@ -10219,10 +10219,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_struct, __pyx_k_struct, sizeof(__pyx_k_struct), 0, 0, 1, 1},
   {&__pyx_n_s_target, __pyx_k_target, sizeof(__pyx_k_target), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_kp_u_typedlist, __pyx_k_typedlist, sizeof(__pyx_k_typedlist), 0, 1, 0, 0},
+  {&__pyx_n_s_typedlist_2, __pyx_k_typedlist_2, sizeof(__pyx_k_typedlist_2), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
   {&__pyx_n_s_value, __pyx_k_value, sizeof(__pyx_k_value), 0, 0, 1, 1},
-  {&__pyx_kp_u_xarray, __pyx_k_xarray, sizeof(__pyx_k_xarray), 0, 1, 0, 0},
-  {&__pyx_n_s_xarray_2, __pyx_k_xarray_2, sizeof(__pyx_k_xarray_2), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
@@ -10494,36 +10494,36 @@ static int __Pyx_modinit_type_init_code(void) {
   if (PyObject_SetAttr(__pyx_m, __pyx_n_s_head, (PyObject *)&__pyx_type_5arrex_6_arrex__head) < 0) __PYX_ERR(0, 101, __pyx_L1_error)
   if (__Pyx_setup_reduce((PyObject*)&__pyx_type_5arrex_6_arrex__head) < 0) __PYX_ERR(0, 101, __pyx_L1_error)
   __pyx_ptype_5arrex_6_arrex__head = &__pyx_type_5arrex_6_arrex__head;
-  __pyx_vtabptr_5arrex_6_arrex_xarray = &__pyx_vtable_5arrex_6_arrex_xarray;
-  __pyx_vtable_5arrex_6_arrex_xarray._use = (int (*)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *))__pyx_f_5arrex_6_arrex_6xarray__use;
-  __pyx_vtable_5arrex_6_arrex_xarray._reallocate = (int (*)(struct __pyx_obj_5arrex_6_arrex_xarray *, size_t))__pyx_f_5arrex_6_arrex_6xarray__reallocate;
-  __pyx_vtable_5arrex_6_arrex_xarray._len = (size_t (*)(struct __pyx_obj_5arrex_6_arrex_xarray *))__pyx_f_5arrex_6_arrex_6xarray__len;
-  __pyx_vtable_5arrex_6_arrex_xarray._index = (Py_ssize_t (*)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *))__pyx_f_5arrex_6_arrex_6xarray__index;
-  __pyx_vtable_5arrex_6_arrex_xarray._getitem = (PyObject *(*)(struct __pyx_obj_5arrex_6_arrex_xarray *, void *))__pyx_f_5arrex_6_arrex_6xarray__getitem;
-  __pyx_vtable_5arrex_6_arrex_xarray._setitem = (void (*)(struct __pyx_obj_5arrex_6_arrex_xarray *, void *, PyObject *))__pyx_f_5arrex_6_arrex_6xarray__setitem;
-  __pyx_vtable_5arrex_6_arrex_xarray.append = (void (*)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *, int __pyx_skip_dispatch))__pyx_f_5arrex_6_arrex_6xarray_append;
-  __pyx_vtable_5arrex_6_arrex_xarray.extend = (void (*)(struct __pyx_obj_5arrex_6_arrex_xarray *, PyObject *, int __pyx_skip_dispatch))__pyx_f_5arrex_6_arrex_6xarray_extend;
-  if (PyType_Ready(&__pyx_type_5arrex_6_arrex_xarray) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
+  __pyx_vtabptr_5arrex_6_arrex_typedlist = &__pyx_vtable_5arrex_6_arrex_typedlist;
+  __pyx_vtable_5arrex_6_arrex_typedlist._use = (int (*)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *))__pyx_f_5arrex_6_arrex_9typedlist__use;
+  __pyx_vtable_5arrex_6_arrex_typedlist._reallocate = (int (*)(struct __pyx_obj_5arrex_6_arrex_typedlist *, size_t))__pyx_f_5arrex_6_arrex_9typedlist__reallocate;
+  __pyx_vtable_5arrex_6_arrex_typedlist._len = (size_t (*)(struct __pyx_obj_5arrex_6_arrex_typedlist *))__pyx_f_5arrex_6_arrex_9typedlist__len;
+  __pyx_vtable_5arrex_6_arrex_typedlist._index = (Py_ssize_t (*)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *))__pyx_f_5arrex_6_arrex_9typedlist__index;
+  __pyx_vtable_5arrex_6_arrex_typedlist._getitem = (PyObject *(*)(struct __pyx_obj_5arrex_6_arrex_typedlist *, void *))__pyx_f_5arrex_6_arrex_9typedlist__getitem;
+  __pyx_vtable_5arrex_6_arrex_typedlist._setitem = (void (*)(struct __pyx_obj_5arrex_6_arrex_typedlist *, void *, PyObject *))__pyx_f_5arrex_6_arrex_9typedlist__setitem;
+  __pyx_vtable_5arrex_6_arrex_typedlist.append = (void (*)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *, int __pyx_skip_dispatch))__pyx_f_5arrex_6_arrex_9typedlist_append;
+  __pyx_vtable_5arrex_6_arrex_typedlist.extend = (void (*)(struct __pyx_obj_5arrex_6_arrex_typedlist *, PyObject *, int __pyx_skip_dispatch))__pyx_f_5arrex_6_arrex_9typedlist_extend;
+  if (PyType_Ready(&__pyx_type_5arrex_6_arrex_typedlist) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_5arrex_6_arrex_xarray.tp_print = 0;
+  __pyx_type_5arrex_6_arrex_typedlist.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_5arrex_6_arrex_xarray.tp_dictoffset && __pyx_type_5arrex_6_arrex_xarray.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_5arrex_6_arrex_xarray.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_5arrex_6_arrex_typedlist.tp_dictoffset && __pyx_type_5arrex_6_arrex_typedlist.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_5arrex_6_arrex_typedlist.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #if CYTHON_COMPILING_IN_CPYTHON
   {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)&__pyx_type_5arrex_6_arrex_xarray, "__len__"); if (unlikely(!wrapper)) __PYX_ERR(0, 110, __pyx_L1_error)
+    PyObject *wrapper = PyObject_GetAttrString((PyObject *)&__pyx_type_5arrex_6_arrex_typedlist, "__len__"); if (unlikely(!wrapper)) __PYX_ERR(0, 110, __pyx_L1_error)
     if (Py_TYPE(wrapper) == &PyWrapperDescr_Type) {
-      __pyx_wrapperbase_5arrex_6_arrex_6xarray_20__len__ = *((PyWrapperDescrObject *)wrapper)->d_base;
-      __pyx_wrapperbase_5arrex_6_arrex_6xarray_20__len__.doc = __pyx_doc_5arrex_6_arrex_6xarray_20__len__;
-      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_5arrex_6_arrex_6xarray_20__len__;
+      __pyx_wrapperbase_5arrex_6_arrex_9typedlist_20__len__ = *((PyWrapperDescrObject *)wrapper)->d_base;
+      __pyx_wrapperbase_5arrex_6_arrex_9typedlist_20__len__.doc = __pyx_doc_5arrex_6_arrex_9typedlist_20__len__;
+      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_5arrex_6_arrex_9typedlist_20__len__;
     }
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_type_5arrex_6_arrex_xarray.tp_dict, __pyx_vtabptr_5arrex_6_arrex_xarray) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_xarray_2, (PyObject *)&__pyx_type_5arrex_6_arrex_xarray) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_5arrex_6_arrex_xarray) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
-  __pyx_ptype_5arrex_6_arrex_xarray = &__pyx_type_5arrex_6_arrex_xarray;
+  if (__Pyx_SetVtable(__pyx_type_5arrex_6_arrex_typedlist.tp_dict, __pyx_vtabptr_5arrex_6_arrex_typedlist) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_typedlist_2, (PyObject *)&__pyx_type_5arrex_6_arrex_typedlist) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_5arrex_6_arrex_typedlist) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
+  __pyx_ptype_5arrex_6_arrex_typedlist = &__pyx_type_5arrex_6_arrex_typedlist;
   if (PyType_Ready(&__pyx_type_5arrex_6_arrex_arrayexposer) < 0) __PYX_ERR(0, 463, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_5arrex_6_arrex_arrayexposer.tp_print = 0;
