@@ -1,7 +1,7 @@
 Arrex
 -----
 
-Arrex is a module that allows to create type arrays much like numpy.ndarray and array.array, but resizeable and using any kind of element.
+Arrex is a module that allows to create type arrays much like `numpy.ndarray` and `array.array`, but resizeable and using any kind of element, not only numbers.
 
 The elements must be extension-types (eg. class created in compiled modules) and must have a packed and copyable content: a fixed size and no reference or pointers.
 
@@ -63,3 +63,26 @@ It does support the buffer protocol, so it can be converted in a great variety o
 
 	>>> np.array(xarray([....]))
 
+	
+	
+## Roadmap
+
+This module is currently a 4 days first draft, but there is additionnal features planned:
+
+- typedarray
+
+	a n-dim array view much like numpy arrays but using dtypes as in `typedlist`.
+	Its purpose is mostly to access its items with n-dim indices and slices.
+	
+- dtypes for mainstream primitives 
+
+	(ints and floats) independant from numpy
+
+- a ufunc system
+	
+	to collect and put defaults to any kind of array scale operations, like `__add__`, `__mul__`, `__matmul__`, ... The goal would be to have a standard way to apply any function to every element of one or more array, that defaults to the python implementation, but can be overloaded with a compiled implementation
+	
+- dtypes defined from python
+
+	current dtypes are extension types (written in C), it could great to create dtypes from python also
+	
