@@ -8,27 +8,27 @@ The elements must be extension-types (eg. class created in compiled modules) and
 ### basic usage:
 
 ```python
-	>>> from arrex import *
-	>>> a = typedlist([
-				myclass(...), 
-				myclass(...),
-				], dtype=myclass)
-	>>> a[0]
-	myclass(...)
+>>> from arrex import *
+>>> a = typedlist([
+			myclass(...), 
+			myclass(...),
+			], dtype=myclass)
+>>> a[0]
+myclass(...)
 ```
 
 in that example, `myclass` can be a primitive numpy type, like `np.float64`
 
 ```python
-	>>> import typedlist.numpy		# this is enabling numpy dtypes for arrex
-	>>> typedlist(dtype=np.float64)
+>>> import typedlist.numpy		# this is enabling numpy dtypes for arrex
+>>> typedlist(dtype=np.float64)
 ```
 	
 it can be a more complex type, from module `pyglm` for instance
 
 ```python
-	>>> import typedlist.glm		# this is enabling glm dtypes for arrex
-	>>> typedlist(dtype=glm.vec4)
+>>> import typedlist.glm		# this is enabling glm dtypes for arrex
+>>> typedlist(dtype=glm.vec4)
 ```
 
 	
@@ -37,36 +37,36 @@ it can be a more complex type, from module `pyglm` for instance
 ### Use it as a list:
 
 ```python
-	>>> a = typedlist(dtype=vec3)
-	
-	# build from an iterable
-	>>> a = typedlist([], dtype=vec3)
-	
-	# append some data
-	>>> a.append(vec3(1,2,3))
-	
-	# extend with an iterable
-	>>> a.extend(vec3(i)  for i in range(5))
-	
-	>>> len(a)	# the current number of elements
-	6
-	
-	>>> a.owner	# the current data buffer
-	b'.........'
+>>> a = typedlist(dtype=vec3)
+
+# build from an iterable
+>>> a = typedlist([], dtype=vec3)
+
+# append some data
+>>> a.append(vec3(1,2,3))
+
+# extend with an iterable
+>>> a.extend(vec3(i)  for i in range(5))
+
+>>> len(a)	# the current number of elements
+6
+
+>>> a.owner	# the current data buffer
+b'.........'
 ```
 	
 ### Use it as a slice:
 
 ```python
-	>>> myslice = a[:5]		# no data is copied
-	typedlist(....)
+>>> myslice = a[:5]		# no data is copied
+typedlist(....)
 ```
 	
 ### Use it as a view on top of a random buffer
 
 ```python
-	>>> a = np.ones((6,3), dtype='f4')
-	>>> myslice = typedlist(a, dtype=vec3)
+>>> a = np.ones((6,3), dtype='f4')
+>>> myslice = typedlist(a, dtype=vec3)
 ```
 	
 ### buffer protocol
@@ -74,7 +74,7 @@ it can be a more complex type, from module `pyglm` for instance
 It does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy
 
 ```python
-	>>> np.array(typedlist([....]))
+>>> np.array(typedlist([....]))
 ```
 	
 	
@@ -84,17 +84,16 @@ Time performances comparison between `list`,  `numpy.ndarray`,  and `arrex.typed
 
 execution time (s) for 10k elements (dvec3)
 
-```
-set item
-  list:         2.31e-03
-  numpy:        8.29e-03
-  arrex:        2.29e-03  (3x faster then numpy)
+	set item
+	list:         2.31e-03
+	numpy:        8.29e-03
+	arrex:        2.29e-03  (3x faster then numpy)
 
-get item
-  list:         5.47e-04
-  numpy:        1.54e-03
-  arrex:        7.47e-04  (2x faster than numpy)
-```
+	get item
+	list:         5.47e-04
+	numpy:        1.54e-03
+	arrex:        7.47e-04  (2x faster than numpy)
+
 
 	
 ## Roadmap
