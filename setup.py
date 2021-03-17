@@ -1,4 +1,4 @@
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 import os
 
 try:
@@ -9,24 +9,29 @@ else:
 	cython_modules = cythonize(['arrex/_arrex.pyx'], annotate=True)
 
 setup(
-    name = 'arrex',
-    version = '0.1',
-    tests_require = [
-		'nprint>=0.1',
+	# package declaration
+	name = 'arrex',
+	version = '0.1',
+	tests_require = [
+		'pnprint>=1.0',
 		'pyglm>=1.2',
 		'numpy>=1.1',
 		],
-    packages = ["arrex"],
-    package_data = {
+	
+	# sources declaration
+	packages = ["arrex"],
+	package_data = {
 		"arrex": ['*.h', '*.c', '*.cpp', '*.pyx'],
 		'': ['COPYING', 'COPYING.LESSER', 'README'],
 		},
-    ext_modules = cython_modules,
-    
-    author = 'Jimy Byerley',
-    author_email = 'jimy.byerley@gmail.com',
-    url = 'https://github.com/jimy-byerley/arrex',
-    license = "GNU GPL v3",
-    description = "typed arrays using any custom type as element type",
+	ext_modules = cython_modules,
+	
+	# metadata for pypi
+	author = 'Jimy Byerley',
+	author_email = 'jimy.byerley@gmail.com',
+	url = 'https://github.com/jimy-byerley/arrex',
+	license = "GNU LGPL v3",
+	description = "typed arrays using any custom type as element type",
 	long_description = open('README.md').read(),
+	long_description_content_type = 'text/markdown',
 )
