@@ -1,5 +1,5 @@
 import glm
-import typedlist as nx
+import arrex as nx
 from nprint import nprint
 
 nx.declare(glm.vec4, None, 'ffff')
