@@ -7,6 +7,7 @@ from cpython.buffer cimport PyBUF_SIMPLE, PyBUF_ND, PyBUF_FORMAT, PyObject_Check
 from libc.string cimport memcpy, memmove
 
 import struct
+from pickle import PickleBuffer
 
 cdef extern from "Python.h":
 	char *PyBytes_AsString(object)
@@ -425,6 +426,18 @@ cdef class typedlist:
 			text += repr(item)
 		text += '])'
 		return text
+		
+	def __copy__(self):
+		return type(self)(self.owner, self.dtype)
+		
+	def __deepcopy__(self, memo):
+		return type(self)(bytes(self.owner), self.dtype)
+		
+	def __reduce_ex__(self, protocol):
+		if protocol >= 5:
+			return type(self), (PickleBuffer(self.owner), self.dtype)
+		else:
+			return type(self), (bytearray(self.owner), self.dtype)
 		
 	def __getbuffer__(self, Py_buffer *view, int flags):
 		cdef arrayexposer exp = arrayexposer.__new__(arrayexposer)

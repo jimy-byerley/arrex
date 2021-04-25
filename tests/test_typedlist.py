@@ -1,5 +1,5 @@
 import glm
-import typedlist as nx
+import arrex as nx
 from nprint import nprint
 
 nx.declare(glm.vec4, None, 'ffff')
@@ -66,5 +66,16 @@ array += array[-5:]
 nprint(array)
 nprint(array + array[-5:])
 nprint(array[:5] + array[-5:])
+
+from copy import copy, deepcopy
+import pickle
+
+array = array[:3]
+nprint('copy', copy(array))
+nprint('deepcopy', deepcopy(array))
+
+reloaded = pickle.loads(pickle.dumps(array))
+assert reloaded == array
+assert reloaded.owner is array.owner
 
 
