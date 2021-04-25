@@ -114,6 +114,17 @@ cdef class typedlist:
 		
 		This is a dynamically sized, borrowing array, which mean the internal buffer of data is reallocated on insertion, but can be used to view and extract from any buffer.
 		
+		Methods added to the signature of list:
+		
+			reserve(n)            reallocate if necessary to make sure n elements can 
+			                      be inserted without reallocation
+			capacity() -> int     return the current number of elements that can be 
+			                      contained without reallocation
+			shrink()              shorten the allocated memory to fit the current content
+			
+			also the slices do not copy the content
+		
+		
 		Use it as a list:
 		
 			>>> a = typedlist(dtype=vec3)
