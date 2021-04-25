@@ -75,7 +75,6 @@ nprint('copy', copy(array))
 nprint('deepcopy', deepcopy(array))
 
 reloaded = pickle.loads(pickle.dumps(array))
-assert reloaded == array
-assert reloaded.owner is array.owner
+assert list(reloaded) == list(array)
 
 

@@ -10,6 +10,7 @@ import struct
 from pickle import PickleBuffer
 
 cdef extern from "Python.h":
+	object PyBytes_FromStringAndSize(const char *v, Py_ssize_t len)
 	char *PyBytes_AsString(object)
 	char *PyBytes_AS_STRING(object)
 	int PySlice_Unpack(object slice, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t *step)
@@ -400,6 +401,7 @@ cdef class typedlist:
 			view = typedlist.__new__(typedlist)
 			view.ptr = self.ptr + start*self.dsize
 			view.size = (stop-start)*self.dsize
+			view.allocated = view.size
 			view.owner = self.owner
 			view.dtype = self.dtype
 			view.dsize = self.dsize
@@ -439,16 +441,45 @@ cdef class typedlist:
 		return text
 		
 	def __copy__(self):
-		return type(self)(self.owner, self.dtype)
+		''' shallow copy will create a copy of that array referencing the same buffer '''
+		return self[:]
 		
 	def __deepcopy__(self, memo):
-		return type(self)(bytes(self.owner), self.dtype)
+		''' deep recursive copy,  will duplicate the underlying buffer '''
+		cdef typedlist new = type(self)(bytes(self.owner), self.dtype)
+		new.ptr = self.ptr
+		new.size = self.size
+		return new
 		
 	def __reduce_ex__(self, protocol):
+		''' serialization protocol '''
+		cdef Py_buffer view
+			
 		if protocol >= 5:
-			return type(self), (PickleBuffer(self.owner), self.dtype)
+			assign_buffer_obj(&view, None)
+			PyObject_GetBuffer(self.owner, &view, PyBUF_SIMPLE)
+			return self._rebuild, (
+						PickleBuffer(self.owner), 
+						self.dtype, 
+						self.ptr-view.buf, 
+						self.size,
+						), 	None
 		else:
-			return type(self), (bytearray(self.owner), self.dtype)
+			return self._rebuild, (
+						PyBytes_FromStringAndSize(<char*>self.ptr, self.size), 
+						self.dtype,
+						0, 
+						self.size,
+						)
+	
+	@classmethod
+	def _rebuild(cls, owner, dtype, size_t start, size_t size):
+		new = typedlist(owner, dtype)
+		assert start <= size
+		assert size <= new.size
+		new.ptr = new.ptr + start
+		new.size = size
+		return new
 		
 	def __getbuffer__(self, Py_buffer *view, int flags):
 		cdef arrayexposer exp = arrayexposer.__new__(arrayexposer)
