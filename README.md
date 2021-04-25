@@ -20,14 +20,14 @@ myclass(...)
 in that example, `myclass` can be a primitive numpy type, like `np.float64`
 
 ```python
->>> import typedlist.numpy		# this is enabling numpy dtypes for arrex
+>>> import arrex.numpy		# this is enabling numpy dtypes for arrex
 >>> typedlist(dtype=np.float64)
 ```
 	
 it can be a more complex type, from module `pyglm` for instance
 
 ```python
->>> import typedlist.glm		# this is enabling glm dtypes for arrex
+>>> import arrex.glm		# this is enabling glm dtypes for arrex
 >>> typedlist(dtype=glm.vec4)
 ```
 
@@ -71,7 +71,7 @@ typedlist(....)
 	
 ### buffer protocol
 
-It does support the buffer protocol, so it can be converted in a great variety of well known arrays, even without any copy
+It does support the buffer protocol, so it can be converted into a great variety of well known arrays, even without any copy
 
 ```python
 >>> np.array(typedlist([....]))
@@ -85,14 +85,14 @@ Time performances comparison between `list`,  `numpy.ndarray`,  and `arrex.typed
 execution time (s) for 10k elements (dvec3)
 
 	set item
-	list:         2.31e-03
-	numpy:        8.29e-03
-	arrex:        2.29e-03  (3x faster then numpy)
+		list:         2.31e-03
+		numpy:        8.29e-03
+		arrex:        2.29e-03  (3x faster than numpy)
 
 	get item
-	list:         5.47e-04
-	numpy:        1.54e-03
-	arrex:        7.47e-04  (2x faster than numpy)
+		list:         5.47e-04
+		numpy:        1.54e-03
+		arrex:        7.47e-04  (2x faster than numpy)
 
 
 	
