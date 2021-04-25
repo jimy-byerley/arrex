@@ -4,7 +4,7 @@ cimport cython
 from cpython cimport PyObject, PyTypeObject, Py_buffer, PyObject_Length, Py_INCREF
 from cpython.mem cimport PyMem_Malloc, PyMem_Realloc, PyMem_Free
 from cpython.buffer cimport PyBUF_SIMPLE, PyBUF_ND, PyBUF_FORMAT, PyObject_CheckBuffer, PyObject_GetBuffer, PyBuffer_Release
-from libc.string cimport memcpy, memmove
+from libc.string cimport memcpy, memmove, memcmp
 
 import struct
 from pickle import PickleBuffer
@@ -440,13 +440,20 @@ cdef class typedlist:
 		text += '])'
 		return text
 		
+	def __eq__(self, other):
+		''' return True if other is a typedlist and its buffer byte contents is the same '''
+		if not isinstance(other, typedlist):	return False
+		cdef typedlist o = other
+		if self.size != o.size:		return False
+		return 0 == memcmp(self.ptr, o.ptr, self.size)
+		
 	def __copy__(self):
 		''' shallow copy will create a copy of that array referencing the same buffer '''
 		return self[:]
 		
 	def __deepcopy__(self, memo):
 		''' deep recursive copy,  will duplicate the underlying buffer '''
-		cdef typedlist new = type(self)(bytes(self.owner), self.dtype)
+		cdef typedlist new = typedlist(bytes(self.owner), self.dtype)
 		new.ptr = self.ptr
 		new.size = self.size
 		return new
