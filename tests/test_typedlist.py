@@ -11,6 +11,11 @@ n = 20
 print('\ncreating')
 array = nx.typedlist([glm.dvec4(-2,-3,-4,-5)], dtype=glm.dvec4)
 
+print('\nfull')
+a2 = nx.typedlist.full(glm.vec4(2), 4)
+assert len(a2) == 4
+assert a2[-1] == glm.vec4(2)
+
 print('\nreserving')
 array.reserve(1)
 
