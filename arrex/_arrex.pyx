@@ -15,6 +15,7 @@ cdef extern from "Python.h":
 	char *PyBytes_AS_STRING(object)
 	int PySlice_Unpack(object slice, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t *step)
 	Py_ssize_t PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t step)
+	Py_ssize_t PyObject_LengthHint(object o, Py_ssize_t default)
 
 
 # this is to avoid the issue around Py_buffer.obj = pyobject, which in cython would try to decref the initially NULL value
@@ -50,7 +51,9 @@ cpdef into(obj, target):
 	return converter(obj)
 	
 cpdef declare(dtype, constructor=None, format=None):
-	''' declare a new dtype 
+	''' declaire(dtype, constructor=None, format=None)
+	
+		declare a new dtype 
 	
 		:constructor:	
 		
@@ -179,29 +182,69 @@ cdef class typedlist:
 	cdef readonly object owner
 	
 
-	def __init__(self, iterable=None, type dtype=None, size_t reserve=0):	
+	def __init__(self, iterable=None, type dtype=None, size_t reserve=0):
+		# look at the type of the first element
+		first = None
+		if not dtype:
+			try:
+				if hasattr(iterable, '__next__'):
+					first = next(iterable)
+					dtype = type(first)
+				elif hasattr(iterable, '__iter__'):
+					dtype = type(next(iter(iterable)))
+			except StopIteration:
+				raise ValueError('iterable is empty')
+	
+		# get the dtype declaration
 		cdef tuple decl = _declared.get(dtype)
 		if decl is None:
 			raise TypeError('dtype must be packed and declared in dict dynarray.declared')
 		
+		# initialize the internal structure
 		self.ptr = NULL
 		self.size = 0
 		self.allocated = 0
 		self.dtype = dtype
 		self.dsize = decl[2]
 		
+		# borrow a buffer
 		if PyObject_CheckBuffer(iterable):
 			self._use(iterable)
 			self.size = self.allocated
 			if reserve:
 				self._reallocate(reserve * self.dsize)
-				
+		# fill with an iterable
 		else:
 			if reserve:
 				self._reallocate(reserve * self.dsize)
 			if iterable is not None:
+				if first is not None:
+					self.append(first)
 				self.extend(iterable)
+				
+	@staticmethod
+	def full(value, size):
+		''' full(value, size)
 		
+			create a new typedlist with the given `size`, all elements initialized to `value`. 
+		'''
+		cdef size_t i
+		cdef typedlist array = typedlist(dtype=type(value), reserve=size)
+		for i in range(size):
+			array._setitem(array.ptr + i*array.dsize, value)
+		array.size = array.allocated
+		return array
+		
+	@staticmethod
+	def empty(dtype, size):
+		''' empty(dtype, size)
+		
+			create a new typedlist with the given `size` and unitialized elements of type `dtype`
+		'''
+		cdef typedlist array = typedlist(dtype=dtype, reserve=size)
+		array.size = array.allocated
+		return array
+	
 	# convenient internal functions
 	
 	cdef int _use(self, buffer) except -1:
@@ -233,10 +276,10 @@ cdef class typedlist:
 		
 	cdef Py_ssize_t _index(self, index) except -1:
 		''' return a C index (0 < i < l) from a python object '''
-		cdef size_t i = index
-		cdef size_t l = self._len()
+		cdef Py_ssize_t i = index
+		cdef Py_ssize_t l = self._len()
 		if i < 0:	i += l
-		if i < 0 or i > l:	
+		if i < 0 or i >= l:	
 			raise IndexError('index out of range')
 		return i
 		
@@ -304,7 +347,10 @@ cdef class typedlist:
 		self._setitem(start, value)
 		self.size += self.dsize
 		
-	cpdef void extend(self, other):
+	def clear(self):
+		self.size = 0
+		
+	cpdef int extend(self, other) except *:
 		''' append all elements from the other array '''
 		cdef Py_buffer view
 		cdef Py_ssize_t l
@@ -321,7 +367,7 @@ cdef class typedlist:
 			PyBuffer_Release(&view)
 			
 		else:
-			l = PyObject_Length(other)
+			l = PyObject_LengthHint(other, 0)
 			if l >= 0 and l*self.dsize > self.allocated - self.size:
 				self._reallocate(max(2*self.size, self.size + l*self.dsize))
 			for o in other:
@@ -358,7 +404,13 @@ cdef class typedlist:
 			
 		else:
 			return NotImplemented
-		
+			
+	def __mul__(self, n):
+		if isinstance(n, int):
+			return typedlist(bytes(self.owner)*n, dtype=n)
+		else:
+			return NotImplemented
+	
 	def capacity(self):
 		''' capacity()
 		
