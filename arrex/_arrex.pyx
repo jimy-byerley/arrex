@@ -32,10 +32,8 @@ cdef extern from *:
 
 
 
-
-
 # dictionnary of compatible packed types
-cdef dict _declared = {}	# {type: (constructor, format, dsize)}
+cdef dict _declared = {}	# {type: (format, dsize, converter)}
 
 
 cpdef into(obj, target):
@@ -193,7 +191,7 @@ cdef class typedlist:
 				elif hasattr(iterable, '__iter__'):
 					dtype = type(next(iter(iterable)))
 			except StopIteration:
-				raise ValueError('iterable is empty')
+				raise ValueError('iterable is empty, dtype must be specified')
 	
 		# get the dtype declaration
 		cdef tuple decl = _declared.get(dtype)
@@ -407,7 +405,7 @@ cdef class typedlist:
 			
 	def __mul__(self, n):
 		if isinstance(n, int):
-			return typedlist(bytes(self.owner)*n, dtype=n)
+			return typedlist(bytes(self.owner)*n, dtype=self.dtype)
 		else:
 			return NotImplemented
 	
@@ -504,14 +502,17 @@ cdef class typedlist:
 		return self[:]
 		
 	def __deepcopy__(self, memo):
-		''' deep recursive copy,  will duplicate the underlying buffer '''
-		cdef typedlist new = typedlist(bytes(self.owner), self.dtype)
-		new.ptr = self.ptr
+		''' deep recursive copy,  will duplicate the appropriate portion of the underlying buffer '''
+		cdef typedlist new = typedlist(dtype=self.dtype)
+		new._reallocate(self.size)
+		memcpy(new.ptr, self.ptr, self.size)
 		new.size = self.size
 		return new
 		
 	def __reduce_ex__(self, protocol):
-		''' serialization protocol '''
+		''' serialization protocol 
+			if `protocol>=5`, data will not be copied if shared accross threads
+		'''
 		cdef Py_buffer view
 			
 		if protocol >= 5:
@@ -533,6 +534,7 @@ cdef class typedlist:
 	
 	@classmethod
 	def _rebuild(cls, owner, dtype, size_t start, size_t size):
+		''' only for the serialization protocol '''
 		new = typedlist(owner, dtype)
 		assert start <= size
 		assert size <= new.size
@@ -572,6 +574,25 @@ cdef class typedlist:
 		
 	def __releasebuffer__(self, Py_buffer *view):
 		pass
+		
+	"""
+	def convert(self, dtype):
+		'''
+			typedlist(... dtype='f4 xx u2') .convert('f8 u1 x')
+		'''
+		pass
+		
+	def cast(self, dtype):
+		''' Reuse the same memory, but consider it to be of the new dtype instead.
+			The new dtype must be a multiple or a fraction of the current one, the factor will change the array shape
+		'''
+		pass
+		
+	def sub(self, key):
+		''' Return an array of the components of the currrent dtype at `key` 
+		'''
+		pass
+	"""
 			
 			
 cdef class arrayexposer:
@@ -597,3 +618,42 @@ cdef class arrayiter:
 		item = self.array._getitem(self.array.ptr + self.position)
 		self.position += self.array.dsize
 		return item
+		
+"""
+cdef class typedarray:
+	cdef void *ptr
+	cdef size_t *shape
+	cdef size_t *strides
+	
+	cdef type dtype
+	cdef size_t dsize
+	
+	cdef readonly object owner
+	
+
+def merge(*args) -> typedarray:
+	''' merge the arrays by merging the dtype.
+		requires all the arrays to share the same shape
+	'''
+	pass
+	
+def concat(*args, axis=0) -> typedarray:
+	''' concatenate the arrays, placing them one after the other.
+		requires all the arrays to share the same dtype
+	'''
+	pass
+	
+cdef dict _ufuncs = {}	# {(operation, *dtypes): func}
+def vect(func) -> callable:
+	''' return a callable executing the given function on arrays of its initial arguments 
+	
+			# use it in expressions
+			>>> vect(sin) ([x1, x2, x3])
+	
+			# use it as a decorator
+			>>> @vect
+			... def my_function_to_vectorize(...):
+			... 	# do something
+	'''
+	pass
+"""
