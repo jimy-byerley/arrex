@@ -1,8 +1,10 @@
 import glm
 from . import _arrex
 from struct import calcsize
+import ctypes
 
-native = 8	# for 64bit machines only
+# machine native operation size
+native = ctypes.sizeof(ctypes.c_size_t)
 
 for prec, fmt in (
 			('u8', 'B'), ('i8', 'b'), ('u16','H'), ('i16','h'), ('u64','Q'), ('i64','q'), 
