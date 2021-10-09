@@ -16,6 +16,7 @@ cdef extern from "Python.h":
 	int PySlice_Unpack(object slice, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t *step)
 	Py_ssize_t PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t step)
 	Py_ssize_t PyObject_LengthHint(object o, Py_ssize_t default)
+	int PyNumber_Check(PyObject *o)
 
 
 # this is to avoid the issue around Py_buffer.obj = pyobject, which in cython would try to decref the initially NULL value
@@ -187,11 +188,15 @@ cdef class typedlist:
 		first = None
 		if not dtype:
 			try:
-				if hasattr(iterable, '__next__'):
+				if isinstance(iterable, type) and not dtype:
+					iterable, dtype = None, iterable
+				elif hasattr(iterable, '__next__'):
 					first = next(iterable)
 					dtype = type(first)
 				elif hasattr(iterable, '__iter__'):
 					dtype = type(next(iter(iterable)))
+				else:
+					raise TypeError('dtype must be provided when it cannot be deduced from the iterable')
 			except StopIteration:
 				raise ValueError('iterable is empty')
 	
@@ -228,7 +233,7 @@ cdef class typedlist:
 		
 			create a new typedlist with the given `size`, all elements initialized to `value`. 
 		'''
-		cdef size_t i
+		cdef ssize_t i
 		cdef typedlist array = typedlist(dtype=type(value), reserve=size)
 		for i in range(size):
 			array._setitem(array.ptr + i*array.dsize, value)
@@ -287,13 +292,16 @@ cdef class typedlist:
 		''' build a python object a pointer to the data it must contain '''
 		#item = PyType_GenericAlloc(<PyTypeObject*><PyObject*>self.dtype, 0)
 		item = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
-		memcpy((<void*><PyObject*>item) + (<PyTypeObject*>self.dtype).tp_basicsize - self.dsize, ptr, self.dsize)
+		memcpy(self._raw(item), ptr, self.dsize)
 		return item
 		
 	cdef void _setitem(self, void *ptr, value):
 		''' dump the object data at the pointer location '''
-		memcpy(ptr, (<void*><PyObject*> value) + (<PyTypeObject*>self.dtype).tp_basicsize - self.dsize, self.dsize)
+		memcpy(ptr, self._raw(value), self.dsize)
 		
+	cdef void * _raw(self, obj):
+		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.dtype).tp_basicsize - self.dsize
+	
 	
 	# python interface
 	
@@ -406,8 +414,9 @@ cdef class typedlist:
 			return NotImplemented
 			
 	def __mul__(self, n):
-		if isinstance(n, int):
-			return typedlist(bytes(self.owner)*n, dtype=n)
+		#if isinstance(n, int):
+		if PyNumber_Check(<PyObject*>n):
+			return typedlist(bytes(self)*n, dtype=self.dtype)
 		else:
 			return NotImplemented
 	
@@ -440,7 +449,8 @@ cdef class typedlist:
 		cdef typedlist view
 		cdef Py_ssize_t start, stop, step
 		
-		if isinstance(index, int):
+		#if isinstance(index, int):
+		if PyNumber_Check(<PyObject*>index):
 			return self._getitem(self.ptr + self._index(index)*self.dsize)
 		
 		elif isinstance(index, slice):
@@ -460,12 +470,47 @@ cdef class typedlist:
 			return view
 		
 		else:
-			raise IndexError('index must be int')
+			raise IndexError('index must be int or slice')
 			
 	def __setitem__(self, index, value):
-		if isinstance(index, int):
+		cdef Py_buffer view
+		cdef Py_ssize_t start, stop, step
+		
+		#if isinstance(index, int):
+		if PyNumber_Check(<PyObject*>index):
 			value = into(value, self.dtype)
 			self._setitem(self.ptr + self._index(index)*self.dsize, value)
+			
+		elif isinstance(index, slice):
+			if PySlice_Unpack(index, &start, &stop, &step):
+				raise IndexError('incorrect slice')
+			if step != 1:
+				raise IndexError('slice step is not supported')
+			PySlice_AdjustIndices(self._len(), &start, &stop, step)
+			
+			if PyObject_CheckBuffer(value):
+				assign_buffer_obj(&view, None)
+				PyObject_GetBuffer(value, &view, PyBUF_SIMPLE)
+				start *= self.dsize
+				stop *= self.dsize
+				
+				if view.len != stop-start:
+					if view.len % self.dsize:
+						PyBuffer_Release(&view)
+						raise TypeError('the given buffer must have a size multiple of dtype size')
+					if view.len - (stop-start) >  (<ssize_t> self.allocated):
+						self._reallocate(self.size+view.len)
+					memmove(self.ptr+view.len, self.ptr+stop, self.size-stop)
+				
+				memcpy(self.ptr+start, view.buf, view.len)
+				
+				PyBuffer_Release(&view)
+				
+			elif hasattr(value, '__iter__'):
+				self[index] = typedlist(value, self.dtype)
+				
+			else:
+				raise IndexError('the assigned value must be a buffer or an iterable')
 			
 		else:
 			raise IndexError('index must be int')
@@ -572,6 +617,48 @@ cdef class typedlist:
 		
 	def __releasebuffer__(self, Py_buffer *view):
 		pass
+		
+	def reverse(self):
+		''' reverse the order of elementd contained '''
+		cdef void *temp
+		cdef void *first
+		cdef void *last
+		cdef size_t i
+		
+		temp = PyMem_Malloc(self.dsize)
+		first = self.ptr
+		last = self.ptr + self.size - self.dsize
+		while first != last:
+			memcpy(temp, first, self.dsize)
+			memcpy(first, last, self.dsize)
+			memcpy(last, temp, self.dsize)
+			first += self.dsize
+			last -= self.dsize
+		PyMem_Free(temp)
+		
+	def index(self, value):
+		''' return the index of the first element binarily equal to the given one '''
+		# TODO: decide whether it is acceptable or not, to assume that elements are equals <=> their byte representation is
+		cdef size_t i, j
+		cdef char *data
+		cdef char *val
+		if not isinstance(value, self.dtype):
+			raise TypeError('expected a value of the same dtype')
+			
+		data = <char*> self.ptr
+		val = <char*> self._raw(value)
+		
+		i = 0
+		while i < self.size:
+			j = 0
+			while data[i+j] == val[j] and j < self.dsize:
+				j += 1
+			if j == self.dsize:
+				return i//self.dsize
+			i += self.dsize
+				
+		raise IndexError('value not found')
+			
 			
 			
 cdef class arrayexposer:
