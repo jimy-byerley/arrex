@@ -76,14 +76,14 @@ for i in range(n):
 print('  arrex:\t{:.4e}'.format(perf_counter()-start))
 
 
-print('\nconxatenation')
+print('\nconcatenation')
 
 start = perf_counter()
 poa + poa
 print('  list:\t{:.4e}'.format(perf_counter()-start))
 
 start = perf_counter()
-npa + npa
+np.concatenate([npa, npa])
 print('  numpy:\t{:.4e}'.format(perf_counter()-start))
 
 start = perf_counter()
