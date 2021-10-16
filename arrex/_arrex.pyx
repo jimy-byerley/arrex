@@ -32,8 +32,94 @@ cdef extern from *:
 
 
 
+ctypedef int (*c_pack_t) (PyObject*, PyObject*, void*)
+ctypedef PyObject* (*c_unpack_t) (PyObject*, void*)
 
-
+cdef class dtype:
+	cdef public size_t dsize
+	cdef c_pack_t c_pack
+	cdef c_unpack_t c_unpack
+	cdef public str layout
+	cdef public str name
+	cdef dict __dict__
+	
+	@staticmethod
+	def from_class(type):
+		layout = getattr(type, '__packlayout__')
+		dsize = getattr(type, '__packsize__')
+		if not dsize:
+			dsize = struct.calcsize(layout)
+		if not dsize:
+			raise ValueError('dsize must not be null, __packlayout__ or __packsize__ must be correctly defined in the given type')
+		return dtype.from_functions(dsize, type.__bytes__, type.frombytes, layout)
+	
+	@staticmethod
+	def from_functions(dsize, pack, unpack, layout=None, name=None):
+		cdef dtype self = dtype()
+		if not callable(pack) or not callable(unpack):
+			raise TypeError('pack and unpack must be callables')
+		self.dsize
+		self.c_pack = <c_pack_t> self._func_pack
+		self.c_unpack = <c_unpack_t> self._func_unpack
+		self.layout = layout
+		self.name = name
+		self.pack = pack
+		self.unpack = unpack
+		
+	cdef int _func_pack(self, object obj, void* place) except +:
+		packed = self.pack(<object>obj)
+		if not isinstance(packed, bytes):
+			raise TypeError('pack must provide a bytes object')
+		if len(packed) < self.dsize:
+			raise ValueError('the dumped bytes length {} does not match dsize {}'.format(len(packed), self.dsize))
+		
+		memcpy(place, PyBytes_AsString(obj), self.dsize)
+	
+	cdef object _func_unpack(self, void* place):
+		return self.unpack(PyBytes_FromStringAndSize(<char*>place, self.dsize))
+		
+		
+	@staticmethod
+	def from_extension(ext, layout=None):
+		cdef dtype self = dtype()
+		if not isinstance(ext, type):
+			raise TypeError('dtype must be a type')
+		#if constructor is not None and not callable(constructor):
+			#raise TypeError('constructor must be a callable returning an instance of dtype')
+			
+		packsize = (<PyTypeObject*> ext).tp_basicsize - sizeof(_head)
+		if layout is not None:
+			if isinstance(layout, str):
+				layout = layout.encode()
+			elif not isinstance(layout, bytes):
+				layout = bytes(layout)
+			
+			fmtsize = struct.calcsize(layout)
+			if packsize < fmtsize:
+				raise ValueError('format describes a too big structure for the given dtype')
+		else:
+			fmtsize = 0
+		
+		self.dsize = fmtsize or packsize
+		if not self.dsize:
+			raise TypeError('dsize cannot be 0')
+		
+		self.c_pack = <c_pack_t> self._ext_pack
+		self.c_unpack = <c_unpack_t> self._ext_unpack
+		self.layout = layout
+		self.name = dtype.__name__
+		self.type = dtype
+		
+	cdef void * _raw(self, obj):
+		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.dtype).tp_basicsize - self.dsize
+	
+	cdef int _ext_pack(self, object obj, void* place) except +:
+		memcpy(place, self._raw(obj), self.dsize)
+		
+	cdef object _ext_unpack(self, void* place):
+		new = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
+		memcpy(self._raw(new), place, self.dsize)
+		return new
 
 # dictionnary of compatible packed types
 cdef dict _declared = {}	# {type: (constructor, format, dsize)}
