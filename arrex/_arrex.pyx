@@ -123,7 +123,7 @@ cdef class DTypeFunctions(DType):
 		packed = self.pack(obj)
 		if not isinstance(packed, bytes):
 			raise TypeError('pack must provide a bytes object')
-		if len(packed) < self.dsize:
+		if len(packed) < <ssize_t> self.dsize:
 			raise ValueError('the dumped bytes length {} does not match dsize {}'.format(len(packed), self.dtype.dsize))
 		
 		memcpy(place, PyBytes_AsString(obj), self.dsize)
@@ -132,8 +132,23 @@ cdef class DTypeFunctions(DType):
 		return self.unpack(PyBytes_FromStringAndSize(<char*>place, self.dsize))
 		
 		
+	def __reduce_ex__(self, protocol):
+		''' allow serialization of the dtype with the array (particularly useful for anonymous dtypes) '''
+		return type(self), (self.dsize, self.pack, self.unpack, self.layout, self.constructor)
+		
+		
 cdef class DTypeExtension(DType):
-	''' create a dtype for a C extension type which is already packed and which internal data can directly be copied '''
+	''' create a dtype for a C extension type.
+	
+		This is the most efficient kind of dtype in term of operating time.
+		
+		In order to put an extension object into an array, it satisfy the following conditions:
+		
+		- have fixed size known at the time of dtype creation (so any array element has the same)
+		- contain only byte copiable data (so nothing particular is done when copying/destroying the objects)
+		
+		WARNING:  These conditions MUST be ensured by the user when declaring an extension type as a dtype
+	'''
 	cdef public type type
 	
 	def __init__(self, type ext, layout=None, constructor=None):
@@ -177,6 +192,10 @@ cdef class DTypeExtension(DType):
 		new = (<PyTypeObject*>self.type).tp_new(self.type, _empty, None)
 		memcpy(self._raw(new), place, self.dsize)
 		return new
+		
+	def __reduce_ex__(self, protocol):
+		''' allow serialization of the dtype with the array (particularly useful for anonymous dtypes) '''
+		return type(self), (self.type, self.layout, self.constructor)
 
 		
 		
@@ -187,7 +206,7 @@ cdef dict _declared = {}	# {python type: dtype}
 
 cpdef into(obj, DType target):
 	''' convert an object into the target type, using the declared constructor '''
-	if type(obj) is target:		return obj
+	if type(obj) is target.key:		return obj
 	
 	if target.constructor is None:	
 		raise TypeError('cannot implicitely convert {} into {}'.format(
@@ -380,7 +399,6 @@ cdef class typedlist:
 		self.allocated = view.len
 		self.owner = buffer
 		PyBuffer_Release(&view)
-		return 0
 		
 	cdef int _reallocate(self, size_t size) except -1:
 		lastowner = self.owner
@@ -391,9 +409,8 @@ cdef class typedlist:
 		self.ptr = PyBytes_AS_STRING(self.owner)
 		self.allocated = size
 		
-		memcpy(self.ptr, lastptr, self.size)
 		self.size = min(size, self.size)
-		return 0
+		memcpy(self.ptr, lastptr, self.size)
 		
 	cdef size_t _len(self):
 		return self.size // self.dtype.dsize
@@ -684,7 +701,7 @@ cdef class typedlist:
 		view.ndim = 1
 		
 		if flags & PyBUF_FORMAT:
-			fmt = _declared[self.dtype][1]
+			fmt = self.dtype.layout
 			if fmt is not None:
 				view.itemsize = self.dtype.dsize
 				view.format = PyBytes_AS_STRING(fmt)
