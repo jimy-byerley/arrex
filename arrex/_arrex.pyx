@@ -32,8 +32,8 @@ cdef extern from *:
 
 
 
-ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*)
-ctypedef PyObject* (*c_unpack_t) (PyObject*, void*)
+ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*) except -1
+ctypedef PyObject* (*c_unpack_t) (PyObject*, void*) except NULL
 
 cdef class DType:
 	''' base class for a dtype, But you should use on of its specialization instead '''
@@ -42,7 +42,6 @@ cdef class DType:
 	cdef c_unpack_t c_unpack
 	cdef public bytes layout
 	cdef public object key
-	cdef public constructor
 	
 	def __init__(self):
 		raise TypeError('DType must not be instantiated, use one of its subclasses instead.')
@@ -56,7 +55,7 @@ cdef class DType:
 			return object.__repr__(self)
 	
 
-def DTypeClass(type, constructor=None):
+def DTypeClass(type):
 	''' create a dtype from a python class (can be a pure python class) 
 		
 		the given type must have the following attributes:
@@ -87,7 +86,7 @@ def DTypeClass(type, constructor=None):
 	if not unpack:
 		raise TypeError("the given type must have a method 'frombytes', 'from_bytes', or 'from_buffer'")
 	
-	return DTypeFunctions(dsize, pack, unpack, layout, constructor)
+	return DTypeFunctions(dsize, pack, unpack, layout)
 	
 
 cdef class DTypeFunctions(DType):
@@ -95,7 +94,7 @@ cdef class DTypeFunctions(DType):
 	cdef public object pack
 	cdef public object unpack
 	
-	def __init__(self, dsize, pack, unpack, layout=None, constructor=None):
+	def __init__(self, dsize, pack, unpack, layout=None):
 		if not callable(pack) or not callable(unpack):
 			raise TypeError('pack and unpack must be callables')
 			
@@ -115,7 +114,6 @@ cdef class DTypeFunctions(DType):
 		self.c_pack = <c_pack_t> self._func_pack
 		self.c_unpack = <c_unpack_t> self._func_unpack
 		self.layout = layout
-		self.constructor = constructor
 		self.pack = pack
 		self.unpack = unpack
 		
@@ -126,7 +124,7 @@ cdef class DTypeFunctions(DType):
 		if len(packed) < <ssize_t> self.dsize:
 			raise ValueError('the dumped bytes length {} does not match dsize {}'.format(len(packed), self.dtype.dsize))
 		
-		memcpy(place, PyBytes_AsString(obj), self.dsize)
+		memcpy(place, PyBytes_AsString(packed), self.dsize)
 	
 	cdef object _func_unpack(self, void* place):
 		return self.unpack(PyBytes_FromStringAndSize(<char*>place, self.dsize))
@@ -150,6 +148,7 @@ cdef class DTypeExtension(DType):
 		WARNING:  These conditions MUST be ensured by the user when declaring an extension type as a dtype
 	'''
 	cdef public type type
+	cdef public object constructor
 	
 	def __init__(self, type ext, layout=None, constructor=None):
 		cdef ssize_t fmtsize, packsize
@@ -179,13 +178,21 @@ cdef class DTypeExtension(DType):
 		self.c_pack = <c_pack_t> self._ext_pack
 		self.c_unpack = <c_unpack_t> self._ext_unpack
 		self.layout = layout
-		self.constructor = constructor
 		self.type = ext
+		self.constructor = constructor
 		
 	cdef void * _raw(self, obj):
 		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
 	
 	cdef int _ext_pack(self, void* place, object obj) except -1:
+		if type(obj) is not self.type:
+			if self.constructor is not None:
+				obj = self.constructor(obj)
+			else:
+				raise TypeError('cannot implicitely convert {} into {}'.format(
+										type(obj).__name__, 
+										repr(self),
+										))
 		memcpy(place, self._raw(obj), self.dsize)
 		
 	cdef object _ext_unpack(self, void* place):
@@ -202,25 +209,14 @@ cdef class DTypeExtension(DType):
 
 # dictionnary of compatible packed types
 cdef dict _declared = {}	# {python type: dtype}
-
-
-cpdef into(obj, DType target):
-	''' convert an object into the target type, using the declared constructor '''
-	if type(obj) is target.key:		return obj
-	
-	if target.constructor is None:	
-		raise TypeError('cannot implicitely convert {} into {}'.format(
-								type(obj).__name__, 
-								target.__name__,
-								))
-	return target.constructor(obj)
 	
 cpdef declare(key, DType dtype):
 	''' declare(dtype, constructor=None, format=None)
 	
 		declare a new dtype 
 	'''
-	dtype.key = key
+	if not dtype.key:	
+		dtype.key = key
 	_declared[key] = dtype
 	
 def declared(key):
@@ -439,13 +435,11 @@ cdef class typedlist:
 		if asked > self.allocated:
 			self._reallocate(asked)
 	
-	cpdef void append(self, value):
+	cpdef int append(self, value) except -1:
 		''' append the given object at the end of the array
 		
 			if there is not enough allocated memory, reallocate enough to amortize the realocation time over the multiple appends
-		'''
-		value = into(value, self.dtype)
-		
+		'''		
 		if self.allocated - self.size < self.dtype.dsize:
 			self._reallocate(self.allocated*2 or self.dtype.dsize)
 		
@@ -465,7 +459,6 @@ cdef class typedlist:
 		
 	def insert(self, index, value):
 		''' insert value at index '''
-		value = into(value, self.dtype)
 		cdef size_t i = self._index(index)
 		
 		if self.allocated - self.size < self.dtype.dsize:
@@ -590,7 +583,6 @@ cdef class typedlist:
 		
 		#if isinstance(index, int):
 		if PyNumber_Check(<PyObject*>index):
-			value = into(value, self.dtype)
 			self._setitem(self.ptr + self._index(index)*self.dtype.dsize, value)
 			
 		elif isinstance(index, slice):
@@ -747,7 +739,6 @@ cdef class typedlist:
 		cdef size_t i, j
 		cdef char *data
 		cdef char *val
-		value = into(value, self.dtype)
 			
 		data = <char*> self.ptr
 		val = <char*> PyMem_Malloc(self.dtype.dsize)
