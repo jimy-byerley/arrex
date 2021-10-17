@@ -4,9 +4,12 @@ import os
 try:
 	from Cython.Build import cythonize
 except ImportError:
-	cython_modules = [Extension('arrex._arrex', ['arrex/_arrex.c'])]
+	cython_modules = [
+				Extension('arrex._arrex', ['arrex/_arrex.c']),
+				Extension('arrex.numbers', ['arrex/numbers.c']),
+				]
 else:
-	cython_modules = cythonize(['arrex/_arrex.pyx'], annotate=True)
+	cython_modules = cythonize(['arrex/_arrex.pyx', 'arrex/numbers.pyx'], annotate=True)
 
 setup(
 	# package declaration
