@@ -13,13 +13,13 @@ for prec, fmt in (
 		pack = size*fmt
 		remain = calcsize(pack) % native
 		if remain:	pack += 'x' * (native - remain)
-		_arrex.declare(type, DTypeExtension(type, pack, type))
+		_arrex.declare(type, _arrex.DTypeExtension(type, pack, type))
 
 for prec, fmt in (('u','I'), ('i','i'), ('f','f'), ('d','d')):
 	for size in range(2,5):
 		type = getattr(glm, prec+'mat'+str(size))
-		_arrex.declare(type, DTypeExtension(type, size*fmt, type))
+		_arrex.declare(type, _arrex.DTypeExtension(type, size*fmt, type))
 		
 for prec in ('f', 'd'):
 	type = getattr(glm, prec+'quat')
-	_arrex.declare(type, DTypeExtension(type, 4*prec, type))
+	_arrex.declare(type, _arrex.DTypeExtension(type, 4*prec, type))
