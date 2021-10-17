@@ -29,3 +29,4 @@ a = typedlist([1, 2, 3, 5])
 assert a.dtype == 'l'
 assert len(a) == 4
 nprint(a, repr(a.dtype))
+
