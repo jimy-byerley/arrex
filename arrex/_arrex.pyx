@@ -32,19 +32,10 @@ cdef extern from *:
 
 
 
-ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*) except -1
-ctypedef PyObject* (*c_unpack_t) (PyObject*, void*) except NULL
+	
 
 cdef class DType:
-	''' base class for a dtype, But you should use on of its specialization instead '''
-	cdef public size_t dsize
-	cdef c_pack_t c_pack
-	cdef c_unpack_t c_unpack
-	cdef public bytes layout
-	cdef public object key
-	
-	def __init__(self):
-		raise TypeError('DType must not be instantiated, use one of its subclasses instead.')
+	''' base class for a dtype, DO NOT USE THIS CLASS FROM PYTHON, use on of its specialization instead '''
 	
 	def __repr__(self):
 		if isinstance(self.key, type):
@@ -87,6 +78,10 @@ def DTypeClass(type):
 		raise TypeError("the given type must have a method 'frombytes', 'from_bytes', or 'from_buffer'")
 	
 	return DTypeFunctions(dsize, pack, unpack, layout)
+	
+def DTypeStruct(struct):
+	''' create a dtype from a Struct object from module `struct` '''
+	return DTypeFunctions(struct.size, struct.pack, struct.unpack, struct.format)
 	
 
 cdef class DTypeFunctions(DType):
@@ -219,13 +214,22 @@ cpdef declare(key, DType dtype):
 		dtype.key = key
 	_declared[key] = dtype
 	
-def declared(key):
-	''' return the content of the declaration for the givne dtype, if not declared it will return None '''
+cpdef DType declared(key):
+	''' return the content of the declaration for the givne dtype '''
 	if isinstance(key, DType):
 		return key
 	else:
-		return _declared.get(key)
+		dtype = _declared.get(key)
+		if dtype is None:
+			raise TypeError('dtype {} is not declared'.format(key))
+		return <DType> dtype
 
+		
+#DType dec_f64 = DType()
+#dec_f64.dsize = 8
+#dec_f64.c_pack = PyFloat_AS_DOUBLE
+#dec_f64.c_unpack = PyFloat_FromDouble
+#dec_f64.layout = b'f'
 	
 
 # create an empty object to easily get the PyObject head size
@@ -735,7 +739,6 @@ cdef class typedlist:
 		
 	def index(self, value):
 		''' return the index of the first element binarily equal to the given one '''
-		# TODO: decide whether it is acceptable or not, to assume that elements are equals <=> their byte representation is
 		cdef size_t i, j
 		cdef char *data
 		cdef char *val
