@@ -651,10 +651,7 @@ cdef class typedlist:
 		
 	def __deepcopy__(self, memo):
 		''' deep recursive copy,  will duplicate the underlying buffer '''
-		cdef typedlist new = typedlist(bytes(self.owner), self.dtype)
-		new.ptr = self.ptr
-		new.size = self.size
-		return new
+		return typedlist(PyBytes_FromStringAndSize(<char*>self.ptr, self.size), self.dtype)
 		
 	def __reduce_ex__(self, protocol):
 		''' serialization protocol '''
