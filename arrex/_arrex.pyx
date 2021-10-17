@@ -32,46 +32,99 @@ cdef extern from *:
 
 
 
-ctypedef int (*c_pack_t) (PyObject*, PyObject*, void*)
+ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*)
 ctypedef PyObject* (*c_unpack_t) (PyObject*, void*)
 
-cdef class dtype:
+cdef class DType:
+	''' base class for a dtype, But you should use on of its specialization instead '''
 	cdef public size_t dsize
 	cdef c_pack_t c_pack
 	cdef c_unpack_t c_unpack
-	cdef public str layout
-	cdef public str name
-	cdef dict __dict__
+	cdef public bytes layout
+	cdef public object key
+	cdef public constructor
 	
-	@staticmethod
-	def from_class(type):
-		layout = getattr(type, '__packlayout__')
-		dsize = getattr(type, '__packsize__')
-		if not dsize:
-			dsize = struct.calcsize(layout)
-		if not dsize:
-			raise ValueError('dsize must not be null, __packlayout__ or __packsize__ must be correctly defined in the given type')
-		return dtype.from_functions(dsize, type.__bytes__, type.frombytes, layout)
+	def __init__(self):
+		raise TypeError('DType must not be instantiated, use one of its subclasses instead.')
 	
-	@staticmethod
-	def from_functions(dsize, pack, unpack, layout=None, name=None):
-		cdef dtype self = dtype()
+	def __repr__(self):
+		if isinstance(self.key, type):
+			return '<dtype {}>'.format(self.key.__name__)
+		elif isinstance(self.key, str):
+			return '<dtype {}>'.format(repr(self.key))
+		else:
+			return object.__repr__(self)
+	
+
+def DTypeClass(type, constructor=None):
+	''' create a dtype from a python class (can be a pure python class) 
+		
+		the given type must have the following attributes:
+		
+			- `frombytes` or `from_bytes` or `from_buffer`
+			
+				static method that initialize the type from bytes
+				
+			- `__bytes__` or `tobytes` or `to_bytes`
+				
+				method that converts to bytes, the returned byte must always be of the same size
+			
+			- `__packlayout__`     (optional)  string or bytes giving binary format returned by `__bytes__`, it must follow the specifications of module `struct`
+			- `__packsize__`       (optional)  defines the byte size returned by `__bytes__`, optional if `__packlayout__` is provided
+	'''
+	layout = getattr(type, '__packlayout__')
+	dsize = getattr(type, '__packsize__')
+	if not dsize:
+		dsize = struct.calcsize(layout)
+	if not dsize:
+		raise ValueError('dsize must not be null, __packlayout__ or __packsize__ must be correctly defined in the given type')
+	
+	pack = getattr(type, '__bytes__', None) or getattr(type, 'tobytes', None) or getattr(type, 'to_bytes', None)
+	if not pack:
+		raise TypeError("the given type must have a method '__bytes__', 'tobytes', or 'to_bytes'")
+	
+	unpack = getattr(type, 'frombytes', None) or getattr(type, 'from_bytes', None) or getattr(type, 'from_buffer', None)
+	if not unpack:
+		raise TypeError("the given type must have a method 'frombytes', 'from_bytes', or 'from_buffer'")
+	
+	return DTypeFunctions(dsize, pack, unpack, layout, constructor)
+	
+
+cdef class DTypeFunctions(DType):
+	''' create a dtype from pure python pack and unpack functions '''
+	cdef public object pack
+	cdef public object unpack
+	
+	def __init__(self, dsize, pack, unpack, layout=None, constructor=None):
 		if not callable(pack) or not callable(unpack):
 			raise TypeError('pack and unpack must be callables')
-		self.dsize
+			
+		if layout is not None:
+			if isinstance(layout, str):
+				layout = layout.encode()
+			elif not isinstance(layout, bytes):
+				layout = bytes(layout)
+			
+			fmtsize = struct.calcsize(layout)
+			if dsize is not None and dsize != fmtsize:
+				raise ValueError('dsize must match layout size')
+		elif dsize is None:
+			raise ValueError('dsize must be provided or deduced from a given layout')
+			
+		self.dsize = dsize
 		self.c_pack = <c_pack_t> self._func_pack
 		self.c_unpack = <c_unpack_t> self._func_unpack
 		self.layout = layout
-		self.name = name
+		self.constructor = constructor
 		self.pack = pack
 		self.unpack = unpack
 		
-	cdef int _func_pack(self, object obj, void* place) except +:
-		packed = self.pack(<object>obj)
+	cdef int _func_pack(self, void* place, object obj) except -1:
+		packed = self.pack(obj)
 		if not isinstance(packed, bytes):
 			raise TypeError('pack must provide a bytes object')
 		if len(packed) < self.dsize:
-			raise ValueError('the dumped bytes length {} does not match dsize {}'.format(len(packed), self.dsize))
+			raise ValueError('the dumped bytes length {} does not match dsize {}'.format(len(packed), self.dtype.dsize))
 		
 		memcpy(place, PyBytes_AsString(obj), self.dsize)
 	
@@ -79,9 +132,13 @@ cdef class dtype:
 		return self.unpack(PyBytes_FromStringAndSize(<char*>place, self.dsize))
 		
 		
-	@staticmethod
-	def from_extension(ext, layout=None):
-		cdef dtype self = dtype()
+cdef class DTypeExtension(DType):
+	''' create a dtype for a C extension type which is already packed and which internal data can directly be copied '''
+	cdef public type type
+	
+	def __init__(self, type ext, layout=None, constructor=None):
+		cdef ssize_t fmtsize, packsize
+	
 		if not isinstance(ext, type):
 			raise TypeError('dtype must be a type')
 		#if constructor is not None and not callable(constructor):
@@ -107,85 +164,52 @@ cdef class dtype:
 		self.c_pack = <c_pack_t> self._ext_pack
 		self.c_unpack = <c_unpack_t> self._ext_unpack
 		self.layout = layout
-		self.name = dtype.__name__
-		self.type = dtype
+		self.constructor = constructor
+		self.type = ext
 		
 	cdef void * _raw(self, obj):
-		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.dtype).tp_basicsize - self.dsize
+		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
 	
-	cdef int _ext_pack(self, object obj, void* place) except +:
+	cdef int _ext_pack(self, void* place, object obj) except -1:
 		memcpy(place, self._raw(obj), self.dsize)
 		
 	cdef object _ext_unpack(self, void* place):
-		new = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
+		new = (<PyTypeObject*>self.type).tp_new(self.type, _empty, None)
 		memcpy(self._raw(new), place, self.dsize)
 		return new
 
+		
+		
+
 # dictionnary of compatible packed types
-cdef dict _declared = {}	# {type: (constructor, format, dsize)}
+cdef dict _declared = {}	# {python type: dtype}
 
 
-cpdef into(obj, target):
+cpdef into(obj, DType target):
 	''' convert an object into the target type, using the declared constructor '''
 	if type(obj) is target:		return obj
 	
-	converter = _declared[target][0]
-	if converter is None:	
+	if target.constructor is None:	
 		raise TypeError('cannot implicitely convert {} into {}'.format(
 								type(obj).__name__, 
 								target.__name__,
 								))
-	return converter(obj)
+	return target.constructor(obj)
 	
-cpdef declare(dtype, constructor=None, format=None):
-	''' declaire(dtype, constructor=None, format=None)
+cpdef declare(key, DType dtype):
+	''' declare(dtype, constructor=None, format=None)
 	
 		declare a new dtype 
-	
-		:constructor:	
-		
-			A callable used to convert objects into dtype (eg for append to an array).
-			The constructor will allow to insert any kind of input object the constructor does support and convert into the proper type
-			
-			leave it to None to disallow implicit conversions
-			
-			Note that the constructor MUST return an instance of the dtype, or bad things will happen
-		
-		:format:		
-		
-			The internal format of the dtype as describes in the `struct` module.
-			
-			if the given format is too small for the dtype size, padding bytes will be added at the beginning of it
-			
-			leave it to None if you don't need to convert arrays of that dtype into numpy arrays
 	'''
-	if not isinstance(dtype, type):
-		raise TypeError('dtype must be a type')
-	if constructor is not None and not callable(constructor):
-		raise TypeError('constructor must be a callable returning an instance of dtype')
-		
-	packsize = (<PyTypeObject*> dtype).tp_basicsize - sizeof(_head)
-	if format is not None:
-		if isinstance(format, str):
-			format = format.encode()
-		elif not isinstance(format, bytes):
-			format = bytes(format)
-		
-		fmtsize = struct.calcsize(format)
-		if packsize < fmtsize:
-			raise ValueError('format describes a too big structure for the given dtype')
-	else:
-		fmtsize = 0
+	dtype.key = key
+	_declared[key] = dtype
 	
-	dsize = fmtsize or packsize
-	if not dsize:
-		raise TypeError('dsize cannot be 0')
-	
-	_declared[dtype] = (constructor, format, dsize)
-	
-def declared(dtype):
+def declared(key):
 	''' return the content of the declaration for the givne dtype, if not declared it will return None '''
-	return _declared.get(dtype)
+	if isinstance(key, DType):
+		return key
+	else:
+		return _declared.get(key)
 
 	
 
@@ -263,13 +287,20 @@ cdef class typedlist:
 	cdef readonly size_t size
 	cdef readonly size_t allocated
 	
-	cdef readonly type dtype
-	cdef readonly size_t dsize
+	cdef DType dtype
 	
 	cdef readonly object owner
 	
+	@property
+	def dtype(self):
+		return self.dtype.key or self.dtype
+		
+	@property
+	def spec(self):
+		return self.dtype
+	
 
-	def __init__(self, iterable=None, type dtype=None, size_t reserve=0):
+	def __init__(self, iterable=None, object dtype=None, size_t reserve=0):
 		# look at the type of the first element
 		first = None
 		if not dtype:
@@ -285,29 +316,25 @@ cdef class typedlist:
 					raise TypeError('dtype must be provided when it cannot be deduced from the iterable')
 			except StopIteration:
 				raise ValueError('iterable is empty')
-	
-		# get the dtype declaration
-		cdef tuple decl = _declared.get(dtype)
-		if decl is None:
-			raise TypeError('dtype must be packed and declared in dict dynarray.declared')
 		
 		# initialize the internal structure
 		self.ptr = NULL
 		self.size = 0
 		self.allocated = 0
-		self.dtype = dtype
-		self.dsize = decl[2]
+		self.dtype = declared(dtype)
+		if not self.dtype:
+			raise TypeError('dtype must be a dtype declaration instance, or a key for a declared dtype')
 		
 		# borrow a buffer
 		if PyObject_CheckBuffer(iterable):
 			self._use(iterable)
 			self.size = self.allocated
 			if reserve:
-				self._reallocate(reserve * self.dsize)
+				self._reallocate(reserve * self.dtype.dsize)
 		# fill with an iterable
 		else:
 			if reserve:
-				self._reallocate(reserve * self.dsize)
+				self._reallocate(reserve * self.dtype.dsize)
 			if iterable is not None:
 				if first is not None:
 					self.append(first)
@@ -322,7 +349,7 @@ cdef class typedlist:
 		cdef ssize_t i
 		cdef typedlist array = typedlist(dtype=type(value), reserve=size)
 		for i in range(size):
-			array._setitem(array.ptr + i*array.dsize, value)
+			array._setitem(array.ptr + i*array.dtype.dsize, value)
 		array.size = array.allocated
 		return array
 		
@@ -337,6 +364,12 @@ cdef class typedlist:
 		return array
 	
 	# convenient internal functions
+	
+	cdef object _getitem(self, void* place):
+		return <object> self.dtype.c_unpack(<PyObject*>self.dtype, <PyObject*> place)
+		
+	cdef int _setitem(self, void* place, obj) except -1:
+		return self.dtype.c_pack(<PyObject*>self.dtype, place, <PyObject*> obj)
 	
 	cdef int _use(self, buffer) except -1:
 		cdef Py_buffer view
@@ -363,7 +396,7 @@ cdef class typedlist:
 		return 0
 		
 	cdef size_t _len(self):
-		return self.size // self.dsize
+		return self.size // self.dtype.dsize
 		
 	cdef Py_ssize_t _index(self, index) except -1:
 		''' return a C index (0 < i < l) from a python object '''
@@ -373,21 +406,6 @@ cdef class typedlist:
 		if i < 0 or i >= l:	
 			raise IndexError('index out of range')
 		return i
-		
-	cdef object _getitem(self, void *ptr):
-		''' build a python object a pointer to the data it must contain '''
-		#item = PyType_GenericAlloc(<PyTypeObject*><PyObject*>self.dtype, 0)
-		item = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
-		memcpy(self._raw(item), ptr, self.dsize)
-		return item
-		
-	cdef void _setitem(self, void *ptr, value):
-		''' dump the object data at the pointer location '''
-		memcpy(ptr, self._raw(value), self.dsize)
-		
-	cdef void * _raw(self, obj):
-		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.dtype).tp_basicsize - self.dsize
-	
 	
 	# python interface
 	
@@ -400,7 +418,7 @@ cdef class typedlist:
 		'''
 		if amount < 0:	
 			raise ValueError('amount must be positive')
-		cdef size_t asked = self.size + (<size_t>amount) * self.dsize
+		cdef size_t asked = self.size + (<size_t>amount) * self.dtype.dsize
 		if asked > self.allocated:
 			self._reallocate(asked)
 	
@@ -411,21 +429,21 @@ cdef class typedlist:
 		'''
 		value = into(value, self.dtype)
 		
-		if self.allocated - self.size < self.dsize:
-			self._reallocate(self.allocated*2 or self.dsize)
+		if self.allocated - self.size < self.dtype.dsize:
+			self._reallocate(self.allocated*2 or self.dtype.dsize)
 		
 		self._setitem(self.ptr + self.size, value)
-		self.size += self.dsize
+		self.size += self.dtype.dsize
 		
 	def pop(self, index=None):
 		''' remove the element at index, returning it. If no index is specified, it will pop the last one '''
 		cdef size_t i
 		i = self._index(index)	if index is not None else  self._len()
 		
-		cdef void * start = self.ptr + i*self.dsize
+		cdef void * start = self.ptr + i*self.dtype.dsize
 		e = self._getitem(start)
-		memmove(start, start + self.dsize, self.size-(i-1)*self.dsize)
-		self.size -= self.dsize
+		memmove(start, start + self.dtype.dsize, self.size-(i-1)*self.dtype.dsize)
+		self.size -= self.dtype.dsize
 		return e
 		
 	def insert(self, index, value):
@@ -433,13 +451,13 @@ cdef class typedlist:
 		value = into(value, self.dtype)
 		cdef size_t i = self._index(index)
 		
-		if self.allocated - self.size < self.dsize:
-			self._reallocate(self.allocated*2 or self.dsize)
+		if self.allocated - self.size < self.dtype.dsize:
+			self._reallocate(self.allocated*2 or self.dtype.dsize)
 			
-		cdef void * start = self.ptr + i*self.dsize
-		memmove(start+self.dsize, start, self.size-i*self.dsize)
+		cdef void * start = self.ptr + i*self.dtype.dsize
+		memmove(start+self.dtype.dsize, start, self.size-i*self.dtype.dsize)
 		self._setitem(start, value)
-		self.size += self.dsize
+		self.size += self.dtype.dsize
 		
 	def clear(self):
 		self.size = 0
@@ -462,8 +480,8 @@ cdef class typedlist:
 			
 		else:
 			l = PyObject_LengthHint(other, 0)
-			if l >= 0 and l*self.dsize > self.allocated - self.size:
-				self._reallocate(max(2*self.size, self.size + l*self.dsize))
+			if l >= 0 and l*self.dtype.dsize > self.allocated - self.size:
+				self._reallocate(max(2*self.size, self.size + l*self.dtype.dsize))
 			for o in other:
 				self.append(o)
 				
@@ -481,7 +499,6 @@ cdef class typedlist:
 			
 			result = typedlist.__new__(typedlist)
 			result.dtype = self.dtype
-			result.dsize = self.dsize
 			result._reallocate(self.size + view.len)
 			memcpy(result.ptr, self.ptr, self.size)
 			memcpy(result.ptr+self.size, view.buf, view.len)
@@ -511,21 +528,14 @@ cdef class typedlist:
 		
 			return the total number of elements that can be stored with the current allocated memory 
 		'''
-		return self.allocated // self.dsize
+		return self.allocated // self.dtype.dsize
 		
 	def shrink(self):
 		''' shrink()
 		
 			reallocate the array to have allocated the exact current size of the array 
 		'''
-		if self.size == 0:
-			if self.hooks:
-				raise RuntimeError('cannot free memory while a view is opened on')
-			PyMem_Free(self.ptr)
-			self.ptr = NULL
-			self.allocated = 0
-		else:
-			self._reallocate(self.size)
+		self._reallocate(self.size)
 		
 	def __len__(self):
 		''' return the current amount of elements inserted '''
@@ -537,7 +547,7 @@ cdef class typedlist:
 		
 		#if isinstance(index, int):
 		if PyNumber_Check(<PyObject*>index):
-			return self._getitem(self.ptr + self._index(index)*self.dsize)
+			return self._getitem(self.ptr + self._index(index)*self.dtype.dsize)
 		
 		elif isinstance(index, slice):
 			if PySlice_Unpack(index, &start, &stop, &step):
@@ -547,12 +557,11 @@ cdef class typedlist:
 			PySlice_AdjustIndices(self._len(), &start, &stop, step)
 			
 			view = typedlist.__new__(typedlist)
-			view.ptr = self.ptr + start*self.dsize
-			view.size = (stop-start)*self.dsize
+			view.ptr = self.ptr + start*self.dtype.dsize
+			view.size = (stop-start)*self.dtype.dsize
 			view.allocated = view.size
 			view.owner = self.owner
 			view.dtype = self.dtype
-			view.dsize = self.dsize
 			return view
 		
 		else:
@@ -565,7 +574,7 @@ cdef class typedlist:
 		#if isinstance(index, int):
 		if PyNumber_Check(<PyObject*>index):
 			value = into(value, self.dtype)
-			self._setitem(self.ptr + self._index(index)*self.dsize, value)
+			self._setitem(self.ptr + self._index(index)*self.dtype.dsize, value)
 			
 		elif isinstance(index, slice):
 			if PySlice_Unpack(index, &start, &stop, &step):
@@ -577,11 +586,11 @@ cdef class typedlist:
 			if PyObject_CheckBuffer(value):
 				assign_buffer_obj(&view, None)
 				PyObject_GetBuffer(value, &view, PyBUF_SIMPLE)
-				start *= self.dsize
-				stop *= self.dsize
+				start *= self.dtype.dsize
+				stop *= self.dtype.dsize
 				
 				if view.len != stop-start:
-					if view.len % self.dsize:
+					if view.len % self.dtype.dsize:
 						PyBuffer_Release(&view)
 						raise TypeError('the given buffer must have a size multiple of dtype size')
 					if view.len - (stop-start) >  (<ssize_t> self.allocated):
@@ -609,17 +618,10 @@ cdef class typedlist:
 		
 	def __repr__(self):
 		cdef size_t i
-		item = (<PyTypeObject*>self.dtype).tp_new(self.dtype, _empty, None)
 		text = 'typedlist(['
 		for i in range(self._len()):
 			if i:	text += ', '
-			memcpy(
-					(<void*><PyObject*>item) 
-					+ (<PyTypeObject*>self.dtype).tp_basicsize 
-					- self.dsize, 
-				self.ptr + i*self.dsize, 
-				self.dsize)
-			text += repr(item)
+			text += repr(self._getitem(self.ptr + i*self.dtype.dsize))
 		text += '])'
 		return text
 		
@@ -684,7 +686,7 @@ cdef class typedlist:
 		if flags & PyBUF_FORMAT:
 			fmt = _declared[self.dtype][1]
 			if fmt is not None:
-				view.itemsize = self.dsize
+				view.itemsize = self.dtype.dsize
 				view.format = PyBytes_AS_STRING(fmt)
 			else:
 				view.itemsize = 1
@@ -711,15 +713,15 @@ cdef class typedlist:
 		cdef void *last
 		cdef size_t i
 		
-		temp = PyMem_Malloc(self.dsize)
+		temp = PyMem_Malloc(self.dtype.dsize)
 		first = self.ptr
-		last = self.ptr + self.size - self.dsize
+		last = self.ptr + self.size - self.dtype.dsize
 		while first != last:
-			memcpy(temp, first, self.dsize)
-			memcpy(first, last, self.dsize)
-			memcpy(last, temp, self.dsize)
-			first += self.dsize
-			last -= self.dsize
+			memcpy(temp, first, self.dtype.dsize)
+			memcpy(first, last, self.dtype.dsize)
+			memcpy(last, temp, self.dtype.dsize)
+			first += self.dtype.dsize
+			last -= self.dtype.dsize
 		PyMem_Free(temp)
 		
 	def index(self, value):
@@ -728,20 +730,20 @@ cdef class typedlist:
 		cdef size_t i, j
 		cdef char *data
 		cdef char *val
-		if not isinstance(value, self.dtype):
-			raise TypeError('expected a value of the same dtype')
+		value = into(value, self.dtype)
 			
 		data = <char*> self.ptr
-		val = <char*> self._raw(value)
+		val = <char*> PyMem_Malloc(self.dtype.dsize)
+		self._setitem(val, value)
 		
 		i = 0
 		while i < self.size:
 			j = 0
-			while data[i+j] == val[j] and j < self.dsize:
+			while data[i+j] == val[j] and j < self.dtype.dsize:
 				j += 1
-			if j == self.dsize:
-				return i//self.dsize
-			i += self.dsize
+			if j == self.dtype.dsize:
+				return i//self.dtype.dsize
+			i += self.dtype.dsize
 				
 		raise IndexError('value not found')
 			
@@ -768,5 +770,5 @@ cdef class arrayiter:
 		if self.position == self.array.size:
 			raise StopIteration()
 		item = self.array._getitem(self.array.ptr + self.position)
-		self.position += self.array.dsize
+		self.position += self.array.dtype.dsize
 		return item
