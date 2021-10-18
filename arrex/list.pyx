@@ -98,7 +98,7 @@ cdef class typedlist:
 	cdef readonly size_t size
 	cdef readonly size_t allocated
 	
-	cdef DType dtype
+	cdef DDType dtype
 	
 	cdef readonly object owner
 	
@@ -107,7 +107,7 @@ cdef class typedlist:
 		return self.dtype.key or self.dtype
 		
 	@property
-	def spec(self):
+	def ddtype(self):
 		return self.dtype
 	
 

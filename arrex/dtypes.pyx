@@ -13,7 +13,7 @@ cdef extern from "Python.h":
 
 	
 
-cdef class DType:
+cdef class DDType:
 	''' base class for a dtype
 		DO NOT USE THIS CLASS FROM PYTHON, use on of its specialization instead 
 	'''
@@ -24,10 +24,10 @@ cdef class DType:
 		elif isinstance(self.key, str):
 			return '<dtype {}>'.format(repr(self.key))
 		else:
-			return object.__repr__(self)
+			return '<dtype at {}>'.format(id(self))
 	
 
-def DTypeClass(type):
+def DDTypeClass(type):
 	''' create a dtype from a python class (can be a pure python class) 
 		
 		the given type must have the following attributes:
@@ -58,14 +58,14 @@ def DTypeClass(type):
 	if not unpack:
 		raise TypeError("the given type must have a method 'frombytes', 'from_bytes', or 'from_buffer'")
 	
-	return DTypeFunctions(dsize, pack, unpack, layout)
+	return DDTypeFunctions(dsize, pack, unpack, layout)
 	
-def DTypeStruct(struct):
+def DDTypeStruct(struct):
 	''' create a dtype from a Struct object from module `struct` '''
-	return DTypeFunctions(struct.size, struct.pack, struct.unpack, struct.format)
+	return DDTypeFunctions(struct.size, struct.pack, struct.unpack, struct.format)
 	
 
-cdef class DTypeFunctions(DType):
+cdef class DDTypeFunctions(DDType):
 	''' create a dtype from pure python pack and unpack functions '''
 	cdef public object pack
 	cdef public object unpack
@@ -111,7 +111,7 @@ cdef class DTypeFunctions(DType):
 		return type(self), (self.dsize, self.pack, self.unpack, self.layout, self.constructor)
 		
 		
-cdef class DTypeExtension(DType):
+cdef class DDTypeExtension(DDType):
 	''' create a dtype for a C extension type.
 	
 		This is the most efficient kind of dtype in term of operating time.
@@ -186,7 +186,7 @@ cdef class DTypeExtension(DType):
 # dictionnary of compatible packed types
 cdef dict _declared = {}	# {python type: dtype}
 	
-cpdef declare(key, DType dtype):
+cpdef declare(key, DDType dtype):
 	''' declare(dtype, constructor=None, format=None)
 	
 		declare a new dtype 
@@ -195,15 +195,15 @@ cpdef declare(key, DType dtype):
 		dtype.key = key
 	_declared[key] = dtype
 	
-cpdef DType declared(key):
+cpdef DDType declared(key):
 	''' return the content of the declaration for the givne dtype '''
-	if isinstance(key, DType):
+	if isinstance(key, DDType):
 		return key
 	else:
 		dtype = _declared.get(key)
 		if dtype is None:
 			raise TypeError('dtype {} is not declared'.format(key))
-		return <DType> dtype
+		return <DDType> dtype
 
 
 

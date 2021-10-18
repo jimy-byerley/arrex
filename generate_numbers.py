@@ -1,12 +1,13 @@
 numbers = open('arrex/numbers.pyx', 'w')
 
-numbers.write('''
+numbers.write('''# cython: language_level=3, cdivision=True
+
 cimport cython
 from cpython cimport PyObject
 from libc.stdint cimport *
-from ._arrex cimport DType, c_pack_t, c_unpack_t, declare, declared
+from .dtypes cimport *
 
-cdef DType decl
+cdef DDType decl
 ''')
 
 template = '''
@@ -18,7 +19,7 @@ cdef int pack_{layout}(PyObject* dtype, {ctype}* place, object obj) except -1:
 cdef object unpack_{layout}(PyObject* dtype, {ctype}* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof({ctype})
 decl.c_pack = <c_pack_t> pack_{layout}
 decl.c_unpack = <c_unpack_t> unpack_{layout}

@@ -11,7 +11,7 @@ from cpython cimport PyObject
 ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*) except -1
 ctypedef PyObject* (*c_unpack_t) (PyObject*, void*) except NULL
 
-cdef class DType:
+cdef class DDType:
 	''' base class for a dtype, But you should use on of its specialization instead '''
 	cdef public size_t dsize	# size of one element in a buffer
 	cdef c_pack_t c_pack  		# pointer to the function that packs the python object into a buffer
@@ -20,5 +20,5 @@ cdef class DType:
 	cdef public object key      # value to return when one asks an array for its dtype (it can be the current class itself, or any hashable value representing it)
 
 	
-cpdef declare(key, DType dtype)
-cpdef DType declared(key)
+cpdef declare(key, DDType dtype)
+cpdef DDType declared(key)

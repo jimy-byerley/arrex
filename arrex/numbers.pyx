@@ -6,7 +6,7 @@ from libc.stdint cimport *
 
 from .dtypes cimport *
 
-cdef DType decl
+cdef DDType decl
 
 
 ### declare double
@@ -16,7 +16,7 @@ cdef int pack_d(PyObject* dtype, double* place, object obj) except -1:
 cdef object unpack_d(PyObject* dtype, double* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(double)
 decl.c_pack = <c_pack_t> pack_d
 decl.c_unpack = <c_unpack_t> unpack_d
@@ -32,7 +32,7 @@ cdef int pack_f(PyObject* dtype, float* place, object obj) except -1:
 cdef object unpack_f(PyObject* dtype, float* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(float)
 decl.c_pack = <c_pack_t> pack_f
 decl.c_unpack = <c_unpack_t> unpack_f
@@ -48,7 +48,7 @@ cdef int pack_b(PyObject* dtype, int8_t* place, object obj) except -1:
 cdef object unpack_b(PyObject* dtype, int8_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(int8_t)
 decl.c_pack = <c_pack_t> pack_b
 decl.c_unpack = <c_unpack_t> unpack_b
@@ -64,7 +64,7 @@ cdef int pack_B(PyObject* dtype, uint8_t* place, object obj) except -1:
 cdef object unpack_B(PyObject* dtype, uint8_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(uint8_t)
 decl.c_pack = <c_pack_t> pack_B
 decl.c_unpack = <c_unpack_t> unpack_B
@@ -80,7 +80,7 @@ cdef int pack_h(PyObject* dtype, int16_t* place, object obj) except -1:
 cdef object unpack_h(PyObject* dtype, int16_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(int16_t)
 decl.c_pack = <c_pack_t> pack_h
 decl.c_unpack = <c_unpack_t> unpack_h
@@ -96,7 +96,7 @@ cdef int pack_H(PyObject* dtype, uint16_t* place, object obj) except -1:
 cdef object unpack_H(PyObject* dtype, uint16_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(uint16_t)
 decl.c_pack = <c_pack_t> pack_H
 decl.c_unpack = <c_unpack_t> unpack_H
@@ -112,7 +112,7 @@ cdef int pack_i(PyObject* dtype, int32_t* place, object obj) except -1:
 cdef object unpack_i(PyObject* dtype, int32_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(int32_t)
 decl.c_pack = <c_pack_t> pack_i
 decl.c_unpack = <c_unpack_t> unpack_i
@@ -128,7 +128,7 @@ cdef int pack_I(PyObject* dtype, uint32_t* place, object obj) except -1:
 cdef object unpack_I(PyObject* dtype, uint32_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(uint32_t)
 decl.c_pack = <c_pack_t> pack_I
 decl.c_unpack = <c_unpack_t> unpack_I
@@ -144,7 +144,7 @@ cdef int pack_l(PyObject* dtype, int64_t* place, object obj) except -1:
 cdef object unpack_l(PyObject* dtype, int64_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(int64_t)
 decl.c_pack = <c_pack_t> pack_l
 decl.c_unpack = <c_unpack_t> unpack_l
@@ -160,7 +160,7 @@ cdef int pack_L(PyObject* dtype, uint64_t* place, object obj) except -1:
 cdef object unpack_L(PyObject* dtype, uint64_t* place):
 	return place[0]
 
-decl = DType()
+decl = DDType()
 decl.dsize = sizeof(uint64_t)
 decl.c_pack = <c_pack_t> pack_L
 decl.c_unpack = <c_unpack_t> unpack_L
