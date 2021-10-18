@@ -33,4 +33,6 @@
 
 __all__ = ['typedlist']
 
-from ._arrex import *
+from .dtypes import *
+from .list import typedlist
+from . import numbers

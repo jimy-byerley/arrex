@@ -1,8 +1,10 @@
+# cython: language_level=3, cdivision=True
 
 cimport cython
 from cpython cimport PyObject
 from libc.stdint cimport *
-from ._arrex cimport DType, c_pack_t, c_unpack_t, declare, declared
+
+from .dtypes cimport *
 
 cdef DType decl
 
