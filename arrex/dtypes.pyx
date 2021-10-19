@@ -4,7 +4,7 @@ cimport cython
 from cpython cimport PyObject, PyTypeObject
 from libc.string cimport memcpy
 
-import struct
+import struct, ctypes
 
 cdef extern from "Python.h":
 	object PyBytes_FromStringAndSize(const char *v, Py_ssize_t len)
@@ -43,10 +43,10 @@ def DDTypeClass(type):
 			- `__packlayout__`     (optional)  string or bytes giving binary format returned by `__bytes__`, it must follow the specifications of module `struct`
 			- `__packsize__`       (optional)  defines the byte size returned by `__bytes__`, optional if `__packlayout__` is provided
 	'''
-	layout = getattr(type, '__packlayout__')
+	layout = getattr(type, '__packlayout__', None)
 	dsize = getattr(type, '__packsize__')
 	if not dsize:
-		dsize = struct.calcsize(layout)
+		dsize = struct.calcsize(layout or b'')
 	if not dsize:
 		raise ValueError('dsize must not be null, __packlayout__ or __packsize__ must be correctly defined in the given type')
 	
@@ -60,10 +60,11 @@ def DDTypeClass(type):
 	
 	return DDTypeFunctions(dsize, pack, unpack, layout)
 	
-def DDTypeStruct(struct):
+def DDTypeStruct(definition):
 	''' create a dtype from a Struct object from module `struct` '''
-	return DDTypeFunctions(struct.size, struct.pack, struct.unpack, struct.format)
-	
+	if not isinstance(definition, struct.Struct):
+		raise TypeError('structure must be struct.Struct')
+	return DDTypeFunctions(definition.size, definition.pack, definition.unpack, definition.format) 
 
 cdef class DDTypeFunctions(DDType):
 	''' create a dtype from pure python pack and unpack functions '''
@@ -83,7 +84,7 @@ cdef class DDTypeFunctions(DDType):
 			fmtsize = struct.calcsize(layout)
 			if dsize is not None and dsize != fmtsize:
 				raise ValueError('dsize must match layout size')
-		elif dsize is None:
+		elif not dsize:
 			raise ValueError('dsize must be provided or deduced from a given layout')
 			
 		self.dsize = dsize
@@ -109,6 +110,27 @@ cdef class DDTypeFunctions(DDType):
 	def __reduce_ex__(self, protocol):
 		''' allow serialization of the dtype with the array (particularly useful for anonymous dtypes) '''
 		return type(self), (self.dsize, self.pack, self.unpack, self.layout, self.constructor)
+		
+cdef class DDTypeCType(DDType):
+	''' create a dtype from a ctype '''
+	cdef public object type
+	
+	def __init__(self, type):
+		if not isctype(type):
+			raise TypeError('type must be a ctype')
+		self.type = type
+		self.dsize = ctypes.sizeof(type)
+		self.c_pack = <c_pack_t> self._ctype_pack
+		self.c_unpack = <c_unpack_t> self._ctype_unpack
+		self.layout = None
+		
+	cdef int _ctype_pack(self, void* place, object obj) except -1:
+		if not isinstance(obj, self.type):
+			raise TypeError('cannot store an object of a different type')
+		memcpy(place, <void*><size_t> ctypes.addressof(obj), ctypes.dsize)
+		
+	cdef object _ctype_unpack(self, void* place):
+		return self.type.from_address(<size_t> place)
 		
 		
 cdef class DDTypeExtension(DDType):
@@ -161,7 +183,7 @@ cdef class DDTypeExtension(DDType):
 		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
 	
 	cdef int _ext_pack(self, void* place, object obj) except -1:
-		if type(obj) is not self.type:
+		if not isinstance(obj, self.type):
 			if self.constructor is not None:
 				obj = self.constructor(obj)
 			else:
@@ -186,13 +208,27 @@ cdef class DDTypeExtension(DDType):
 # dictionnary of compatible packed types
 cdef dict _declared = {}	# {python type: dtype}
 	
-cpdef declare(key, DDType dtype):
+cpdef declare(key, DDType dtype=None):
 	''' declare(dtype, constructor=None, format=None)
 	
 		declare a new dtype 
 	'''
-	if not dtype.key:	
-		dtype.key = key
+	if dtype:
+		if not dtype.key:	
+			dtype.key = key
+	else:
+		if isinstance(key, str):
+			# create a struct dtype
+			dtype = struct.Struct(key)
+		elif isctype(key):
+			# create a ctype dtype
+			dtype = DDTypeCType(key)
+		elif isinstance(key, type):
+			# create a dtype from a pure python class
+			try:	dtype = DDTypeClass(key)
+			except TypeError:	pass
+		if not dtype:
+			raise TypeError('dtype {} is not declared, and cannot be guessed'.format(key))
 	_declared[key] = dtype
 	
 cpdef DDType declared(key):
@@ -202,9 +238,12 @@ cpdef DDType declared(key):
 	else:
 		dtype = _declared.get(key)
 		if dtype is None:
-			raise TypeError('dtype {} is not declared'.format(key))
+			declare(key)
+			#raise TypeError('dtype {} is not declared'.format(key))
 		return <DDType> dtype
 
+cdef isctype(obj):
+	return isinstance(obj, ctypes._CData)
 
 
 # create an empty object to easily get the PyObject head size

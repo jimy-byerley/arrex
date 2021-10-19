@@ -2,9 +2,9 @@ import glm
 import arrex as nx
 from nprint import nprint
 
-nx.declare(glm.vec4, nx.DTypeExtension(glm.vec4, 'ffff'))
-nx.declare(glm.dvec4, nx.DTypeExtension(glm.dvec4, 'dddd', glm.dvec4))
-nx.declare(glm.mat4, nx.DTypeExtension(glm.mat4))
+nx.declare(glm.vec4, nx.DDTypeExtension(glm.vec4, 'ffff'))
+nx.declare(glm.dvec4, nx.DDTypeExtension(glm.dvec4, 'dddd', glm.dvec4))
+nx.declare(glm.mat4, nx.DDTypeExtension(glm.mat4))
 
 n = 20
 
