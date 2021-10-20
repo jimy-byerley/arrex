@@ -20,5 +20,5 @@ cdef class DDType:
 	cdef public object key      # value to return when one asks an array for its dtype (it can be the current class itself, or any hashable value representing it)
 
 	
-cpdef declare(key, DDType dtype=*)
+cpdef DDType declare(key, DDType dtype=*)
 cpdef DDType declared(key)
