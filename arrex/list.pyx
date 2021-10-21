@@ -92,6 +92,15 @@ cdef class typedlist:
 			typedlist(dtype, reserve=None)
 			typedlist(iterable, dtype, reserve=None)
 			typedlist(buffer, dtype)
+			
+		Attributes:
+			
+			size (int):        byte size of the current content
+			allocated (int):   byte size of the memory allocated memory
+			owner:             object realy owning the data instead of the current `typedlist`
+			
+			dtype (type):         the python data type
+			ddtype (DDType):      the data type declaration
 	'''
 
 	cdef void *ptr
@@ -104,10 +113,12 @@ cdef class typedlist:
 	
 	@property
 	def dtype(self):
+		''' the python dtype object, or the ddtype if there is not dtype '''
 		return self.dtype.key or self.dtype
 		
 	@property
 	def ddtype(self):
+		''' the declaration of the dtype, a DDType instance '''
 		return self.dtype
 	
 
