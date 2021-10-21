@@ -3,12 +3,12 @@ import arrex as nx
 from glm import fvec3, dvec3, dmat4
 from time import perf_counter
 
-nx.declare(fvec3, nx.DTypeExtension(fvec3, 'fff', fvec3))
-nx.declare(dvec3, nx.DTypeExtension(dvec3, 'ddd', dvec3))
-nx.declare(dmat4, nx.DTypeExtension(dmat4, 'd'*16, dmat4))
+nx.declare(fvec3, nx.DDTypeExtension(fvec3, 'fff', fvec3))
+nx.declare(dvec3, nx.DDTypeExtension(dvec3, 'ddd', dvec3))
+nx.declare(dmat4, nx.DDTypeExtension(dmat4, 'd'*16, dmat4))
 n = 10000
 
-print('benchmark for arrays of {} elements'.format(n))
+print('benchmark for arrays of {:.3g} elements'.format(n))
 
 
 print('\nempty creation')

@@ -22,7 +22,6 @@ assert type(a[0]) is int
 a = typedlist(dtype='h')
 a.append(1)
 a.append(4)
-
 nprint('h', a.ddtype, a)
 assert len(a) == 2
 assert a[0] == 1
@@ -43,7 +42,7 @@ a.append((1.2, 3, -2))
 a.append((1.2, 1, -2))
 nprint('struct', a.ddtype, a)
 assert a[1][1:] == (1, -2)
-assert type(a[1]) == tuple
+assert type(a[1]) is tuple
 assert a.dtype == 'fxBh'
 
 
@@ -61,15 +60,19 @@ a = typedlist(dtype=test_structure)
 a.append(test_structure(y=1.2, x=1))
 a.append(test_structure(y=1, x=-2))
 nprint('ctype structure', a.ddtype, a)
-assert type(a[0]) == test_structure
+assert type(a[0]) is test_structure
 assert a.dtype is test_structure
 
+a = typedlist(dtype=ctypes.c_int8)
+a.append(ctypes.c_int8(8))
+a.append(ctypes.c_int8(2))
+nprint('ctype primitive', a.ddtype, a)
 
 # python native class
 import struct
 
 class test_class:
-	__packlayout__ = 'ff'
+	__packlayout__ = 'dd'
 	_struct = struct.Struct(__packlayout__)
 	
 	def __init__(self, x, y):
@@ -89,7 +92,7 @@ a = typedlist(dtype=test_class)
 a.append(test_class(1.2, 2))
 a.append(test_class(1.2, 1))
 nprint('native class', a.ddtype, a)
-assert a.ddtype.dsize == 8
+assert a.ddtype.dsize == 16
 assert a[0].x == a[1].x
-assert type(a[0]) == test_class
+assert type(a[0]) is test_class
 assert a.dtype is test_class
