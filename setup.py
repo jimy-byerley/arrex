@@ -15,7 +15,7 @@ else:
 setup(
 	# package declaration
 	name = 'arrex',
-	version = '0.1',
+	version = '0.2',
 	tests_require = [
 		'pnprint>=1.0',
 		'pyglm>=1.2',

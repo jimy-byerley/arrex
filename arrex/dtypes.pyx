@@ -1,5 +1,17 @@
 # cython: language_level=3, cdivision=True
 
+'''
+	The *dtype* is the type of the elements in a buffer. Thanks to the ddtype system, it is very easy to create new dtypes on top of pretty much everything.
+	
+	Definitions:
+	
+		:type:    a python type object (typically a class or a builtin type)
+		:dtype:   data dtype, meaning the type of the elements in an array,  it can be a type, but more generally anything that define a data format.
+		:ddtype:  declaration of data type, meaning a packet of things decribing how to pack/unpack that dtype from/to an array
+		
+	a ddtype always inherits from base class `DDType` which content is implemented at C level.
+'''
+
 cimport cython
 from cpython cimport PyObject, PyTypeObject
 from libc.string cimport memcpy
@@ -54,24 +66,24 @@ def DDTypeClass(type):
 			
 		Example:
 		
-			class test_class:
-				__packlayout__ = 'ff'
-				_struct = struct.Struct(__packlayout__)
-				
-				def __init__(self, x, y):
-					self.x = x
-					self.y = y
-				
-				def __bytes__(self):
-					return self._struct.pack(self.x, self.y)
-				@classmethod
-				def frombytes(cls, b):
-					return cls(*cls._struct.unpack(b))
-					
-				def __repr__(self):
-					return '(x={}, y={})'.format(self.x, self.y)
-
-			a = typedlist(dtype=test_class)    # no declaration needed
+			>>> class test_class:
+			... 	__packlayout__ = 'ff'
+			... 	_struct = struct.Struct(__packlayout__)
+			... 	
+			... 	def __init__(self, x, y):
+			... 		self.x = x
+			... 		self.y = y
+			... 	
+			... 	def __bytes__(self):
+			... 		return self._struct.pack(self.x, self.y)
+			... 	@classmethod
+			... 	def frombytes(cls, b):
+			... 		return cls(*cls._struct.unpack(b))
+			... 		
+			... 	def __repr__(self):
+			... 		return '(x={}, y={})'.format(self.x, self.y)
+			... 
+			>>> a = typedlist(dtype=test_class)    # no declaration needed
 	'''
 	layout = getattr(type, '__packlayout__', None)
 	dsize = getattr(type, '__packsize__', None)
@@ -97,7 +109,7 @@ def DDTypeStruct(definition):
 	
 		Example:
 			
-			a = typedlist(dtype='fxBh')   # no declaration needed
+			>>> a = typedlist(dtype='fxBh')   # no declaration needed
 	'''
 	if not isinstance(definition, struct.Struct):
 		raise TypeError('structure must be struct.Struct')
@@ -110,15 +122,15 @@ cdef class DDTypeFunctions(DDType):
 	
 		Example:
 		
-			enum_pack = {'apple':b'a', 'orange':b'o', 'cake':b'c'}
-			enum_unpack = {v:k   for k,v in enum_direct.items()}
-			enum_dtype = DDTypeFunctions(
-						dsize=1,                         # 1 byte storage
-						pack=enum_pack.__getitem__,      # this takes the python object and gives a bytes to dump
-						unpack=enum_unpack.__getitem__,  # this takes the bytes and return a python object
-						)
-			
-			a = typedlist(dtype=enum_dtype)		# declaration is not necessary
+			>>> enum_pack = {'apple':b'a', 'orange':b'o', 'cake':b'c'}
+			>>> enum_unpack = {v:k   for k,v in enum_direct.items()}
+			>>> enum_dtype = DDTypeFunctions(
+			... 			dsize=1,                         # 1 byte storage
+			... 			pack=enum_pack.__getitem__,      # this takes the python object and gives a bytes to dump
+			... 			unpack=enum_unpack.__getitem__,  # this takes the bytes and return a python object
+			... 			)
+			... 
+			>>> a = typedlist(dtype=enum_dtype)		# declaration is not necessary
 	'''
 	cdef public object pack
 	cdef public object unpack
@@ -164,18 +176,21 @@ cdef class DDTypeFunctions(DDType):
 		return type(self), (self.dsize, self.pack, self.unpack, self.layout, self.constructor)
 		
 cdef class DDTypeCType(DDType):
-	''' create a dtype from a ctype 
+	''' DDTypeCType(type)
+	
+		Create a dtype from a ctype 
 	
 		Example:
 		
-			class test_structure(ctypes.Structure):
-				_fields_ = [('x', ctypes.c_int),
-							('y', ctypes.c_float),
-							]
-				def __repr__(self):
-					return '(x={}, y={})'.format(self.x, self.y)
-			
-			a = typedlist(dtype=test_structure)
+			>>> class test_structure(ctypes.Structure):
+			... 	_fields_ = [
+			... 		('x', ctypes.c_int),
+			... 		('y', ctypes.c_float),
+			... 		]
+			... 	def __repr__(self):
+			... 		return '(x={}, y={})'.format(self.x, self.y)
+			... 
+			>>> a = typedlist(dtype=test_structure)
 	'''
 	cdef public object type
 	
@@ -209,12 +224,14 @@ cdef class DDTypeExtension(DDType):
 		- have fixed size known at the time of dtype creation (so any array element has the same)
 		- contain only byte copiable data (so nothing particular is done when copying/destroying the objects)
 		
-		WARNING:  These conditions MUST be ensured by the user when declaring an extension type as a dtype
+		WARNING:  
+		
+			These conditions MUST be ensured by the user when declaring an extension type as a dtype, or it will result in memory corruption and crash of the program
 		
 		
 		Example:
 		
-			arrex.declare(vec3, DDTypeExtension(vec3, 'fff', vec3))
+			>>> arrex.declare(vec3, DDTypeExtension(vec3, 'fff', vec3))
 	'''
 	cdef public type type
 	cdef public object constructor
