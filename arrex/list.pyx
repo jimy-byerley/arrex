@@ -42,11 +42,11 @@ cdef class typedlist:
 		
 		Methods added to the signature of list:
 		
-			reserve(n)            reallocate if necessary to make sure n elements can 
-			                      be inserted without reallocation
-			capacity() -> int     return the current number of elements that can be 
-			                      contained without reallocation
-			shrink()              shorten the allocated memory to fit the current content
+			`reserve(n)`            reallocate if necessary to make sure n elements can 
+			                        be inserted without reallocation
+			`capacity() -> int`     return the current number of elements that can be 
+			                        contained without reallocation
+			`shrink()`              shorten the allocated memory to fit the current content
 			
 			also the slices do not copy the content
 		
@@ -54,25 +54,25 @@ cdef class typedlist:
 		Use it as a list:
 		
 			>>> a = typedlist(dtype=vec3)
-			
-			# build from an iterable
+			>>> 
+			>>> # build from an iterable
 			>>> a = typedlist([], dtype=vec3)
-			
-			# append some data
+			>>> 
+			>>> # append some data
 			>>> a.append(vec3(1,2,3))
-			
-			# extend with an iterable
+			>>> 
+			>>> # extend with an iterable
 			>>> a.extend(vec3(i)  for i in range(5))
-			
+			>>> 
 			>>> len(a)	# the current number of elements
 			6
-			
+			>>> 
 			>>> a.owner	# the current data buffer
 			b'.........'
 			
 		Use it as a slice:
 		
-			# no data is copied
+			>>> # no data is copied
 			>>> myslice = a[:5]
 			typedlist(....)
 			
@@ -87,11 +87,11 @@ cdef class typedlist:
 		
 		
 		Constructors:
-		
-			typedlist()
-			typedlist(dtype, reserve=None)
-			typedlist(iterable, dtype, reserve=None)
-			typedlist(buffer, dtype)
+			
+			.. py:function:: typedlist()
+			.. py:function:: typedlist(dtype, reserve=None)
+			.. py:function:: typedlist(iterable, dtype, reserve=None)
+			.. py:function:: typedlist(buffer, dtype)
 			
 		Attributes:
 			
@@ -243,7 +243,9 @@ cdef class typedlist:
 			self._reallocate(asked)
 	
 	cpdef int append(self, value) except -1:
-		''' append the given object at the end of the array
+		''' append(value)
+		
+			append the given object at the end of the array
 		
 			if there is not enough allocated memory, reallocate enough to amortize the realocation time over the multiple appends
 		'''		
@@ -254,7 +256,10 @@ cdef class typedlist:
 		self.size += self.dtype.dsize
 		
 	def pop(self, index=None):
-		''' remove the element at index, returning it. If no index is specified, it will pop the last one '''
+		''' pop(index=None) -> object
+		
+			remove the element at index, returning it. If no index is specified, it will pop the last one .
+		'''
 		cdef size_t i
 		i = self._index(index)	if index is not None else  self._len()
 		
@@ -265,7 +270,10 @@ cdef class typedlist:
 		return e
 		
 	def insert(self, index, value):
-		''' insert value at index '''
+		''' insert(index, value)
+		
+			insert value at index 
+		'''
 		cdef size_t i = self._index(index)
 		
 		if self.allocated - self.size < self.dtype.dsize:
@@ -277,10 +285,14 @@ cdef class typedlist:
 		self.size += self.dtype.dsize
 		
 	def clear(self):
+		''' remove all elements from the array, very fast operation '''
 		self.size = 0
 		
 	cpdef int extend(self, other) except *:
-		''' append all elements from the other array '''
+		''' extend(iterable)
+		
+			append all elements from the other array 
+		'''
 		cdef Py_buffer view
 		cdef Py_ssize_t l
 		
@@ -307,6 +319,7 @@ cdef class typedlist:
 		return self
 		
 	def __add__(typedlist self, other):
+		''' concatenation of two arrays '''
 		cdef typedlist result
 		cdef Py_buffer view
 		
@@ -334,6 +347,7 @@ cdef class typedlist:
 			return NotImplemented
 			
 	def __mul__(self, n):
+		''' duplicate the sequence by a certain number '''
 		#if isinstance(n, int):
 		if PyNumber_Check(<PyObject*>n):
 			return typedlist(bytes(self)*n, dtype=self.dtype)
@@ -359,6 +373,14 @@ cdef class typedlist:
 		return self._len()
 		
 	def __getitem__(self, index):
+		''' self[index]
+		
+			currently supports:
+			
+				- indices
+				- negative indices
+				- slices with step=1
+		'''
 		cdef typedlist view
 		cdef Py_ssize_t start, stop, step
 		
@@ -427,6 +449,7 @@ cdef class typedlist:
 			raise IndexError('index must be int')
 			
 	def __iter__(self):
+		''' yield successive elements in the list '''
 		cdef arrayiter it = arrayiter.__new__(arrayiter)
 		it.array = self
 		it.position = 0
@@ -453,7 +476,7 @@ cdef class typedlist:
 		return self[:]
 		
 	def __deepcopy__(self, memo):
-		''' deep recursive copy,  will duplicate the underlying buffer '''
+		''' deep recursive copy,  will duplicate the viewed data in the underlying buffer '''
 		return typedlist(PyBytes_FromStringAndSize(<char*>self.ptr, self.size), self.dtype)
 		
 	def __reduce_ex__(self, protocol):
@@ -520,7 +543,10 @@ cdef class typedlist:
 		pass
 		
 	def reverse(self):
-		''' reverse the order of elementd contained '''
+		''' reverse()
+		
+			reverse the order of elementd contained 
+		'''
 		cdef void *temp
 		cdef void *first
 		cdef void *last
@@ -538,7 +564,10 @@ cdef class typedlist:
 		PyMem_Free(temp)
 		
 	def index(self, value):
-		''' return the index of the first element binarily equal to the given one '''
+		''' index(value)
+		
+			return the index of the first element binarily equal to the given one 
+		'''
 		cdef size_t i, j
 		cdef char *data
 		cdef char *val

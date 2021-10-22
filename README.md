@@ -8,6 +8,13 @@ The elements can be many different things, there is just 2 requirements:
 - they must be of a fixed binary size
 - they must be byte copiable, therefore without any reference or pointer to something else
 
+### interests
+
+- much smaller memory footprint (an arrex array is at most 30x smaller than pure python data storage)
+- content can be directly shared with compiled code which improves computation performances
+- slice & view without a copy
+- compatible with standard python libraries
+
 ### basic usage:
 
 ```python
@@ -55,6 +62,9 @@ it can be a more complex type, from module `pyglm` for instance
 
 >>> a.owner	# the current data buffer
 b'.........'
+
+>>> a[0]
+vec3(1,2,3)
 ```
 
 ### Use it as a slice:
