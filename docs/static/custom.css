@@ -309,6 +309,11 @@ a:visited { /* links visited */
 /* sphinx roles - funnction headers and all markups */
 
 /* module items */
+/* signature names */
+.sig-name {
+    color: #e3e3e3 !important;
+}
+/* signature boxes */
 .rst-content dl.class > dt,
 .rst-content dl.function > dt,
 .rst-content dl.data > dt,
