@@ -75,6 +75,9 @@ assert len(pick) == 2
 nprint(pick)
 for e in array[10:n]: pass
 
+array[2:3] = [glm.dvec4(-42), glm.dvec4(-43), glm.dvec4(-44)]
+assert len(array) == 2*n+4
+
 # test array conversion
 print('\n* np array')
 import numpy.core as np

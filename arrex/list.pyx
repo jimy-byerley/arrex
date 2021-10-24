@@ -163,13 +163,13 @@ cdef class typedlist:
 				self.extend(iterable)
 				
 	@staticmethod
-	def full(value, size):
+	def full(value, size, dtype=None):
 		''' full(value, size)
 		
 			create a new typedlist with the given `size`, all elements initialized to `value`. 
 		'''
 		cdef ssize_t i
-		cdef typedlist array = typedlist(dtype=type(value), reserve=size)
+		cdef typedlist array = typedlist(dtype=dtype or type(value), reserve=size)
 		for i in range(size):
 			array._setitem(array.ptr + i*array.dtype.dsize, value)
 		array.size = array.allocated
@@ -409,6 +409,7 @@ cdef class typedlist:
 	def __setitem__(self, index, value):
 		cdef Py_buffer view
 		cdef Py_ssize_t start, stop, step
+		cdef size_t newsize
 		
 		#if isinstance(index, int):
 		if PyNumber_Check(<PyObject*>index):
@@ -431,9 +432,13 @@ cdef class typedlist:
 					if view.len % self.dtype.dsize:
 						PyBuffer_Release(&view)
 						raise TypeError('the given buffer must have a size multiple of dtype size')
-					if view.len - (stop-start) >  (<ssize_t> self.allocated):
-						self._reallocate(self.size+view.len)
-					memmove(self.ptr+view.len, self.ptr+stop, self.size-stop)
+					
+					newsize = self.size + view.len - (stop-start)
+					if newsize >  self.allocated:
+						self._reallocate(max(2*self.size, newsize))
+					
+					memmove(self.ptr+start+view.len, self.ptr+stop, self.size-stop)
+					self.size = newsize
 				
 				memcpy(self.ptr+start, view.buf, view.len)
 				
