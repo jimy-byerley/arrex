@@ -1,22 +1,20 @@
 # cython: language_level=3, cdivision=True
 
 cimport cython
-from cpython cimport PyObject, PyTypeObject, Py_buffer, PyObject_Length, Py_INCREF
+from cpython cimport PyObject, PyTypeObject, Py_buffer, Py_INCREF, Py_DECREF, Py_XDECREF, PyObject_Length
 from cpython.mem cimport PyMem_Malloc, PyMem_Realloc, PyMem_Free
 from cpython.buffer cimport PyBUF_SIMPLE, PyBUF_ND, PyBUF_FORMAT, PyObject_CheckBuffer, PyObject_GetBuffer, PyBuffer_Release
+from cpython.bytes cimport PyBytes_FromStringAndSize, PyBytes_AsString, PyBytes_AS_STRING
+from cpython.slice cimport PySlice_Unpack, PySlice_AdjustIndices
+from cpython.number cimport PyNumber_Check
 from libc.string cimport memcpy, memmove, memcmp
 
 import struct
 from pickle import PickleBuffer
+import sys
 
 cdef extern from "Python.h":
-	object PyBytes_FromStringAndSize(const char *v, Py_ssize_t len)
-	char *PyBytes_AsString(object)
-	char *PyBytes_AS_STRING(object)
-	int PySlice_Unpack(object slice, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t *step)
-	Py_ssize_t PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t *start, Py_ssize_t *stop, Py_ssize_t step)
 	Py_ssize_t PyObject_LengthHint(object o, Py_ssize_t default)
-	int PyNumber_Check(PyObject *o)
 
 
 from .dtypes cimport *
@@ -31,6 +29,15 @@ cdef extern from *:
 	}
 	"""
 	void assign_buffer_obj(Py_buffer* buf, object o)
+	
+cdef extern from *:
+	"""
+	void release_buffer_obj(Py_buffer* buf) {
+		if (buf->obj != NULL)
+			Py_DECREF(buf->obj);
+	}
+	"""
+	void release_buffer_obj(Py_buffer* buf)
 
 
 	
@@ -140,6 +147,7 @@ cdef class typedlist:
 				raise ValueError('iterable is empty')
 		
 		# initialize the internal structure
+		self.owner = None
 		self.ptr = NULL
 		self.size = 0
 		self.allocated = 0
@@ -185,6 +193,7 @@ cdef class typedlist:
 		array.size = array.allocated
 		return array
 	
+	
 	# convenient internal functions
 	
 	cdef object _getitem(self, void* place):
@@ -196,21 +205,22 @@ cdef class typedlist:
 	cdef int _use(self, buffer) except -1:
 		cdef Py_buffer view
 		
-		assign_buffer_obj(&view, None)
 		PyObject_GetBuffer(buffer, &view, PyBUF_SIMPLE)
 		self.ptr = view.buf
 		self.allocated = view.len
-		self.owner = buffer
+		self.owner = view.obj
 		PyBuffer_Release(&view)
 		
 	cdef int _reallocate(self, size_t size) except -1:
 		lastowner = self.owner
 		lastptr = self.ptr
 		
-		#self._use(bytes(size))		# buffer protocol is less efficient than PyBytes_AS_STRING
-		self.owner = bytes(size)
+		# buffer protocol is less efficient that PyBytes_AS_STRING so we use it directly here where we know that owner is bytes
+		self.owner = PyBytes_FromStringAndSize(NULL, size)
 		self.ptr = PyBytes_AS_STRING(self.owner)
 		self.allocated = size
+		
+		#print('** reallocate', sys.getrefcount(self.owner), sys.getrefcount(lastowner), lastowner is None)
 		
 		self.size = min(size, self.size)
 		memcpy(self.ptr, lastptr, self.size)
@@ -297,7 +307,6 @@ cdef class typedlist:
 		cdef Py_ssize_t l
 		
 		if PyObject_CheckBuffer(other):
-			assign_buffer_obj(&view, None)
 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)
 			
 			if <size_t>view.len > self.allocated - self.size:
@@ -309,8 +318,8 @@ cdef class typedlist:
 			
 		else:
 			l = PyObject_LengthHint(other, 0)
-			if l >= 0 and l*self.dtype.dsize > self.allocated - self.size:
-				self._reallocate(max(2*self.size, self.size + l*self.dtype.dsize))
+			if l > 0 and l*self.dtype.dsize > self.allocated - self.size:
+				self._reallocate(self.size + l*self.dtype.dsize)
 			for o in other:
 				self.append(o)
 				
@@ -324,7 +333,6 @@ cdef class typedlist:
 		cdef Py_buffer view
 		
 		if PyObject_CheckBuffer(other):
-			assign_buffer_obj(&view, None)
 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)
 			
 			result = typedlist.__new__(typedlist)
@@ -349,7 +357,7 @@ cdef class typedlist:
 	def __mul__(self, n):
 		''' duplicate the sequence by a certain number '''
 		#if isinstance(n, int):
-		if PyNumber_Check(<PyObject*>n):
+		if PyNumber_Check(n):
 			return typedlist(bytes(self)*n, dtype=self.dtype)
 		else:
 			return NotImplemented
@@ -385,7 +393,7 @@ cdef class typedlist:
 		cdef Py_ssize_t start, stop, step
 		
 		#if isinstance(index, int):
-		if PyNumber_Check(<PyObject*>index):
+		if PyNumber_Check(index):
 			return self._getitem(self.ptr + self._index(index)*self.dtype.dsize)
 		
 		elif isinstance(index, slice):
@@ -412,7 +420,7 @@ cdef class typedlist:
 		cdef size_t newsize
 		
 		#if isinstance(index, int):
-		if PyNumber_Check(<PyObject*>index):
+		if PyNumber_Check(index):
 			self._setitem(self.ptr + self._index(index)*self.dtype.dsize, value)
 			
 		elif isinstance(index, slice):
@@ -423,7 +431,6 @@ cdef class typedlist:
 			PySlice_AdjustIndices(self._len(), &start, &stop, step)
 			
 			if PyObject_CheckBuffer(value):
-				assign_buffer_obj(&view, None)
 				PyObject_GetBuffer(value, &view, PyBUF_SIMPLE)
 				start *= self.dtype.dsize
 				stop *= self.dtype.dsize
@@ -487,16 +494,19 @@ cdef class typedlist:
 	def __reduce_ex__(self, protocol):
 		''' serialization protocol '''
 		cdef Py_buffer view
+		
+		print('reduce_ex')
 			
 		if protocol >= 5:
-			assign_buffer_obj(&view, None)
 			PyObject_GetBuffer(self.owner, &view, PyBUF_SIMPLE)
-			return self._rebuild, (
+			stuff = (
 						PickleBuffer(self.owner), 
 						self.dtype, 
 						self.ptr-view.buf, 
 						self.size,
-						), 	None
+						)
+			PyBuffer_Release(&view)
+			return self._rebuild, stuff, None
 		else:
 			return self._rebuild, (
 						PyBytes_FromStringAndSize(<char*>self.ptr, self.size), 
@@ -507,6 +517,7 @@ cdef class typedlist:
 	
 	@classmethod
 	def _rebuild(cls, owner, dtype, size_t start, size_t size):
+		print('_rebuild')
 		new = typedlist(owner, dtype)
 		assert start <= size
 		assert size <= new.size
@@ -519,6 +530,7 @@ cdef class typedlist:
 		exp.owner = self.owner
 		exp.shape[0] = self._len()
 	
+		assign_buffer_obj(view, None)
 		view.obj = exp
 		view.buf = self.ptr
 		view.len = self.size
@@ -545,7 +557,10 @@ cdef class typedlist:
 			
 		
 	def __releasebuffer__(self, Py_buffer *view):
-		pass
+		cdef arrayexposer exp = view.obj
+		print('** release buffer', sys.getrefcount(exp.owner))
+		exp.owner = None
+		view.obj = None
 		
 	def reverse(self):
 		''' reverse()
@@ -587,9 +602,11 @@ cdef class typedlist:
 			while data[i+j] == val[j] and j < self.dtype.dsize:
 				j += 1
 			if j == self.dtype.dsize:
+				PyMem_Free(val)
 				return i//self.dtype.dsize
 			i += self.dtype.dsize
-				
+			
+		PyMem_Free(val)
 		raise IndexError('value not found')
 			
 			
