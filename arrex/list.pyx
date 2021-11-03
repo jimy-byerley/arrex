@@ -8,6 +8,7 @@ from cpython.bytes cimport PyBytes_FromStringAndSize, PyBytes_AsString, PyBytes_
 from cpython.slice cimport PySlice_Unpack, PySlice_AdjustIndices
 from cpython.number cimport PyNumber_Check
 from libc.string cimport memcpy, memmove, memcmp
+from libc.stdlib cimport malloc, free
 
 import struct
 from pickle import PickleBuffer
@@ -197,10 +198,10 @@ cdef class typedlist:
 	# convenient internal functions
 	
 	cdef object _getitem(self, void* place):
-		return <object> self.dtype.c_unpack(<PyObject*>self.dtype, <PyObject*> place)
+		return self.dtype.c_unpack(self.dtype, place)
 		
 	cdef int _setitem(self, void* place, obj) except -1:
-		return self.dtype.c_pack(<PyObject*>self.dtype, place, <PyObject*> obj)
+		return self.dtype.c_pack(self.dtype, place, obj)
 	
 	cdef int _use(self, buffer) except -1:
 		cdef Py_buffer view
@@ -216,8 +217,11 @@ cdef class typedlist:
 		lastptr = self.ptr
 		
 		# buffer protocol is less efficient that PyBytes_AS_STRING so we use it directly here where we know that owner is bytes
-		self.owner = PyBytes_FromStringAndSize(NULL, size)
-		self.ptr = PyBytes_AS_STRING(self.owner)
+		#self.owner = PyBytes_FromStringAndSize(NULL, size)
+		#self.ptr = PyBytes_AS_STRING(self.owner)
+		cdef buffer buff = buffer(size)
+		self.owner = buff
+		self.ptr = buff.ptr
 		self.allocated = size
 		
 		#print('** reallocate', sys.getrefcount(self.owner), sys.getrefcount(lastowner), lastowner is None)
@@ -634,3 +638,32 @@ cdef class arrayiter:
 		item = self.array._getitem(self.array.ptr + self.position)
 		self.position += self.array.dtype.dsize
 		return item
+
+		
+cdef size_t buffer_id = 0
+cdef size_t buffer_count = 0
+
+cdef class buffer:
+	cdef void* ptr
+	cdef readonly size_t size
+	cdef size_t id
+	
+	def __cinit__(self, size_t size):
+		global buffer_id, buffer_count
+		self.id = buffer_id
+		buffer_id += 1
+		buffer_count += 1
+		print('allocate', self.id, size)
+		
+		self.ptr = PyMem_Malloc(size)
+		self.size = size
+		
+	def __dealloc__(self):
+		global buffer_id, buffer_count
+		buffer_count -= 1
+		PyMem_Free(self.ptr)
+		self.ptr = NULL
+		print('deallocate', self.id, buffer_count)
+		
+	def __len__(self):
+		return self.size
