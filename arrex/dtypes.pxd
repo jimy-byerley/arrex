@@ -8,8 +8,8 @@
 cimport cython
 from cpython cimport PyObject
 
-ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*) except -1
-ctypedef PyObject* (*c_unpack_t) (PyObject*, void*) except NULL
+ctypedef int (*c_pack_t) (object, void*, object) except -1
+ctypedef object (*c_unpack_t) (object, void*)
 
 cdef class DDType:
 	''' base class for a dtype, But you should use on of its specialization instead '''
@@ -18,6 +18,12 @@ cdef class DDType:
 	cdef c_unpack_t c_unpack 	# pointer to the function that create the python object using a buffer content
 	cdef public bytes layout    # (optional)  element layout following specifications in module `struct`
 	cdef public object key      # value to return when one asks an array for its dtype (it can be the current class itself, or any hashable value representing it)
+	
+	'''
+	Just a piece of recommendation:
+		
+	- the method/function used to put in c_pack and c_unpack, MUST use type <object> as argument and return type, or it will wrongly increment/decrement its refcount and make a memory leak or a segfault
+	'''
 
 	
 cpdef DDType declare(key, DDType dtype=*)
