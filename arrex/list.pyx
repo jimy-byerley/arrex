@@ -279,7 +279,7 @@ cdef class typedlist:
 		
 		cdef void * start = self.ptr + i*self.dtype.dsize
 		e = self._getitem(start)
-		memmove(start, start + self.dtype.dsize, self.size-(i-1)*self.dtype.dsize)
+		memmove(start, start + self.dtype.dsize, self.size-(i+1)*self.dtype.dsize)
 		self.size -= self.dtype.dsize
 		return e
 		
@@ -442,7 +442,7 @@ cdef class typedlist:
 				if view.len != stop-start:
 					if view.len % self.dtype.dsize:
 						PyBuffer_Release(&view)
-						raise TypeError('the given buffer must have a size multiple of dtype size')
+						raise TypeError('the given buffer must have a byte size multiple of dtype size')
 					
 					newsize = self.size + view.len - (stop-start)
 					if newsize >  self.allocated:
