@@ -854,22 +854,22 @@ struct __pyx_opt_args_5arrex_6dtypes_declare;
 /* "dtypes.pxd":11
  * from cpython cimport PyObject
  * 
- * ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*) except -1             # <<<<<<<<<<<<<<
- * ctypedef PyObject* (*c_unpack_t) (PyObject*, void*) except NULL
+ * ctypedef int (*c_pack_t) (object, void*, object) except -1             # <<<<<<<<<<<<<<
+ * ctypedef object (*c_unpack_t) (object, void*)
  * 
  */
 typedef int (*__pyx_t_5arrex_6dtypes_c_pack_t)(PyObject *, void *, PyObject *);
 
 /* "dtypes.pxd":12
  * 
- * ctypedef int (*c_pack_t) (PyObject*, void*, PyObject*) except -1
- * ctypedef PyObject* (*c_unpack_t) (PyObject*, void*) except NULL             # <<<<<<<<<<<<<<
+ * ctypedef int (*c_pack_t) (object, void*, object) except -1
+ * ctypedef object (*c_unpack_t) (object, void*)             # <<<<<<<<<<<<<<
  * 
  * cdef class DDType:
  */
 typedef PyObject *(*__pyx_t_5arrex_6dtypes_c_unpack_t)(PyObject *, void *);
 
-/* "dtypes.pxd":23
+/* "dtypes.pxd":29
  * 
  * 
  * cpdef DDType declare(key, DDType dtype=*)             # <<<<<<<<<<<<<<
@@ -881,7 +881,7 @@ struct __pyx_opt_args_5arrex_6dtypes_declare {
 };
 
 /* "dtypes.pxd":14
- * ctypedef PyObject* (*c_unpack_t) (PyObject*, void*) except NULL
+ * ctypedef object (*c_unpack_t) (object, void*)
  * 
  * cdef class DDType:             # <<<<<<<<<<<<<<
  * 	''' base class for a dtype, But you should use on of its specialization instead '''
@@ -1353,12 +1353,12 @@ static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_test;
 /* Late includes */
 
-/* "arrex/numbers.pyx":14
+/* "arrex/numbers.pyx":13
  * ### declare double
  * 
- * cdef int pack_d(PyObject* dtype, double* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_d(object dtype, double* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_d(PyObject* dtype, double* place):
+ * cdef object unpack_d(object dtype, double* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_d(CYTHON_UNUSED PyObject *__pyx_v_dtype, double *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -1370,22 +1370,22 @@ static int __pyx_f_5arrex_7numbers_pack_d(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_d", 0);
 
-  /* "arrex/numbers.pyx":15
+  /* "arrex/numbers.pyx":14
  * 
- * cdef int pack_d(PyObject* dtype, double* place, object obj) except -1:
+ * cdef int pack_d(object dtype, double* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_d(PyObject* dtype, double* place):
+ * cdef object unpack_d(object dtype, double* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_obj); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_obj); if (unlikely((__pyx_t_1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":14
+  /* "arrex/numbers.pyx":13
  * ### declare double
  * 
- * cdef int pack_d(PyObject* dtype, double* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_d(object dtype, double* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_d(PyObject* dtype, double* place):
+ * cdef object unpack_d(object dtype, double* place):
  */
 
   /* function exit code */
@@ -1399,10 +1399,10 @@ static int __pyx_f_5arrex_7numbers_pack_d(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":16
- * cdef int pack_d(PyObject* dtype, double* place, object obj) except -1:
+/* "arrex/numbers.pyx":15
+ * cdef int pack_d(object dtype, double* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_d(PyObject* dtype, double* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_d(object dtype, double* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1416,24 +1416,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_d(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_d", 0);
 
-  /* "arrex/numbers.pyx":17
+  /* "arrex/numbers.pyx":16
  * 	place[0] = obj
- * cdef object unpack_d(PyObject* dtype, double* place):
+ * cdef object unpack_d(object dtype, double* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":16
- * cdef int pack_d(PyObject* dtype, double* place, object obj) except -1:
+  /* "arrex/numbers.pyx":15
+ * cdef int pack_d(object dtype, double* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_d(PyObject* dtype, double* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_d(object dtype, double* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1449,12 +1449,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_d(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":30
+/* "arrex/numbers.pyx":29
  * ### declare float
  * 
- * cdef int pack_f(PyObject* dtype, float* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_f(object dtype, float* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_f(PyObject* dtype, float* place):
+ * cdef object unpack_f(object dtype, float* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_f(CYTHON_UNUSED PyObject *__pyx_v_dtype, float *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -1466,22 +1466,22 @@ static int __pyx_f_5arrex_7numbers_pack_f(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_f", 0);
 
-  /* "arrex/numbers.pyx":31
+  /* "arrex/numbers.pyx":30
  * 
- * cdef int pack_f(PyObject* dtype, float* place, object obj) except -1:
+ * cdef int pack_f(object dtype, float* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_f(PyObject* dtype, float* place):
+ * cdef object unpack_f(object dtype, float* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_obj); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_obj); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":30
+  /* "arrex/numbers.pyx":29
  * ### declare float
  * 
- * cdef int pack_f(PyObject* dtype, float* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_f(object dtype, float* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_f(PyObject* dtype, float* place):
+ * cdef object unpack_f(object dtype, float* place):
  */
 
   /* function exit code */
@@ -1495,10 +1495,10 @@ static int __pyx_f_5arrex_7numbers_pack_f(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":32
- * cdef int pack_f(PyObject* dtype, float* place, object obj) except -1:
+/* "arrex/numbers.pyx":31
+ * cdef int pack_f(object dtype, float* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_f(PyObject* dtype, float* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_f(object dtype, float* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1512,24 +1512,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_f(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_f", 0);
 
-  /* "arrex/numbers.pyx":33
+  /* "arrex/numbers.pyx":32
  * 	place[0] = obj
- * cdef object unpack_f(PyObject* dtype, float* place):
+ * cdef object unpack_f(object dtype, float* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":32
- * cdef int pack_f(PyObject* dtype, float* place, object obj) except -1:
+  /* "arrex/numbers.pyx":31
+ * cdef int pack_f(object dtype, float* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_f(PyObject* dtype, float* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_f(object dtype, float* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1545,12 +1545,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_f(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":46
+/* "arrex/numbers.pyx":45
  * ### declare int8_t
  * 
- * cdef int pack_b(PyObject* dtype, int8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_b(object dtype, int8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_b(PyObject* dtype, int8_t* place):
+ * cdef object unpack_b(object dtype, int8_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_b(CYTHON_UNUSED PyObject *__pyx_v_dtype, int8_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -1562,22 +1562,22 @@ static int __pyx_f_5arrex_7numbers_pack_b(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_b", 0);
 
-  /* "arrex/numbers.pyx":47
+  /* "arrex/numbers.pyx":46
  * 
- * cdef int pack_b(PyObject* dtype, int8_t* place, object obj) except -1:
+ * cdef int pack_b(object dtype, int8_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_b(PyObject* dtype, int8_t* place):
+ * cdef object unpack_b(object dtype, int8_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int8_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int8_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 46, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":46
+  /* "arrex/numbers.pyx":45
  * ### declare int8_t
  * 
- * cdef int pack_b(PyObject* dtype, int8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_b(object dtype, int8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_b(PyObject* dtype, int8_t* place):
+ * cdef object unpack_b(object dtype, int8_t* place):
  */
 
   /* function exit code */
@@ -1591,10 +1591,10 @@ static int __pyx_f_5arrex_7numbers_pack_b(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":48
- * cdef int pack_b(PyObject* dtype, int8_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":47
+ * cdef int pack_b(object dtype, int8_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_b(PyObject* dtype, int8_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_b(object dtype, int8_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1608,24 +1608,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_b(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_b", 0);
 
-  /* "arrex/numbers.pyx":49
+  /* "arrex/numbers.pyx":48
  * 	place[0] = obj
- * cdef object unpack_b(PyObject* dtype, int8_t* place):
+ * cdef object unpack_b(object dtype, int8_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int8_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int8_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":48
- * cdef int pack_b(PyObject* dtype, int8_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":47
+ * cdef int pack_b(object dtype, int8_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_b(PyObject* dtype, int8_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_b(object dtype, int8_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1641,12 +1641,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_b(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":62
+/* "arrex/numbers.pyx":61
  * ### declare uint8_t
  * 
- * cdef int pack_B(PyObject* dtype, uint8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_B(object dtype, uint8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_B(PyObject* dtype, uint8_t* place):
+ * cdef object unpack_B(object dtype, uint8_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_B(CYTHON_UNUSED PyObject *__pyx_v_dtype, uint8_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -1658,22 +1658,22 @@ static int __pyx_f_5arrex_7numbers_pack_B(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_B", 0);
 
-  /* "arrex/numbers.pyx":63
+  /* "arrex/numbers.pyx":62
  * 
- * cdef int pack_B(PyObject* dtype, uint8_t* place, object obj) except -1:
+ * cdef int pack_B(object dtype, uint8_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_B(PyObject* dtype, uint8_t* place):
+ * cdef object unpack_B(object dtype, uint8_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint8_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint8_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 62, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":62
+  /* "arrex/numbers.pyx":61
  * ### declare uint8_t
  * 
- * cdef int pack_B(PyObject* dtype, uint8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_B(object dtype, uint8_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_B(PyObject* dtype, uint8_t* place):
+ * cdef object unpack_B(object dtype, uint8_t* place):
  */
 
   /* function exit code */
@@ -1687,10 +1687,10 @@ static int __pyx_f_5arrex_7numbers_pack_B(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":64
- * cdef int pack_B(PyObject* dtype, uint8_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":63
+ * cdef int pack_B(object dtype, uint8_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_B(PyObject* dtype, uint8_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_B(object dtype, uint8_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1704,24 +1704,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_B(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_B", 0);
 
-  /* "arrex/numbers.pyx":65
+  /* "arrex/numbers.pyx":64
  * 	place[0] = obj
- * cdef object unpack_B(PyObject* dtype, uint8_t* place):
+ * cdef object unpack_B(object dtype, uint8_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint8_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint8_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":64
- * cdef int pack_B(PyObject* dtype, uint8_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":63
+ * cdef int pack_B(object dtype, uint8_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_B(PyObject* dtype, uint8_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_B(object dtype, uint8_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1737,12 +1737,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_B(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":78
+/* "arrex/numbers.pyx":77
  * ### declare int16_t
  * 
- * cdef int pack_h(PyObject* dtype, int16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_h(object dtype, int16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_h(PyObject* dtype, int16_t* place):
+ * cdef object unpack_h(object dtype, int16_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_h(CYTHON_UNUSED PyObject *__pyx_v_dtype, int16_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -1754,22 +1754,22 @@ static int __pyx_f_5arrex_7numbers_pack_h(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_h", 0);
 
-  /* "arrex/numbers.pyx":79
+  /* "arrex/numbers.pyx":78
  * 
- * cdef int pack_h(PyObject* dtype, int16_t* place, object obj) except -1:
+ * cdef int pack_h(object dtype, int16_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_h(PyObject* dtype, int16_t* place):
+ * cdef object unpack_h(object dtype, int16_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int16_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int16_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int16_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int16_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 78, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":78
+  /* "arrex/numbers.pyx":77
  * ### declare int16_t
  * 
- * cdef int pack_h(PyObject* dtype, int16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_h(object dtype, int16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_h(PyObject* dtype, int16_t* place):
+ * cdef object unpack_h(object dtype, int16_t* place):
  */
 
   /* function exit code */
@@ -1783,10 +1783,10 @@ static int __pyx_f_5arrex_7numbers_pack_h(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":80
- * cdef int pack_h(PyObject* dtype, int16_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":79
+ * cdef int pack_h(object dtype, int16_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_h(PyObject* dtype, int16_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_h(object dtype, int16_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1800,24 +1800,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_h(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_h", 0);
 
-  /* "arrex/numbers.pyx":81
+  /* "arrex/numbers.pyx":80
  * 	place[0] = obj
- * cdef object unpack_h(PyObject* dtype, int16_t* place):
+ * cdef object unpack_h(object dtype, int16_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int16_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int16_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":80
- * cdef int pack_h(PyObject* dtype, int16_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":79
+ * cdef int pack_h(object dtype, int16_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_h(PyObject* dtype, int16_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_h(object dtype, int16_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1833,12 +1833,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_h(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":94
+/* "arrex/numbers.pyx":93
  * ### declare uint16_t
  * 
- * cdef int pack_H(PyObject* dtype, uint16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_H(object dtype, uint16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_H(PyObject* dtype, uint16_t* place):
+ * cdef object unpack_H(object dtype, uint16_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_H(CYTHON_UNUSED PyObject *__pyx_v_dtype, uint16_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -1850,22 +1850,22 @@ static int __pyx_f_5arrex_7numbers_pack_H(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_H", 0);
 
-  /* "arrex/numbers.pyx":95
+  /* "arrex/numbers.pyx":94
  * 
- * cdef int pack_H(PyObject* dtype, uint16_t* place, object obj) except -1:
+ * cdef int pack_H(object dtype, uint16_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_H(PyObject* dtype, uint16_t* place):
+ * cdef object unpack_H(object dtype, uint16_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint16_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint16_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint16_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint16_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 94, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":94
+  /* "arrex/numbers.pyx":93
  * ### declare uint16_t
  * 
- * cdef int pack_H(PyObject* dtype, uint16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_H(object dtype, uint16_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_H(PyObject* dtype, uint16_t* place):
+ * cdef object unpack_H(object dtype, uint16_t* place):
  */
 
   /* function exit code */
@@ -1879,10 +1879,10 @@ static int __pyx_f_5arrex_7numbers_pack_H(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":96
- * cdef int pack_H(PyObject* dtype, uint16_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":95
+ * cdef int pack_H(object dtype, uint16_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_H(PyObject* dtype, uint16_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_H(object dtype, uint16_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1896,24 +1896,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_H(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_H", 0);
 
-  /* "arrex/numbers.pyx":97
+  /* "arrex/numbers.pyx":96
  * 	place[0] = obj
- * cdef object unpack_H(PyObject* dtype, uint16_t* place):
+ * cdef object unpack_H(object dtype, uint16_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint16_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint16_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":96
- * cdef int pack_H(PyObject* dtype, uint16_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":95
+ * cdef int pack_H(object dtype, uint16_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_H(PyObject* dtype, uint16_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_H(object dtype, uint16_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1929,12 +1929,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_H(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":110
+/* "arrex/numbers.pyx":109
  * ### declare int32_t
  * 
- * cdef int pack_i(PyObject* dtype, int32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_i(object dtype, int32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_i(PyObject* dtype, int32_t* place):
+ * cdef object unpack_i(object dtype, int32_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_i(CYTHON_UNUSED PyObject *__pyx_v_dtype, int32_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -1946,22 +1946,22 @@ static int __pyx_f_5arrex_7numbers_pack_i(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_i", 0);
 
-  /* "arrex/numbers.pyx":111
+  /* "arrex/numbers.pyx":110
  * 
- * cdef int pack_i(PyObject* dtype, int32_t* place, object obj) except -1:
+ * cdef int pack_i(object dtype, int32_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_i(PyObject* dtype, int32_t* place):
+ * cdef object unpack_i(object dtype, int32_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int32_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int32_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":110
+  /* "arrex/numbers.pyx":109
  * ### declare int32_t
  * 
- * cdef int pack_i(PyObject* dtype, int32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_i(object dtype, int32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_i(PyObject* dtype, int32_t* place):
+ * cdef object unpack_i(object dtype, int32_t* place):
  */
 
   /* function exit code */
@@ -1975,10 +1975,10 @@ static int __pyx_f_5arrex_7numbers_pack_i(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":112
- * cdef int pack_i(PyObject* dtype, int32_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":111
+ * cdef int pack_i(object dtype, int32_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_i(PyObject* dtype, int32_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_i(object dtype, int32_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -1992,24 +1992,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_i(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_i", 0);
 
-  /* "arrex/numbers.pyx":113
+  /* "arrex/numbers.pyx":112
  * 	place[0] = obj
- * cdef object unpack_i(PyObject* dtype, int32_t* place):
+ * cdef object unpack_i(object dtype, int32_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int32_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":112
- * cdef int pack_i(PyObject* dtype, int32_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":111
+ * cdef int pack_i(object dtype, int32_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_i(PyObject* dtype, int32_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_i(object dtype, int32_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -2025,12 +2025,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_i(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":126
+/* "arrex/numbers.pyx":125
  * ### declare uint32_t
  * 
- * cdef int pack_I(PyObject* dtype, uint32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_I(object dtype, uint32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_I(PyObject* dtype, uint32_t* place):
+ * cdef object unpack_I(object dtype, uint32_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_I(CYTHON_UNUSED PyObject *__pyx_v_dtype, uint32_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -2042,22 +2042,22 @@ static int __pyx_f_5arrex_7numbers_pack_I(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_I", 0);
 
-  /* "arrex/numbers.pyx":127
+  /* "arrex/numbers.pyx":126
  * 
- * cdef int pack_I(PyObject* dtype, uint32_t* place, object obj) except -1:
+ * cdef int pack_I(object dtype, uint32_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_I(PyObject* dtype, uint32_t* place):
+ * cdef object unpack_I(object dtype, uint32_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 126, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":126
+  /* "arrex/numbers.pyx":125
  * ### declare uint32_t
  * 
- * cdef int pack_I(PyObject* dtype, uint32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_I(object dtype, uint32_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_I(PyObject* dtype, uint32_t* place):
+ * cdef object unpack_I(object dtype, uint32_t* place):
  */
 
   /* function exit code */
@@ -2071,10 +2071,10 @@ static int __pyx_f_5arrex_7numbers_pack_I(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":128
- * cdef int pack_I(PyObject* dtype, uint32_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":127
+ * cdef int pack_I(object dtype, uint32_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_I(PyObject* dtype, uint32_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_I(object dtype, uint32_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -2088,24 +2088,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_I(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_I", 0);
 
-  /* "arrex/numbers.pyx":129
+  /* "arrex/numbers.pyx":128
  * 	place[0] = obj
- * cdef object unpack_I(PyObject* dtype, uint32_t* place):
+ * cdef object unpack_I(object dtype, uint32_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":128
- * cdef int pack_I(PyObject* dtype, uint32_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":127
+ * cdef int pack_I(object dtype, uint32_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_I(PyObject* dtype, uint32_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_I(object dtype, uint32_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -2121,12 +2121,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_I(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":142
+/* "arrex/numbers.pyx":141
  * ### declare int64_t
  * 
- * cdef int pack_l(PyObject* dtype, int64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_l(object dtype, int64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_l(PyObject* dtype, int64_t* place):
+ * cdef object unpack_l(object dtype, int64_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_l(CYTHON_UNUSED PyObject *__pyx_v_dtype, int64_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -2138,22 +2138,22 @@ static int __pyx_f_5arrex_7numbers_pack_l(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_l", 0);
 
-  /* "arrex/numbers.pyx":143
+  /* "arrex/numbers.pyx":142
  * 
- * cdef int pack_l(PyObject* dtype, int64_t* place, object obj) except -1:
+ * cdef int pack_l(object dtype, int64_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_l(PyObject* dtype, int64_t* place):
+ * cdef object unpack_l(object dtype, int64_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int64_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 143, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int64_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 142, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":142
+  /* "arrex/numbers.pyx":141
  * ### declare int64_t
  * 
- * cdef int pack_l(PyObject* dtype, int64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_l(object dtype, int64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_l(PyObject* dtype, int64_t* place):
+ * cdef object unpack_l(object dtype, int64_t* place):
  */
 
   /* function exit code */
@@ -2167,10 +2167,10 @@ static int __pyx_f_5arrex_7numbers_pack_l(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":144
- * cdef int pack_l(PyObject* dtype, int64_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":143
+ * cdef int pack_l(object dtype, int64_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_l(PyObject* dtype, int64_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_l(object dtype, int64_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -2184,24 +2184,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_l(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_l", 0);
 
-  /* "arrex/numbers.pyx":145
+  /* "arrex/numbers.pyx":144
  * 	place[0] = obj
- * cdef object unpack_l(PyObject* dtype, int64_t* place):
+ * cdef object unpack_l(object dtype, int64_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":144
- * cdef int pack_l(PyObject* dtype, int64_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":143
+ * cdef int pack_l(object dtype, int64_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_l(PyObject* dtype, int64_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_l(object dtype, int64_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -2217,12 +2217,12 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_l(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":158
+/* "arrex/numbers.pyx":157
  * ### declare uint64_t
  * 
- * cdef int pack_L(PyObject* dtype, uint64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_L(object dtype, uint64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_L(PyObject* dtype, uint64_t* place):
+ * cdef object unpack_L(object dtype, uint64_t* place):
  */
 
 static int __pyx_f_5arrex_7numbers_pack_L(CYTHON_UNUSED PyObject *__pyx_v_dtype, uint64_t *__pyx_v_place, PyObject *__pyx_v_obj) {
@@ -2234,22 +2234,22 @@ static int __pyx_f_5arrex_7numbers_pack_L(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("pack_L", 0);
 
-  /* "arrex/numbers.pyx":159
+  /* "arrex/numbers.pyx":158
  * 
- * cdef int pack_L(PyObject* dtype, uint64_t* place, object obj) except -1:
+ * cdef int pack_L(object dtype, uint64_t* place, object obj) except -1:
  * 	place[0] = obj             # <<<<<<<<<<<<<<
- * cdef object unpack_L(PyObject* dtype, uint64_t* place):
+ * cdef object unpack_L(object dtype, uint64_t* place):
  * 	return place[0]
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint64_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 159, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint64_t(__pyx_v_obj); if (unlikely((__pyx_t_1 == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
   (__pyx_v_place[0]) = __pyx_t_1;
 
-  /* "arrex/numbers.pyx":158
+  /* "arrex/numbers.pyx":157
  * ### declare uint64_t
  * 
- * cdef int pack_L(PyObject* dtype, uint64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
+ * cdef int pack_L(object dtype, uint64_t* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 	place[0] = obj
- * cdef object unpack_L(PyObject* dtype, uint64_t* place):
+ * cdef object unpack_L(object dtype, uint64_t* place):
  */
 
   /* function exit code */
@@ -2263,10 +2263,10 @@ static int __pyx_f_5arrex_7numbers_pack_L(CYTHON_UNUSED PyObject *__pyx_v_dtype,
   return __pyx_r;
 }
 
-/* "arrex/numbers.pyx":160
- * cdef int pack_L(PyObject* dtype, uint64_t* place, object obj) except -1:
+/* "arrex/numbers.pyx":159
+ * cdef int pack_L(object dtype, uint64_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_L(PyObject* dtype, uint64_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_L(object dtype, uint64_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -2280,24 +2280,24 @@ static PyObject *__pyx_f_5arrex_7numbers_unpack_L(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("unpack_L", 0);
 
-  /* "arrex/numbers.pyx":161
+  /* "arrex/numbers.pyx":160
  * 	place[0] = obj
- * cdef object unpack_L(PyObject* dtype, uint64_t* place):
+ * cdef object unpack_L(object dtype, uint64_t* place):
  * 	return place[0]             # <<<<<<<<<<<<<<
  * 
  * decl = DDType()
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint64_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint64_t((__pyx_v_place[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "arrex/numbers.pyx":160
- * cdef int pack_L(PyObject* dtype, uint64_t* place, object obj) except -1:
+  /* "arrex/numbers.pyx":159
+ * cdef int pack_L(object dtype, uint64_t* place, object obj) except -1:
  * 	place[0] = obj
- * cdef object unpack_L(PyObject* dtype, uint64_t* place):             # <<<<<<<<<<<<<<
+ * cdef object unpack_L(object dtype, uint64_t* place):             # <<<<<<<<<<<<<<
  * 	return place[0]
  * 
  */
@@ -2717,21 +2717,21 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "arrex/numbers.pyx":19
+  /* "arrex/numbers.pyx":18
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(double)
  * decl.c_pack = <c_pack_t> pack_d
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":20
+  /* "arrex/numbers.pyx":19
  * 
  * decl = DDType()
  * decl.dsize = sizeof(double)             # <<<<<<<<<<<<<<
@@ -2740,7 +2740,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(double));
 
-  /* "arrex/numbers.pyx":21
+  /* "arrex/numbers.pyx":20
  * decl = DDType()
  * decl.dsize = sizeof(double)
  * decl.c_pack = <c_pack_t> pack_d             # <<<<<<<<<<<<<<
@@ -2749,7 +2749,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_d);
 
-  /* "arrex/numbers.pyx":22
+  /* "arrex/numbers.pyx":21
  * decl.dsize = sizeof(double)
  * decl.c_pack = <c_pack_t> pack_d
  * decl.c_unpack = <c_unpack_t> unpack_d             # <<<<<<<<<<<<<<
@@ -2758,7 +2758,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_d);
 
-  /* "arrex/numbers.pyx":23
+  /* "arrex/numbers.pyx":22
  * decl.c_pack = <c_pack_t> pack_d
  * decl.c_unpack = <c_unpack_t> unpack_d
  * decl.layout = b'd'             # <<<<<<<<<<<<<<
@@ -2771,7 +2771,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_d;
 
-  /* "arrex/numbers.pyx":25
+  /* "arrex/numbers.pyx":24
  * decl.layout = b'd'
  * 
  * declare('d', decl)             # <<<<<<<<<<<<<<
@@ -2782,26 +2782,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_1);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1);
-  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_d, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_d, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":35
+  /* "arrex/numbers.pyx":34
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(float)
  * decl.c_pack = <c_pack_t> pack_f
  */
-  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":36
+  /* "arrex/numbers.pyx":35
  * 
  * decl = DDType()
  * decl.dsize = sizeof(float)             # <<<<<<<<<<<<<<
@@ -2810,7 +2810,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(float));
 
-  /* "arrex/numbers.pyx":37
+  /* "arrex/numbers.pyx":36
  * decl = DDType()
  * decl.dsize = sizeof(float)
  * decl.c_pack = <c_pack_t> pack_f             # <<<<<<<<<<<<<<
@@ -2819,7 +2819,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_f);
 
-  /* "arrex/numbers.pyx":38
+  /* "arrex/numbers.pyx":37
  * decl.dsize = sizeof(float)
  * decl.c_pack = <c_pack_t> pack_f
  * decl.c_unpack = <c_unpack_t> unpack_f             # <<<<<<<<<<<<<<
@@ -2828,7 +2828,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_f);
 
-  /* "arrex/numbers.pyx":39
+  /* "arrex/numbers.pyx":38
  * decl.c_pack = <c_pack_t> pack_f
  * decl.c_unpack = <c_unpack_t> unpack_f
  * decl.layout = b'f'             # <<<<<<<<<<<<<<
@@ -2841,7 +2841,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_f;
 
-  /* "arrex/numbers.pyx":41
+  /* "arrex/numbers.pyx":40
  * decl.layout = b'f'
  * 
  * declare('f', decl)             # <<<<<<<<<<<<<<
@@ -2852,26 +2852,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_2);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_f, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_f, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":51
+  /* "arrex/numbers.pyx":50
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(int8_t)
  * decl.c_pack = <c_pack_t> pack_b
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":52
+  /* "arrex/numbers.pyx":51
  * 
  * decl = DDType()
  * decl.dsize = sizeof(int8_t)             # <<<<<<<<<<<<<<
@@ -2880,7 +2880,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(int8_t));
 
-  /* "arrex/numbers.pyx":53
+  /* "arrex/numbers.pyx":52
  * decl = DDType()
  * decl.dsize = sizeof(int8_t)
  * decl.c_pack = <c_pack_t> pack_b             # <<<<<<<<<<<<<<
@@ -2889,7 +2889,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_b);
 
-  /* "arrex/numbers.pyx":54
+  /* "arrex/numbers.pyx":53
  * decl.dsize = sizeof(int8_t)
  * decl.c_pack = <c_pack_t> pack_b
  * decl.c_unpack = <c_unpack_t> unpack_b             # <<<<<<<<<<<<<<
@@ -2898,7 +2898,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_b);
 
-  /* "arrex/numbers.pyx":55
+  /* "arrex/numbers.pyx":54
  * decl.c_pack = <c_pack_t> pack_b
  * decl.c_unpack = <c_unpack_t> unpack_b
  * decl.layout = b'b'             # <<<<<<<<<<<<<<
@@ -2911,7 +2911,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_b;
 
-  /* "arrex/numbers.pyx":57
+  /* "arrex/numbers.pyx":56
  * decl.layout = b'b'
  * 
  * declare('b', decl)             # <<<<<<<<<<<<<<
@@ -2922,26 +2922,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_1);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1);
-  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_b, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_b, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":67
+  /* "arrex/numbers.pyx":66
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(uint8_t)
  * decl.c_pack = <c_pack_t> pack_B
  */
-  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":68
+  /* "arrex/numbers.pyx":67
  * 
  * decl = DDType()
  * decl.dsize = sizeof(uint8_t)             # <<<<<<<<<<<<<<
@@ -2950,7 +2950,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(uint8_t));
 
-  /* "arrex/numbers.pyx":69
+  /* "arrex/numbers.pyx":68
  * decl = DDType()
  * decl.dsize = sizeof(uint8_t)
  * decl.c_pack = <c_pack_t> pack_B             # <<<<<<<<<<<<<<
@@ -2959,7 +2959,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_B);
 
-  /* "arrex/numbers.pyx":70
+  /* "arrex/numbers.pyx":69
  * decl.dsize = sizeof(uint8_t)
  * decl.c_pack = <c_pack_t> pack_B
  * decl.c_unpack = <c_unpack_t> unpack_B             # <<<<<<<<<<<<<<
@@ -2968,7 +2968,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_B);
 
-  /* "arrex/numbers.pyx":71
+  /* "arrex/numbers.pyx":70
  * decl.c_pack = <c_pack_t> pack_B
  * decl.c_unpack = <c_unpack_t> unpack_B
  * decl.layout = b'B'             # <<<<<<<<<<<<<<
@@ -2981,7 +2981,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_B;
 
-  /* "arrex/numbers.pyx":73
+  /* "arrex/numbers.pyx":72
  * decl.layout = b'B'
  * 
  * declare('B', decl)             # <<<<<<<<<<<<<<
@@ -2992,26 +2992,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_2);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_B, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_B, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":83
+  /* "arrex/numbers.pyx":82
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(int16_t)
  * decl.c_pack = <c_pack_t> pack_h
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":84
+  /* "arrex/numbers.pyx":83
  * 
  * decl = DDType()
  * decl.dsize = sizeof(int16_t)             # <<<<<<<<<<<<<<
@@ -3020,7 +3020,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(int16_t));
 
-  /* "arrex/numbers.pyx":85
+  /* "arrex/numbers.pyx":84
  * decl = DDType()
  * decl.dsize = sizeof(int16_t)
  * decl.c_pack = <c_pack_t> pack_h             # <<<<<<<<<<<<<<
@@ -3029,7 +3029,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_h);
 
-  /* "arrex/numbers.pyx":86
+  /* "arrex/numbers.pyx":85
  * decl.dsize = sizeof(int16_t)
  * decl.c_pack = <c_pack_t> pack_h
  * decl.c_unpack = <c_unpack_t> unpack_h             # <<<<<<<<<<<<<<
@@ -3038,7 +3038,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_h);
 
-  /* "arrex/numbers.pyx":87
+  /* "arrex/numbers.pyx":86
  * decl.c_pack = <c_pack_t> pack_h
  * decl.c_unpack = <c_unpack_t> unpack_h
  * decl.layout = b'h'             # <<<<<<<<<<<<<<
@@ -3051,7 +3051,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_h;
 
-  /* "arrex/numbers.pyx":89
+  /* "arrex/numbers.pyx":88
  * decl.layout = b'h'
  * 
  * declare('h', decl)             # <<<<<<<<<<<<<<
@@ -3062,26 +3062,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_1);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1);
-  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_h, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_h, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":99
+  /* "arrex/numbers.pyx":98
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(uint16_t)
  * decl.c_pack = <c_pack_t> pack_H
  */
-  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 99, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":100
+  /* "arrex/numbers.pyx":99
  * 
  * decl = DDType()
  * decl.dsize = sizeof(uint16_t)             # <<<<<<<<<<<<<<
@@ -3090,7 +3090,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(uint16_t));
 
-  /* "arrex/numbers.pyx":101
+  /* "arrex/numbers.pyx":100
  * decl = DDType()
  * decl.dsize = sizeof(uint16_t)
  * decl.c_pack = <c_pack_t> pack_H             # <<<<<<<<<<<<<<
@@ -3099,7 +3099,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_H);
 
-  /* "arrex/numbers.pyx":102
+  /* "arrex/numbers.pyx":101
  * decl.dsize = sizeof(uint16_t)
  * decl.c_pack = <c_pack_t> pack_H
  * decl.c_unpack = <c_unpack_t> unpack_H             # <<<<<<<<<<<<<<
@@ -3108,7 +3108,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_H);
 
-  /* "arrex/numbers.pyx":103
+  /* "arrex/numbers.pyx":102
  * decl.c_pack = <c_pack_t> pack_H
  * decl.c_unpack = <c_unpack_t> unpack_H
  * decl.layout = b'H'             # <<<<<<<<<<<<<<
@@ -3121,7 +3121,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_H;
 
-  /* "arrex/numbers.pyx":105
+  /* "arrex/numbers.pyx":104
  * decl.layout = b'H'
  * 
  * declare('H', decl)             # <<<<<<<<<<<<<<
@@ -3132,26 +3132,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_2);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_H, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_H, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":115
+  /* "arrex/numbers.pyx":114
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(int32_t)
  * decl.c_pack = <c_pack_t> pack_i
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":116
+  /* "arrex/numbers.pyx":115
  * 
  * decl = DDType()
  * decl.dsize = sizeof(int32_t)             # <<<<<<<<<<<<<<
@@ -3160,7 +3160,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(int32_t));
 
-  /* "arrex/numbers.pyx":117
+  /* "arrex/numbers.pyx":116
  * decl = DDType()
  * decl.dsize = sizeof(int32_t)
  * decl.c_pack = <c_pack_t> pack_i             # <<<<<<<<<<<<<<
@@ -3169,7 +3169,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_i);
 
-  /* "arrex/numbers.pyx":118
+  /* "arrex/numbers.pyx":117
  * decl.dsize = sizeof(int32_t)
  * decl.c_pack = <c_pack_t> pack_i
  * decl.c_unpack = <c_unpack_t> unpack_i             # <<<<<<<<<<<<<<
@@ -3178,7 +3178,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_i);
 
-  /* "arrex/numbers.pyx":119
+  /* "arrex/numbers.pyx":118
  * decl.c_pack = <c_pack_t> pack_i
  * decl.c_unpack = <c_unpack_t> unpack_i
  * decl.layout = b'i'             # <<<<<<<<<<<<<<
@@ -3191,7 +3191,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_i;
 
-  /* "arrex/numbers.pyx":121
+  /* "arrex/numbers.pyx":120
  * decl.layout = b'i'
  * 
  * declare('i', decl)             # <<<<<<<<<<<<<<
@@ -3202,26 +3202,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_1);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1);
-  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_i, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_i, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":131
+  /* "arrex/numbers.pyx":130
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(uint32_t)
  * decl.c_pack = <c_pack_t> pack_I
  */
-  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":132
+  /* "arrex/numbers.pyx":131
  * 
  * decl = DDType()
  * decl.dsize = sizeof(uint32_t)             # <<<<<<<<<<<<<<
@@ -3230,7 +3230,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(uint32_t));
 
-  /* "arrex/numbers.pyx":133
+  /* "arrex/numbers.pyx":132
  * decl = DDType()
  * decl.dsize = sizeof(uint32_t)
  * decl.c_pack = <c_pack_t> pack_I             # <<<<<<<<<<<<<<
@@ -3239,7 +3239,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_I);
 
-  /* "arrex/numbers.pyx":134
+  /* "arrex/numbers.pyx":133
  * decl.dsize = sizeof(uint32_t)
  * decl.c_pack = <c_pack_t> pack_I
  * decl.c_unpack = <c_unpack_t> unpack_I             # <<<<<<<<<<<<<<
@@ -3248,7 +3248,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_I);
 
-  /* "arrex/numbers.pyx":135
+  /* "arrex/numbers.pyx":134
  * decl.c_pack = <c_pack_t> pack_I
  * decl.c_unpack = <c_unpack_t> unpack_I
  * decl.layout = b'I'             # <<<<<<<<<<<<<<
@@ -3261,7 +3261,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_I;
 
-  /* "arrex/numbers.pyx":137
+  /* "arrex/numbers.pyx":136
  * decl.layout = b'I'
  * 
  * declare('I', decl)             # <<<<<<<<<<<<<<
@@ -3272,26 +3272,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_2);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_I, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_I, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":147
+  /* "arrex/numbers.pyx":146
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(int64_t)
  * decl.c_pack = <c_pack_t> pack_l
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":148
+  /* "arrex/numbers.pyx":147
  * 
  * decl = DDType()
  * decl.dsize = sizeof(int64_t)             # <<<<<<<<<<<<<<
@@ -3300,7 +3300,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(int64_t));
 
-  /* "arrex/numbers.pyx":149
+  /* "arrex/numbers.pyx":148
  * decl = DDType()
  * decl.dsize = sizeof(int64_t)
  * decl.c_pack = <c_pack_t> pack_l             # <<<<<<<<<<<<<<
@@ -3309,7 +3309,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_l);
 
-  /* "arrex/numbers.pyx":150
+  /* "arrex/numbers.pyx":149
  * decl.dsize = sizeof(int64_t)
  * decl.c_pack = <c_pack_t> pack_l
  * decl.c_unpack = <c_unpack_t> unpack_l             # <<<<<<<<<<<<<<
@@ -3318,7 +3318,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_l);
 
-  /* "arrex/numbers.pyx":151
+  /* "arrex/numbers.pyx":150
  * decl.c_pack = <c_pack_t> pack_l
  * decl.c_unpack = <c_unpack_t> unpack_l
  * decl.layout = b'l'             # <<<<<<<<<<<<<<
@@ -3331,7 +3331,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_l;
 
-  /* "arrex/numbers.pyx":153
+  /* "arrex/numbers.pyx":152
  * decl.layout = b'l'
  * 
  * declare('l', decl)             # <<<<<<<<<<<<<<
@@ -3342,26 +3342,26 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_1);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1);
-  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_l, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_l, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":163
+  /* "arrex/numbers.pyx":162
  * 	return place[0]
  * 
  * decl = DDType()             # <<<<<<<<<<<<<<
  * decl.dsize = sizeof(uint64_t)
  * decl.c_pack = <c_pack_t> pack_L
  */
-  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_5arrex_6dtypes_DDType)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_5arrex_7numbers_decl));
   __Pyx_DECREF_SET(__pyx_v_5arrex_7numbers_decl, ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":164
+  /* "arrex/numbers.pyx":163
  * 
  * decl = DDType()
  * decl.dsize = sizeof(uint64_t)             # <<<<<<<<<<<<<<
@@ -3370,7 +3370,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->dsize = (sizeof(uint64_t));
 
-  /* "arrex/numbers.pyx":165
+  /* "arrex/numbers.pyx":164
  * decl = DDType()
  * decl.dsize = sizeof(uint64_t)
  * decl.c_pack = <c_pack_t> pack_L             # <<<<<<<<<<<<<<
@@ -3379,7 +3379,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_pack = ((__pyx_t_5arrex_6dtypes_c_pack_t)__pyx_f_5arrex_7numbers_pack_L);
 
-  /* "arrex/numbers.pyx":166
+  /* "arrex/numbers.pyx":165
  * decl.dsize = sizeof(uint64_t)
  * decl.c_pack = <c_pack_t> pack_L
  * decl.c_unpack = <c_unpack_t> unpack_L             # <<<<<<<<<<<<<<
@@ -3388,7 +3388,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_5arrex_7numbers_decl->c_unpack = ((__pyx_t_5arrex_6dtypes_c_unpack_t)__pyx_f_5arrex_7numbers_unpack_L);
 
-  /* "arrex/numbers.pyx":167
+  /* "arrex/numbers.pyx":166
  * decl.c_pack = <c_pack_t> pack_L
  * decl.c_unpack = <c_unpack_t> unpack_L
  * decl.layout = b'L'             # <<<<<<<<<<<<<<
@@ -3401,7 +3401,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_v_5arrex_7numbers_decl->layout);
   __pyx_v_5arrex_7numbers_decl->layout = __pyx_n_b_L;
 
-  /* "arrex/numbers.pyx":169
+  /* "arrex/numbers.pyx":168
  * decl.layout = b'L'
  * 
  * declare('L', decl)             # <<<<<<<<<<<<<<
@@ -3412,36 +3412,36 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_t_2);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_L, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(__pyx_n_u_L, 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "arrex/numbers.pyx":171
+  /* "arrex/numbers.pyx":170
  * declare('L', decl)
  * 
  * declare(float, declared('d'))             # <<<<<<<<<<<<<<
  * declare(int, declared('l'))
  */
-  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declared(__pyx_n_u_d, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declared(__pyx_n_u_d, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_1);
-  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(((PyObject *)(&PyFloat_Type)), 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(((PyObject *)(&PyFloat_Type)), 0, &__pyx_t_3)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "arrex/numbers.pyx":172
+  /* "arrex/numbers.pyx":171
  * 
  * declare(float, declared('d'))
  * declare(int, declared('l'))             # <<<<<<<<<<<<<<
  */
-  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declared(__pyx_n_u_l, 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __pyx_t_2 = ((PyObject *)__pyx_f_5arrex_6dtypes_declared(__pyx_n_u_l, 0)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3.__pyx_n = 1;
   __pyx_t_3.dtype = ((struct __pyx_obj_5arrex_6dtypes_DDType *)__pyx_t_2);
-  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(((PyObject *)(&PyInt_Type)), 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_5arrex_6dtypes_declare(((PyObject *)(&PyInt_Type)), 0, &__pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
