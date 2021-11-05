@@ -3,7 +3,7 @@ numbers = open('arrex/numbers.pyx', 'w')
 numbers.write('''# cython: language_level=3, cdivision=True
 
 cimport cython
-from cpython cimport PyObject
+from cpython cimport PyObject, Py_DECREF
 from libc.stdint cimport *
 from .dtypes cimport *
 
@@ -14,9 +14,9 @@ template = '''
 
 ### declare {ctype}
 
-cdef int pack_{layout}(PyObject* dtype, {ctype}* place, object obj) except -1:
+cdef int pack_{layout}(object dtype, {ctype}* place, object obj) except -1:
 	place[0] = obj
-cdef object unpack_{layout}(PyObject* dtype, {ctype}* place):
+cdef object unpack_{layout}(object dtype, {ctype}* place):
 	return place[0]
 
 decl = DDType()
