@@ -48,6 +48,5 @@ setup(
 		'Programming Language :: Python :: 3.10',
 		'Topic :: Software Development :: Libraries',
 		'Topic :: Utilities',
-		'Topic :: Typed',
 		],
 )
