@@ -217,11 +217,11 @@ cdef class typedlist:
 		lastptr = self.ptr
 		
 		# buffer protocol is less efficient that PyBytes_AS_STRING so we use it directly here where we know that owner is bytes
-		#self.owner = PyBytes_FromStringAndSize(NULL, size)
-		#self.ptr = PyBytes_AS_STRING(self.owner)
-		cdef buffer buff = buffer(size)
-		self.owner = buff
-		self.ptr = buff.ptr
+		self.owner = PyBytes_FromStringAndSize(NULL, size)
+		self.ptr = PyBytes_AS_STRING(self.owner)
+		#cdef buffer buff = buffer(size)
+		#self.owner = buff
+		#self.ptr = buff.ptr
 		self.allocated = size
 		
 		#print('** reallocate', sys.getrefcount(self.owner), sys.getrefcount(lastowner), lastowner is None)
@@ -299,7 +299,7 @@ cdef class typedlist:
 		self.size += self.dtype.dsize
 		
 	def clear(self):
-		''' remove all elements from the array, very fast operation '''
+		''' remove all elements from the array but does not deallocate, very fast operation '''
 		self.size = 0
 		
 	cpdef int extend(self, other) except *:
@@ -312,6 +312,10 @@ cdef class typedlist:
 		
 		if PyObject_CheckBuffer(other):
 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)
+			
+			if view.len % self.dtype.dsize:
+				PyBuffer_Release(&view)
+				raise TypeError('the given buffer must have a byte size multiple of dtype size')
 			
 			if <size_t>view.len > self.allocated - self.size:
 				self._reallocate(max(2*self.size, self.size + view.len))
@@ -338,6 +342,10 @@ cdef class typedlist:
 		
 		if PyObject_CheckBuffer(other):
 			PyObject_GetBuffer(other, &view, PyBUF_SIMPLE)
+			
+			if view.len % self.dtype.dsize:
+				PyBuffer_Release(&view)
+				raise TypeError('the given buffer must have a byte size multiple of dtype size')
 			
 			result = typedlist.__new__(typedlist)
 			result.dtype = self.dtype
@@ -640,6 +648,12 @@ cdef class arrayiter:
 		return item
 
 		
+		
+
+'''	
+# this is in reserve for debug purpose
+# helps to keep track of buffers
+
 cdef size_t buffer_id = 0
 cdef size_t buffer_count = 0
 
@@ -667,3 +681,4 @@ cdef class buffer:
 		
 	def __len__(self):
 		return self.size
+'''
