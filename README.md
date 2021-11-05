@@ -1,6 +1,13 @@
 Arrex
 -----
 
+- [documentation](https://arrex.readthedocs.io/)
+- [repository](https://github.com/jimy-byerley/pymadcad)
+
+[![support-version](https://img.shields.io/pypi/pyversions/pymadcad.svg)](https://img.shields.io/pypi/pyversions/arrex)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/pymadcad.svg)](https://pypi.org/project/arrex/)
+[![Documentation Status](https://readthedocs.org/projects/pymadcad/badge/?version=latest)](https://arrex.readthedocs.io/en/latest/?badge=latest)
+
 Arrex is a module that allows to create typed arrays much like `numpy.ndarray` and `array.array`, but resizeable and using any kind of element, not only numbers. Its dtype system is extremely flexible and makes it ideal to work and share structured data with compiled code.
 
 The elements can be many different things, there is just 2 requirements:
