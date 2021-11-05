@@ -15,7 +15,7 @@ else:
 setup(
 	# package declaration
 	name = 'arrex',
-	version = '0.2',
+	version = '0.3',
 	python_requires='>=3.8',
 	tests_require = [
 		'pnprint>=1.0',
@@ -39,4 +39,15 @@ setup(
 	description = "typed arrays using any custom type as element type",
 	long_description = open('README.md').read(),
 	long_description_content_type = 'text/markdown',
+	keywords='buffer array list dynamic dtype serialization numeric',
+	classifiers=[
+		'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+		'Development Status :: 3 - Alpha',
+		'Programming Language :: Python :: 3.8',
+		'Programming Language :: Python :: 3.9',
+		'Programming Language :: Python :: 3.10',
+		'Topic :: Software Development :: Libraries',
+		'Topic :: Utilities',
+		'Topic :: Typed',
+		],
 )
