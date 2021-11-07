@@ -275,13 +275,20 @@ cdef class typedlist:
 			remove the element at index, returning it. If no index is specified, it will pop the last one .
 		'''
 		cdef size_t i
-		i = self._index(index)	if index is not None else  self._len()
+		cdef void * start
 		
-		cdef void * start = self.ptr + i*self.dtype.dsize
-		e = self._getitem(start)
-		memmove(start, start + self.dtype.dsize, self.size-(i+1)*self.dtype.dsize)
-		self.size -= self.dtype.dsize
-		return e
+		if index is None:
+			e = self._getitem(self.ptr + self.size - self.dtype.dsize)
+			self.size -= self.dtype.dsize
+			return e
+		else:
+			i = self._index(index)
+			
+			start = self.ptr + i*self.dtype.dsize
+			e = self._getitem(start)
+			memmove(start, start + self.dtype.dsize, self.size-(i+1)*self.dtype.dsize)
+			self.size -= self.dtype.dsize
+			return e
 		
 	def insert(self, index, value):
 		''' insert(index, value)
@@ -587,7 +594,7 @@ cdef class typedlist:
 		temp = PyMem_Malloc(self.dtype.dsize)
 		first = self.ptr
 		last = self.ptr + self.size - self.dtype.dsize
-		while first != last:
+		while <size_t>first < <size_t>last:
 			memcpy(temp, first, self.dtype.dsize)
 			memcpy(first, last, self.dtype.dsize)
 			memcpy(last, temp, self.dtype.dsize)
