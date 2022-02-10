@@ -1,5 +1,5 @@
 from arrex import *
-from nprint import nprint
+from pnprint import nprint
 
 
 # python builtin numbers

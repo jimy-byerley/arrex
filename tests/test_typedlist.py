@@ -1,6 +1,6 @@
 import glm
 import arrex as nx
-from nprint import nprint
+from pnprint import nprint
 
 nx.declare(glm.vec4, nx.DDTypeExtension(glm.vec4, 'ffff'))
 nx.declare(glm.dvec4, nx.DDTypeExtension(glm.dvec4, 'dddd', glm.dvec4))
