@@ -222,10 +222,10 @@ cdef class typedlist:
 		#cdef buffer buff = buffer(size)
 		#self.owner = buff
 		#self.ptr = buff.ptr
-		self.allocated = size
 		
 		#print('** reallocate', sys.getrefcount(self.owner), sys.getrefcount(lastowner), lastowner is None)
 		
+		self.allocated = size
 		self.size = min(size, self.size)
 		memcpy(self.ptr, lastptr, self.size)
 		
@@ -263,7 +263,7 @@ cdef class typedlist:
 		
 			if there is not enough allocated memory, reallocate enough to amortize the realocation time over the multiple appends
 		'''		
-		if self.allocated - self.size < self.dtype.dsize:
+		if self.allocated < self.size + self.dtype.dsize:
 			self._reallocate(self.allocated*2 or self.dtype.dsize)
 		
 		self._setitem(self.ptr + self.size, value)
@@ -276,6 +276,9 @@ cdef class typedlist:
 		'''
 		cdef size_t i
 		cdef void * start
+		
+		if not self.size:
+			raise IndexError('pop from empty list')
 		
 		if index is None:
 			e = self._getitem(self.ptr + self.size - self.dtype.dsize)
@@ -295,13 +298,19 @@ cdef class typedlist:
 		
 			insert value at index 
 		'''
-		cdef size_t i = self._index(index)
+		
+		cdef Py_ssize_t i = index
+		cdef Py_ssize_t l = self._len()
+		if i < 0:	i += l
+		if i < 0 or i > l:	
+			raise IndexError('index out of range')
+		cdef size_t j = i
 		
 		if self.allocated - self.size < self.dtype.dsize:
 			self._reallocate(self.allocated*2 or self.dtype.dsize)
 			
-		cdef void * start = self.ptr + i*self.dtype.dsize
-		memmove(start+self.dtype.dsize, start, self.size-i*self.dtype.dsize)
+		cdef void * start = self.ptr + j*self.dtype.dsize
+		memmove(start+self.dtype.dsize, start, self.size-j*self.dtype.dsize)
 		self._setitem(start, value)
 		self.size += self.dtype.dsize
 		
@@ -333,7 +342,7 @@ cdef class typedlist:
 			
 		else:
 			l = PyObject_LengthHint(other, 0)
-			if l > 0 and l*self.dtype.dsize > self.allocated - self.size:
+			if l*self.dtype.dsize > self.allocated - self.size:
 				self._reallocate(self.size + l*self.dtype.dsize)
 			for o in other:
 				self.append(o)
@@ -459,7 +468,7 @@ cdef class typedlist:
 						PyBuffer_Release(&view)
 						raise TypeError('the given buffer must have a byte size multiple of dtype size')
 					
-					newsize = self.size + view.len - (stop-start)
+					newsize = self.size + view.len + start - stop
 					if newsize >  self.allocated:
 						self._reallocate(max(2*self.size, newsize))
 					
@@ -514,9 +523,9 @@ cdef class typedlist:
 		''' serialization protocol '''
 		cdef Py_buffer view
 		
-		print('reduce_ex')
-			
 		if protocol >= 5:
+			if not PyObject_CheckBuffer(self.owner):
+				raise RuntimeError("the buffer owner doens't implement the buffer protocol")
 			PyObject_GetBuffer(self.owner, &view, PyBUF_SIMPLE)
 			stuff = (
 						PickleBuffer(self.owner), 
@@ -536,7 +545,6 @@ cdef class typedlist:
 	
 	@classmethod
 	def _rebuild(cls, owner, dtype, size_t start, size_t size):
-		print('_rebuild')
 		new = typedlist(owner, dtype)
 		assert start <= size
 		assert size <= new.size
