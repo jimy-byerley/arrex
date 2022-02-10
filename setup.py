@@ -15,10 +15,10 @@ else:
 setup(
 	# package declaration
 	name = 'arrex',
-	version = '0.3',
+	version = '0.3.1',
 	python_requires='>=3.8',
 	tests_require = [
-		'pnprint>=1.0',
+		'pnprint>=1.1',
 		'pyglm>=1.2',
 		'numpy>=1.1',
 		],
@@ -26,7 +26,7 @@ setup(
 	# sources declaration
 	packages = ["arrex"],
 	package_data = {
-		"arrex": ['*.h', '*.c', '*.cpp', '*.pyx'],
+		"arrex": ['*.h', '*.c', '*.cpp', '*.pyx', '*.pxd'],
 		'': ['COPYING', 'COPYING.LESSER', 'README'],
 		},
 	ext_modules = cython_modules,
