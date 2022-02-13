@@ -5240,7 +5240,7 @@ static int __pyx_pf_5arrex_6dtypes_15DDTypeExtension___init__(struct __pyx_obj_5
  * 		self.constructor = constructor
  * 
  * 	cdef void * _raw(self, obj):             # <<<<<<<<<<<<<<
- * 		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
+ * 		return (<char*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
  * 
  */
 
@@ -5252,18 +5252,18 @@ static void *__pyx_f_5arrex_6dtypes_15DDTypeExtension__raw(struct __pyx_obj_5arr
   /* "arrex/dtypes.pyx":269
  * 
  * 	cdef void * _raw(self, obj):
- * 		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize             # <<<<<<<<<<<<<<
+ * 		return (<char*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize             # <<<<<<<<<<<<<<
  * 
  * 	cdef int _ext_pack(self, void* place, object obj) except -1:
  */
-  __pyx_r = ((((void *)((PyObject *)__pyx_v_obj)) + ((PyTypeObject *)__pyx_v_self->type)->tp_basicsize) - __pyx_v_self->__pyx_base.dsize);
+  __pyx_r = ((((char *)((PyObject *)__pyx_v_obj)) + ((PyTypeObject *)__pyx_v_self->type)->tp_basicsize) - __pyx_v_self->__pyx_base.dsize);
   goto __pyx_L0;
 
   /* "arrex/dtypes.pyx":268
  * 		self.constructor = constructor
  * 
  * 	cdef void * _raw(self, obj):             # <<<<<<<<<<<<<<
- * 		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
+ * 		return (<char*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
  * 
  */
 
@@ -5274,7 +5274,7 @@ static void *__pyx_f_5arrex_6dtypes_15DDTypeExtension__raw(struct __pyx_obj_5arr
 }
 
 /* "arrex/dtypes.pyx":271
- * 		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
+ * 		return (<char*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
  * 
  * 	cdef int _ext_pack(self, void* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 		if not isinstance(obj, self.type):
@@ -5475,7 +5475,7 @@ static int __pyx_f_5arrex_6dtypes_15DDTypeExtension__ext_pack(struct __pyx_obj_5
   (void)(memcpy(__pyx_v_place, ((struct __pyx_vtabstruct_5arrex_6dtypes_DDTypeExtension *)__pyx_v_self->__pyx_vtab)->_raw(__pyx_v_self, __pyx_v_obj), __pyx_v_self->__pyx_base.dsize));
 
   /* "arrex/dtypes.pyx":271
- * 		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
+ * 		return (<char*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
  * 
  * 	cdef int _ext_pack(self, void* place, object obj) except -1:             # <<<<<<<<<<<<<<
  * 		if not isinstance(obj, self.type):

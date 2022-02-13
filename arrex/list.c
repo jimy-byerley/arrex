@@ -985,7 +985,7 @@ struct __pyx_obj_5arrex_6dtypes_DDType {
 struct __pyx_obj_5arrex_4list_typedlist {
   PyObject_HEAD
   struct __pyx_vtabstruct_5arrex_4list_typedlist *__pyx_vtab;
-  void *ptr;
+  char *ptr;
   size_t size;
   size_t allocated;
   struct __pyx_obj_5arrex_6dtypes_DDType *dtype;
@@ -3080,9 +3080,8 @@ static int __pyx_f_5arrex_4list_9typedlist__use(struct __pyx_obj_5arrex_4list_ty
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  void *__pyx_t_2;
-  Py_ssize_t __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  Py_ssize_t __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3092,7 +3091,7 @@ static int __pyx_f_5arrex_4list_9typedlist__use(struct __pyx_obj_5arrex_4list_ty
  * 		cdef Py_buffer view
  * 
  * 		PyObject_GetBuffer(buffer, &view, PyBUF_SIMPLE)             # <<<<<<<<<<<<<<
- * 		self.ptr = view.buf
+ * 		self.ptr = <char*> view.buf
  * 		self.allocated = view.len
  */
   __pyx_t_1 = PyObject_GetBuffer(__pyx_v_buffer, (&__pyx_v_view), PyBUF_SIMPLE); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 209, __pyx_L1_error)
@@ -3100,37 +3099,36 @@ static int __pyx_f_5arrex_4list_9typedlist__use(struct __pyx_obj_5arrex_4list_ty
   /* "arrex/list.pyx":210
  * 
  * 		PyObject_GetBuffer(buffer, &view, PyBUF_SIMPLE)
- * 		self.ptr = view.buf             # <<<<<<<<<<<<<<
+ * 		self.ptr = <char*> view.buf             # <<<<<<<<<<<<<<
  * 		self.allocated = view.len
  * 		self.owner = view.obj
  */
-  __pyx_t_2 = __pyx_v_view.buf;
-  __pyx_v_self->ptr = __pyx_t_2;
+  __pyx_v_self->ptr = ((char *)__pyx_v_view.buf);
 
   /* "arrex/list.pyx":211
  * 		PyObject_GetBuffer(buffer, &view, PyBUF_SIMPLE)
- * 		self.ptr = view.buf
+ * 		self.ptr = <char*> view.buf
  * 		self.allocated = view.len             # <<<<<<<<<<<<<<
  * 		self.owner = view.obj
  * 		PyBuffer_Release(&view)
  */
-  __pyx_t_3 = __pyx_v_view.len;
-  __pyx_v_self->allocated = __pyx_t_3;
+  __pyx_t_2 = __pyx_v_view.len;
+  __pyx_v_self->allocated = __pyx_t_2;
 
   /* "arrex/list.pyx":212
- * 		self.ptr = view.buf
+ * 		self.ptr = <char*> view.buf
  * 		self.allocated = view.len
  * 		self.owner = view.obj             # <<<<<<<<<<<<<<
  * 		PyBuffer_Release(&view)
  * 
  */
-  __pyx_t_4 = __pyx_v_view.obj;
-  __Pyx_INCREF(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_4);
+  __pyx_t_3 = __pyx_v_view.obj;
+  __Pyx_INCREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_3);
   __Pyx_GOTREF(__pyx_v_self->owner);
   __Pyx_DECREF(__pyx_v_self->owner);
-  __pyx_v_self->owner = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __pyx_v_self->owner = __pyx_t_3;
+  __pyx_t_3 = 0;
 
   /* "arrex/list.pyx":213
  * 		self.allocated = view.len
@@ -3153,7 +3151,7 @@ static int __pyx_f_5arrex_4list_9typedlist__use(struct __pyx_obj_5arrex_4list_ty
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_AddTraceback("arrex.list.typedlist._use", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -3171,11 +3169,11 @@ static int __pyx_f_5arrex_4list_9typedlist__use(struct __pyx_obj_5arrex_4list_ty
 
 static int __pyx_f_5arrex_4list_9typedlist__reallocate(struct __pyx_obj_5arrex_4list_typedlist *__pyx_v_self, size_t __pyx_v_size) {
   CYTHON_UNUSED PyObject *__pyx_v_lastowner = NULL;
-  void *__pyx_v_lastptr;
+  char *__pyx_v_lastptr;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  void *__pyx_t_2;
+  char *__pyx_t_2;
   size_t __pyx_t_3;
   size_t __pyx_t_4;
   size_t __pyx_t_5;
@@ -3834,7 +3832,7 @@ static PyObject *__pyx_pw_5arrex_4list_9typedlist_11pop(PyObject *__pyx_v_self, 
 
 static PyObject *__pyx_pf_5arrex_4list_9typedlist_10pop(struct __pyx_obj_5arrex_4list_typedlist *__pyx_v_self, PyObject *__pyx_v_index) {
   size_t __pyx_v_i;
-  void *__pyx_v_start;
+  char *__pyx_v_start;
   PyObject *__pyx_v_e = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3848,7 +3846,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_10pop(struct __pyx_obj_5arrex_
   __Pyx_RefNannySetupContext("pop", 0);
 
   /* "arrex/list.pyx":280
- * 		cdef void * start
+ * 		cdef char * start
  * 
  * 		if not self.size:             # <<<<<<<<<<<<<<
  * 			raise IndexError('pop from empty list')
@@ -3871,7 +3869,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_10pop(struct __pyx_obj_5arrex_
     __PYX_ERR(0, 281, __pyx_L1_error)
 
     /* "arrex/list.pyx":280
- * 		cdef void * start
+ * 		cdef char * start
  * 
  * 		if not self.size:             # <<<<<<<<<<<<<<
  * 			raise IndexError('pop from empty list')
@@ -4092,7 +4090,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_12insert(struct __pyx_obj_5arr
   Py_ssize_t __pyx_v_i;
   Py_ssize_t __pyx_v_l;
   size_t __pyx_v_j;
-  void *__pyx_v_start;
+  char *__pyx_v_start;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
@@ -4202,7 +4200,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_12insert(struct __pyx_obj_5arr
  * 		if self.allocated - self.size < self.dtype.dsize:
  * 			self._reallocate(self.allocated*2 or self.dtype.dsize)             # <<<<<<<<<<<<<<
  * 
- * 		cdef void * start = self.ptr + j*self.dtype.dsize
+ * 		cdef char * start = self.ptr + j*self.dtype.dsize
  */
     __pyx_t_6 = (__pyx_v_self->allocated * 2);
     if (!__pyx_t_6) {
@@ -4226,7 +4224,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_12insert(struct __pyx_obj_5arr
   /* "arrex/list.pyx":312
  * 			self._reallocate(self.allocated*2 or self.dtype.dsize)
  * 
- * 		cdef void * start = self.ptr + j*self.dtype.dsize             # <<<<<<<<<<<<<<
+ * 		cdef char * start = self.ptr + j*self.dtype.dsize             # <<<<<<<<<<<<<<
  * 		memmove(start+self.dtype.dsize, start, self.size-j*self.dtype.dsize)
  * 		self._setitem(start, value)
  */
@@ -4234,7 +4232,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_12insert(struct __pyx_obj_5arr
 
   /* "arrex/list.pyx":313
  * 
- * 		cdef void * start = self.ptr + j*self.dtype.dsize
+ * 		cdef char * start = self.ptr + j*self.dtype.dsize
  * 		memmove(start+self.dtype.dsize, start, self.size-j*self.dtype.dsize)             # <<<<<<<<<<<<<<
  * 		self._setitem(start, value)
  * 		self.size += self.dtype.dsize
@@ -4242,7 +4240,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_12insert(struct __pyx_obj_5arr
   (void)(memmove((__pyx_v_start + __pyx_v_self->dtype->dsize), __pyx_v_start, (__pyx_v_self->size - (__pyx_v_j * __pyx_v_self->dtype->dsize))));
 
   /* "arrex/list.pyx":314
- * 		cdef void * start = self.ptr + j*self.dtype.dsize
+ * 		cdef char * start = self.ptr + j*self.dtype.dsize
  * 		memmove(start+self.dtype.dsize, start, self.size-j*self.dtype.dsize)
  * 		self._setitem(start, value)             # <<<<<<<<<<<<<<
  * 		self.size += self.dtype.dsize
@@ -6727,7 +6725,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_44__reduce_ex__(struct __pyx_o
  * 			stuff = (
  * 						PickleBuffer(self.owner),             # <<<<<<<<<<<<<<
  * 						self.dtype,
- * 						self.ptr-view.buf,
+ * 						self.ptr - <char*>view.buf,
  */
     __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_PickleBuffer); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
@@ -6750,16 +6748,16 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_44__reduce_ex__(struct __pyx_o
     /* "arrex/list.pyx":533
  * 						PickleBuffer(self.owner),
  * 						self.dtype,
- * 						self.ptr-view.buf,             # <<<<<<<<<<<<<<
+ * 						self.ptr - <char*>view.buf,             # <<<<<<<<<<<<<<
  * 						self.size,
  * 						)
  */
-    __pyx_t_4 = __Pyx_PyInt_From_ptrdiff_t((__pyx_v_self->ptr - __pyx_v_view.buf)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 533, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_ptrdiff_t((__pyx_v_self->ptr - ((char *)__pyx_v_view.buf))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 533, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
 
     /* "arrex/list.pyx":534
  * 						self.dtype,
- * 						self.ptr-view.buf,
+ * 						self.ptr - <char*>view.buf,
  * 						self.size,             # <<<<<<<<<<<<<<
  * 						)
  * 			PyBuffer_Release(&view)
@@ -6772,7 +6770,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_44__reduce_ex__(struct __pyx_o
  * 			stuff = (
  * 						PickleBuffer(self.owner),             # <<<<<<<<<<<<<<
  * 						self.dtype,
- * 						self.ptr-view.buf,
+ * 						self.ptr - <char*>view.buf,
  */
     __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
@@ -7167,7 +7165,7 @@ static int __pyx_pf_5arrex_4list_9typedlist_48__getbuffer__(struct __pyx_obj_5ar
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  void *__pyx_t_2;
+  char *__pyx_t_2;
   size_t __pyx_t_3;
   int __pyx_t_4;
   int __pyx_t_5;
@@ -7628,27 +7626,27 @@ static PyObject *__pyx_pw_5arrex_4list_9typedlist_53reverse(PyObject *__pyx_v_se
 }
 
 static PyObject *__pyx_pf_5arrex_4list_9typedlist_52reverse(struct __pyx_obj_5arrex_4list_typedlist *__pyx_v_self) {
-  void *__pyx_v_temp;
-  void *__pyx_v_first;
-  void *__pyx_v_last;
+  char *__pyx_v_temp;
+  char *__pyx_v_first;
+  char *__pyx_v_last;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  void *__pyx_t_1;
+  char *__pyx_t_1;
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("reverse", 0);
 
   /* "arrex/list.pyx":602
  * 		cdef size_t i
  * 
- * 		temp = PyMem_Malloc(self.dtype.dsize)             # <<<<<<<<<<<<<<
+ * 		temp = <char*> PyMem_Malloc(self.dtype.dsize)             # <<<<<<<<<<<<<<
  * 		first = self.ptr
  * 		last = self.ptr + self.size - self.dtype.dsize
  */
-  __pyx_v_temp = PyMem_Malloc(__pyx_v_self->dtype->dsize);
+  __pyx_v_temp = ((char *)PyMem_Malloc(__pyx_v_self->dtype->dsize));
 
   /* "arrex/list.pyx":603
  * 
- * 		temp = PyMem_Malloc(self.dtype.dsize)
+ * 		temp = <char*> PyMem_Malloc(self.dtype.dsize)
  * 		first = self.ptr             # <<<<<<<<<<<<<<
  * 		last = self.ptr + self.size - self.dtype.dsize
  * 		while <size_t>first < <size_t>last:
@@ -7657,7 +7655,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_52reverse(struct __pyx_obj_5ar
   __pyx_v_first = __pyx_t_1;
 
   /* "arrex/list.pyx":604
- * 		temp = PyMem_Malloc(self.dtype.dsize)
+ * 		temp = <char*> PyMem_Malloc(self.dtype.dsize)
  * 		first = self.ptr
  * 		last = self.ptr + self.size - self.dtype.dsize             # <<<<<<<<<<<<<<
  * 		while <size_t>first < <size_t>last:
@@ -7964,7 +7962,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_54index(struct __pyx_obj_5arre
 
 /* "arrex/list.pyx":115
  * 
- * 	cdef void *ptr
+ * 	cdef char *ptr
  * 	cdef readonly size_t size             # <<<<<<<<<<<<<<
  * 	cdef readonly size_t allocated
  * 
@@ -8010,7 +8008,7 @@ static PyObject *__pyx_pf_5arrex_4list_9typedlist_4size___get__(struct __pyx_obj
 }
 
 /* "arrex/list.pyx":116
- * 	cdef void *ptr
+ * 	cdef char *ptr
  * 	cdef readonly size_t size
  * 	cdef readonly size_t allocated             # <<<<<<<<<<<<<<
  * 
