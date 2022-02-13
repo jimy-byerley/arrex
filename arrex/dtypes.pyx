@@ -266,7 +266,7 @@ cdef class DDTypeExtension(DDType):
 		self.constructor = constructor
 		
 	cdef void * _raw(self, obj):
-		return (<void*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
+		return (<char*><PyObject*> obj) + (<PyTypeObject*>self.type).tp_basicsize - self.dsize
 	
 	cdef int _ext_pack(self, void* place, object obj) except -1:
 		if not isinstance(obj, self.type):

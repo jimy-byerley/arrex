@@ -111,7 +111,7 @@ cdef class typedlist:
 			ddtype (DDType):      the data type declaration
 	'''
 
-	cdef void *ptr
+	cdef char *ptr
 	cdef readonly size_t size
 	cdef readonly size_t allocated
 	
@@ -207,7 +207,7 @@ cdef class typedlist:
 		cdef Py_buffer view
 		
 		PyObject_GetBuffer(buffer, &view, PyBUF_SIMPLE)
-		self.ptr = view.buf
+		self.ptr = <char*> view.buf
 		self.allocated = view.len
 		self.owner = view.obj
 		PyBuffer_Release(&view)
@@ -275,7 +275,7 @@ cdef class typedlist:
 			remove the element at index, returning it. If no index is specified, it will pop the last one .
 		'''
 		cdef size_t i
-		cdef void * start
+		cdef char * start
 		
 		if not self.size:
 			raise IndexError('pop from empty list')
@@ -309,7 +309,7 @@ cdef class typedlist:
 		if self.allocated - self.size < self.dtype.dsize:
 			self._reallocate(self.allocated*2 or self.dtype.dsize)
 			
-		cdef void * start = self.ptr + j*self.dtype.dsize
+		cdef char * start = self.ptr + j*self.dtype.dsize
 		memmove(start+self.dtype.dsize, start, self.size-j*self.dtype.dsize)
 		self._setitem(start, value)
 		self.size += self.dtype.dsize
@@ -530,7 +530,7 @@ cdef class typedlist:
 			stuff = (
 						PickleBuffer(self.owner), 
 						self.dtype, 
-						self.ptr-view.buf, 
+						self.ptr - <char*>view.buf, 
 						self.size,
 						)
 			PyBuffer_Release(&view)
@@ -594,12 +594,12 @@ cdef class typedlist:
 		
 			reverse the order of elementd contained 
 		'''
-		cdef void *temp
-		cdef void *first
-		cdef void *last
+		cdef char *temp
+		cdef char *first
+		cdef char *last
 		cdef size_t i
 		
-		temp = PyMem_Malloc(self.dtype.dsize)
+		temp = <char*> PyMem_Malloc(self.dtype.dsize)
 		first = self.ptr
 		last = self.ptr + self.size - self.dtype.dsize
 		while <size_t>first < <size_t>last:
