@@ -44,6 +44,21 @@ cdef class DDType:
 			return '<dtype {}>'.format(repr(self.key))
 		else:
 			return '<dtype at {}>'.format(id(self))
+			
+	def __reduce_ex__(self, protocol):
+		''' allow serialization of the dtype with the array (particularly useful for anonymous dtypes) '''
+		return self._rebuild, (self.key, self.dsize, self.layout)
+		
+	@classmethod
+	def _rebuild(cls, key, size_t dsize, bytes layout):
+		candidate = declared(key)
+		if dsize != candidate.dsize:
+			raise ValueError('the pickled dtype {} has a different size here than in dump, unpickled {} expected {}'
+						.format(repr(key), dsize, candidate.dsize))
+		if candidate.layout and layout != candidate.layout:
+			raise ValueError('the pickled dtype {} has a different memory layout here than in dump, unpickled {} expected {}'
+						.format(repr(key), layout, candidate.layout))
+		return candidate
 	
 
 def DDTypeClass(type):
@@ -283,10 +298,21 @@ cdef class DDTypeExtension(DDType):
 		new = (<PyTypeObject*>self.type).tp_new(self.type, _empty, None)
 		memcpy(self._raw(new), place, self.dsize)
 		return new
-		
+	
 	def __reduce_ex__(self, protocol):
-		''' allow serialization of the dtype with the array (particularly useful for anonymous dtypes) '''
-		return type(self), (self.type, self.layout, self.constructor)
+		''' that overload allows for automatic declaration of the dtype fron the pickled informations, as long as they are consistent with the given type size '''
+		return self._rebuild, (self.type, self.dsize, self.layout, self.constructor)
+		
+	@classmethod
+	def _rebuild(cls, type, size_t dsize, bytes layout, constructor):
+		candidate = _declared.get(type) or declare(type, DDTypeExtension(type, layout, constructor))
+		if dsize != candidate.dsize:
+			raise ValueError('the pickled dtype {} has a different size here than in dump, unpickled {} expected {}'
+						.format(repr(key), dsize, candidate.dsize))
+		if candidate.layout and layout != candidate.layout:
+			raise ValueError('the pickled dtype {} has a different memory layout here than in dump, unpickled {} expected {}'
+						.format(repr(key), layout, candidate.layout))
+		return candidate
 
 		
 		

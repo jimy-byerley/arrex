@@ -120,4 +120,8 @@ print('\n* pickle')
 reloaded = pickle.loads(pickle.dumps(array))
 assert reloaded == array
 
+array = nx.typedlist([1,2,3,4], dtype='I')
+reloaded = pickle.loads(pickle.dumps(array))
+assert reloaded == array
+
 
