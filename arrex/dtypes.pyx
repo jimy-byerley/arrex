@@ -47,6 +47,8 @@ cdef class DDType:
 			
 	def __reduce_ex__(self, protocol):
 		''' allow serialization of the dtype with the array (particularly useful for anonymous dtypes) '''
+		if self.key is None:
+			raise TypeError('a dtype must be declared in order to be pickleable')
 		return self._rebuild, (self.key, self.dsize, self.layout)
 		
 	@classmethod
@@ -308,10 +310,10 @@ cdef class DDTypeExtension(DDType):
 		candidate = _declared.get(type) or declare(type, DDTypeExtension(type, layout, constructor))
 		if dsize != candidate.dsize:
 			raise ValueError('the pickled dtype {} has a different size here than in dump, unpickled {} expected {}'
-						.format(repr(key), dsize, candidate.dsize))
+						.format(repr(type), dsize, candidate.dsize))
 		if candidate.layout and layout != candidate.layout:
 			raise ValueError('the pickled dtype {} has a different memory layout here than in dump, unpickled {} expected {}'
-						.format(repr(key), layout, candidate.layout))
+						.format(repr(type), layout, candidate.layout))
 		return candidate
 
 		
@@ -321,7 +323,7 @@ cdef class DDTypeExtension(DDType):
 cdef dict _declared = {}	# {python type: dtype}
 	
 cpdef DDType declare(key, DDType dtype=None):
-	''' declare(dtype, constructor=None, format=None)
+	''' declare(dtype, ddtype)
 	
 		declare a new dtype 
 	'''
