@@ -15,7 +15,7 @@ else:
 setup(
 	# package declaration
 	name = 'arrex',
-	version = '0.4.0',
+	version = '0.5.0',
 	python_requires='>=3.8',
 	tests_require = [
 		'pnprint>=1.1',
