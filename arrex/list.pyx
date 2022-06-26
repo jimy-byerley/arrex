@@ -430,6 +430,8 @@ cdef class typedlist:
 			if step != 1:
 				raise IndexError('slice step is not supported')
 			PySlice_AdjustIndices(self._len(), &start, &stop, step)
+			if stop < start:
+				stop = start
 			
 			view = typedlist.__new__(typedlist)
 			view.ptr = self.ptr + start*self.dtype.dsize
@@ -457,6 +459,8 @@ cdef class typedlist:
 			if step != 1:
 				raise IndexError('slice step is not supported')
 			PySlice_AdjustIndices(self._len(), &start, &stop, step)
+			if stop < start:
+				stop = start
 			
 			if PyObject_CheckBuffer(value):
 				PyObject_GetBuffer(value, &view, PyBUF_SIMPLE)
@@ -656,8 +660,8 @@ cdef class arrayiter:
 		return self
 		
 	def __next__(self):
-		if self.position == self.array.size:
-			raise StopIteration()
+		if self.position + self.array.dtype.dsize > self.array.size:
+			raise StopIteration
 		item = self.array._getitem(self.array.ptr + self.position)
 		self.position += self.array.dtype.dsize
 		return item
