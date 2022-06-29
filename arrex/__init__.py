@@ -7,9 +7,9 @@
 	
 		>>> from arrex import *
 		>>> a = typedlist([
-		            myclass(...), 
-		            myclass(...),
-		            ], dtype=myclass)
+		...             myclass(...), 
+		...             myclass(...),
+		...             ], dtype=myclass)
 		>>> a[0]
 		myclass(...)
 	
@@ -22,15 +22,46 @@
 	
 		>>> import typedlist.glm		# this is enabling glm dtypes for arrex
 		>>> typedlist(dtype=glm.vec4)
+		
+		>>> a = typedlist(dtype=vec3)
+
+	use it as a list
 	
+		>>> # build from an iterable
+		>>> a = typedlist([], dtype=vec3)
+		>>>
+		>>> # append some data
+		>>> a.append(vec3(1,2,3))
+		>>>
+		>>> # extend with an iterable
+		>>> a.extend(vec3(i)  for i in range(5))
+		>>>
+		>>> len(a)	# the current number of elements
+		6
+		>>> a.owner	# the current data buffer
+		b'.........'
+		>>> a[0]
+		vec3(1,2,3)
+		
+		
+	Use it as a slice:
+
+		>>> myslice = a[:5]		# no data is copied
+		typedlist(....)
 	
-	if you want to use a type that you know to satisfy the requirements to be packed and noref, you can declare it as a valid dtype:
+	Use it as a view on top of a random buffer
+
+		>>> a = np.ones((6,3), dtype='f4')
+		>>> myslice = typedlist(a, dtype=vec3)
 	
-		>>> packed_format = 'xxfiB'	# format as described in module 'struct'
-		>>> arrex.declare(mytype, mytype, packed_format)	# (myclass, constructor, format)
+	It does support the buffer protocol, so it can be converted into a great variety of well known arrays, even without any copy
+
+		>>> np.array(typedlist([....]))
 	
 '''
 
 __all__ = ['typedlist']
 
-from ._arrex import *
+from .dtypes import *
+from .list import typedlist
+from . import numbers

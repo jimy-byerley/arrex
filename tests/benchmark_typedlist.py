@@ -3,64 +3,86 @@ import arrex as nx
 from glm import fvec3, dvec3, dmat4
 from time import perf_counter
 
-nx.declare(fvec3, fvec3, 'fff')
-nx.declare(dvec3, dvec3, 'ddd')
-nx.declare(dmat4, dmat4, 'd'*16)
+nx.declare(fvec3, nx.DDTypeExtension(fvec3, 'fff', fvec3))
+nx.declare(dvec3, nx.DDTypeExtension(dvec3, 'ddd', dvec3))
+nx.declare(dmat4, nx.DDTypeExtension(dmat4, 'd'*16, dmat4))
 n = 10000
 
+print('benchmark for arrays of {:.3g} elements'.format(n))
 
-print('\ncreation')
+
+print('\nempty creation')
 
 start = perf_counter()
 poa = [None] * n
-print('  list:\t{:.4e}'.format(perf_counter()-start))
+print('  list: \t{:.4e} s'.format(perf_counter()-start))
 
 start = perf_counter()
 npa = np.empty((n,), dtype='3f8')
-print('  numpy:\t{:.4e}'.format(perf_counter()-start))
+print('  numpy:\t{:.4e} s'.format(perf_counter()-start))
 
 start = perf_counter()
 nxa = nx.typedlist(dtype=dvec3, reserve=n)
-print('  arrex:\t{:.4e}'.format(perf_counter()-start))
+print('  arrex:\t{:.4e} s'.format(perf_counter()-start))
 
-for i in range(n):
-	nxa.append(dvec3(0))
+
+print('\nfilled creation')
+
+start = perf_counter()
+poa = [dvec3(1)  for i in range(n)]
+print('  list: \t{:.4e} s'.format(perf_counter()-start))
+
+start = perf_counter()
+npa = np.ones((n,), dtype='3f8')
+print('  numpy:\t{:.4e} s'.format(perf_counter()-start))
+
+start = perf_counter()
+nxa = nx.typedlist.full(dvec3(1), n)
+print('  arrex:\t{:.4e} s'.format(perf_counter()-start))
 
 
 print('\nset item')
 
+e = dvec3(1)
 start = perf_counter()
 for i in range(n):
-	poa[i] = dvec3(i,i,i)
-print('  list:\t{:.4e}'.format(perf_counter()-start))
+	poa[i] = e
+print('  list: \t{:.4e} s'.format(perf_counter()-start))
 
+e = (1,1,1)
 start = perf_counter()
 for i in range(n):
-	npa[i] = (i,i,i)
-print('  numpy:\t{:.4e}'.format(perf_counter()-start))
+	npa[i] = e
+print('  numpy:\t{:.4e} s'.format(perf_counter()-start))
 
+e = dvec3(1)
 start = perf_counter()
 for i in range(n):
-	nxa[i] = dvec3(i,i,i)
-print('  arrex:\t{:.4e}'.format(perf_counter()-start))
+	nxa[i] = e
+print('  arrex:\t{:.4e} s'.format(perf_counter()-start))
 
 
 print('\nget item')
 
 start = perf_counter()
 for i in range(n):
+	dvec3(1)
+print('  creation:\t{:.4e} s'.format(perf_counter()-start))
+
+start = perf_counter()
+for i in range(n):
 	poa[i]
-print('  list:\t{:.4e}'.format(perf_counter()-start))
+print('  list: \t{:.4e} s'.format(perf_counter()-start))
 
 start = perf_counter()
 for i in range(n):
 	npa[i]
-print('  numpy:\t{:.4e}'.format(perf_counter()-start))
+print('  numpy:\t{:.4e} s'.format(perf_counter()-start))
 
 start = perf_counter()
 for i in range(n):
 	nxa[i]
-print('  arrex:\t{:.4e}'.format(perf_counter()-start))
+print('  arrex:\t{:.4e} s'.format(perf_counter()-start))
 
 
 print('\ninto memoryview')
@@ -68,24 +90,24 @@ print('\ninto memoryview')
 start = perf_counter()
 for i in range(n):
 	memoryview(npa)
-print('  numpy:\t{:.4e}'.format(perf_counter()-start))
+print('  numpy:\t{:.4e} s'.format(perf_counter()-start))
 
 start = perf_counter()
 for i in range(n):
 	memoryview(nxa)
-print('  arrex:\t{:.4e}'.format(perf_counter()-start))
+print('  arrex:\t{:.4e} s'.format(perf_counter()-start))
 
 
-print('\nconxatenation')
+print('\nconcatenation')
 
 start = perf_counter()
 poa + poa
-print('  list:\t{:.4e}'.format(perf_counter()-start))
+print('  list: \t{:.4e} s'.format(perf_counter()-start))
 
 start = perf_counter()
-npa + npa
-print('  numpy:\t{:.4e}'.format(perf_counter()-start))
+np.concatenate([npa, npa])
+print('  numpy:\t{:.4e} s'.format(perf_counter()-start))
 
 start = perf_counter()
 nxa + nxa
-print('  arrex:\t{:.4e}'.format(perf_counter()-start))
+print('  arrex:\t{:.4e} s'.format(perf_counter()-start))

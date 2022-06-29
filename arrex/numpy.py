@@ -1,5 +1,5 @@
 import numpy.core as np
-from . import _arrex
+from .dtypes import declare, DDTypeExtension
 
 f16 = np.float16
 f32 = np.float32
@@ -16,16 +16,16 @@ i16 = np.int16
 i32 = np.int32
 i64 = np.int64
 
-_arrex.declare(f16, f16, 'exxxxxx')
-_arrex.declare(f32, f32, 'fxxxx')
-_arrex.declare(f64, f64, 'd')
-_arrex.declare(f128, f128, 'B'*16)
+declare(f16, DDTypeExtension(f16, 'exxxxxx', f16))
+declare(f32, DDTypeExtension(f32, 'fxxxx', f32))
+declare(f64, DDTypeExtension(f64, 'd', f64))
+declare(f128, DDTypeExtension(f128, 'B'*16, f128))
 
-_arrex.declare(u8, u8, 'Bxxxxxxx')
-_arrex.declare(i8, i8, 'bxxxxxxx')
-_arrex.declare(u16, u16, 'Hxxxxxx')
-_arrex.declare(i16, i16, 'hxxxxxx')
-_arrex.declare(u32, u32, 'Ixxxx')
-_arrex.declare(i16, i16, 'ixxxx')
-_arrex.declare(u64, u64, 'L')
-_arrex.declare(i64, i64, 'l')
+declare(u8, DDTypeExtension(u8, 'Bxxxxxxx', u8))
+declare(i8, DDTypeExtension(i8, 'bxxxxxxx', i8))
+declare(u16, DDTypeExtension(u16, 'Hxxxxxx', u16))
+declare(i16, DDTypeExtension(i16, 'hxxxxxx', i16))
+declare(u32, DDTypeExtension(u32, 'Ixxxx', u32))
+declare(i16, DDTypeExtension(i32, 'ixxxx', i32))
+declare(u64, DDTypeExtension(u64, 'L', u64))
+declare(i64, DDTypeExtension(i64, 'l', i64))

@@ -4,16 +4,21 @@ import os
 try:
 	from Cython.Build import cythonize
 except ImportError:
-	cython_modules = [Extension('arrex._arrex', ['arrex/_arrex.c'])]
+	cython_modules = [
+				Extension('arrex.dtypes', ['arrex/dtypes.c']),
+				Extension('arrex.list', ['arrex/list.c']),
+				Extension('arrex.numbers', ['arrex/numbers.c']),
+				]
 else:
-	cython_modules = cythonize(['arrex/_arrex.pyx'], annotate=True)
+	cython_modules = cythonize(['arrex/dtypes.pyx', 'arrex/list.pyx', 'arrex/numbers.pyx'], annotate=True)
 
 setup(
 	# package declaration
 	name = 'arrex',
-	version = '0.1',
+	version = '0.4.2',
+	python_requires='>=3.8',
 	tests_require = [
-		'pnprint>=1.0',
+		'pnprint>=1.1',
 		'pyglm>=1.2',
 		'numpy>=1.1',
 		],
@@ -21,7 +26,7 @@ setup(
 	# sources declaration
 	packages = ["arrex"],
 	package_data = {
-		"arrex": ['*.h', '*.c', '*.cpp', '*.pyx'],
+		"arrex": ['*.h', '*.c', '*.cpp', '*.pyx', '*.pxd'],
 		'': ['COPYING', 'COPYING.LESSER', 'README'],
 		},
 	ext_modules = cython_modules,
@@ -34,4 +39,14 @@ setup(
 	description = "typed arrays using any custom type as element type",
 	long_description = open('README.md').read(),
 	long_description_content_type = 'text/markdown',
+	keywords='buffer array list dynamic dtype serialization numeric',
+	classifiers=[
+		'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+		'Development Status :: 3 - Alpha',
+		'Programming Language :: Python :: 3.8',
+		'Programming Language :: Python :: 3.9',
+		'Programming Language :: Python :: 3.10',
+		'Topic :: Software Development :: Libraries',
+		'Topic :: Utilities',
+		],
 )
