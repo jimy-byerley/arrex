@@ -486,7 +486,28 @@ cdef class typedlist:
 				raise IndexError('the assigned value must be a buffer or an iterable')
 			
 		else:
-			raise IndexError('index must be int')
+			raise IndexError('index must be int or slice')
+			
+	def __delitem__(self, index):
+		cdef Py_ssize_t start, stop, step
+		
+		if PyNumber_Check(index):
+			start = index
+			stop = index+1
+		elif isinstance(index, slice):
+			if PySlice_Unpack(index, &start, &stop, &step):
+				raise IndexError('incorrect slice')
+			if step != 1:
+				raise IndexError('slice step is not supported')
+			PySlice_AdjustIndices(self._len(), &start, &stop, step)
+		else:
+			raise IndexError('index must be int or slice')
+			
+		start *= self.dtype.dsize
+		stop *= self.dtype.dsize
+		memmove(self.ptr+start, self.ptr+stop, self.size-stop)
+		self.size = self.size + start - stop
+
 			
 	def __iter__(self):
 		''' yield successive elements in the list '''
