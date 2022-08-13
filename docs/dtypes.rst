@@ -1,6 +1,9 @@
 dtypes
 ======
 
+general
+-------
+
 .. automodule:: arrex.dtypes
 
 .. autoclass:: DDType
