@@ -4,7 +4,8 @@
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #24a87d; font-weight: bold } /* Keyword */
 .highlight .o { color: #666666 } /* Operator */
-.highlight .p {color: #4fa886; } 
+.highlight .p { color: #738c9b }
+.highlight .s1 { color: #66D4FF; color: #98CAFF }  /* string literal */
 .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
 .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
 .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
@@ -75,13 +76,17 @@
 
 /* side navigation bar */
 
-.wy-body-for-nav {
+/*.wy-body-for-nav {
     background: none;
-}
+}*/
 
 .wy-nav-side {
 	color: #cecccc;
 	background: #161c20;
+}
+
+.wy-nav-content-wrap {
+	background: #0e1215;
 }
 
 .wy-side-nav-search {
@@ -156,10 +161,6 @@
 
 a:visited { /* links visited */
     color: #479da2;
-}
-
-.wy-body-for-nav { /* zone rezied to screen */
-	background: #0e1215;
 }
 
 .wy-nav-content {
@@ -308,32 +309,31 @@ a:visited { /* links visited */
 
 /* sphinx roles - funnction headers and all markups */
 
-/* module items */
-/* signature names */
-.sig-name {
-    color: #e3e3e3 !important;
+.rst-content dl > dt {
+  border-left: none !important;
+  background: none !important;
+  color: inherit !important;
 }
-/* signature boxes */
+
+/* module items */
 .rst-content dl.class > dt,
 .rst-content dl.function > dt,
 .rst-content dl.data > dt,
 .rst-content dl.exception > dt {
     background: #6ab0de12 !important;
     color: #319ADF !important; 
-    border-top: solid 3px #5087aa !important;
-	border-left: none !important;
+    border-top: none !important;
+    border-left: solid 1em #254d66 !important;
+	padding-left: 0.7em !important;
 }
-.rst-content dl.method > dt {
-    border-left: 3px solid #6eaa96 !important;
+.rst-content dl.method > dt,
+.rst-content dl.attribute > dt,
+.rst-content dl.property > dt {
+    border-left: 3px solid #385149 !important;
 	border-top: none !important;
-	background: #243435 !important;
-	color: #649d8a !important;
-}
-.rst-content dl.attribute > dt {
-    border-left: 3px solid #8caa6e !important;
-	border-top: none !important;
-	background: #293524 !important;
-	color: #649d8a !important;
+	background: #1d2626 !important;
+    color: #578676 !important;
+	padding-left: 1em !important;
 }
 
 /* text ident headers */
@@ -349,13 +349,14 @@ a:visited { /* links visited */
 .rst-content tt, 
 code {
     color: #fff;
-    background: #000;
-    border: 1px solid #77cdea30;
+    background: transparent;
+    border: 1px solid #172122;
     font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,Courier,monospace;
+	font-size: 0.9em;
 }
 .rst-content code.literal, 
 .rst-content tt.literal {
-    color: #88bedf;
+    color: #65a9d2;
 }
 .rst-content div[class^="highlight"], .rst-content pre.literal-block {
     border: 1px solid #1c343c;
@@ -370,10 +371,10 @@ code {
 }
 
 /* tables */
-.rst-content table.docutils td {
+.rst-content table.docutils:not(.field-list) td {
 	border: 1px solid #20484a !important;
 }
-.rst-content table.docutils th {
+.rst-content table.docutils:not(.field-list) th {
 	border: 1px solid #173233 !important;
     border-bottom: 1px solid #5b8891 !important;
 }
@@ -389,19 +390,38 @@ code {
 /* markdown stuff */
 h1, h2, h3 {
 	border-bottom: 1px solid #c6c5c536;
-	margin-bottom: 5%;
+	margin-top: 5%;
 }
+/*
 h2 {
 	margin-top: 15%;
+}*/
+
+.sphinx_collapse__icon {
+	border-top-color: #479da2;
+}
+.sphinx_collapse__label {
+	color: #479da2;
+	font-size: 100%;
 }
 
 
 /* ugly stuff to correct other colors from readthedocs */
 
-html.writer-html4 .rst-content dl:not(.docutils) dl:not(.field-list) > dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) dl:not(.field-list) > dt {
-  /* border-left: 3px solid #ccc; */
-  /* background: #f0f0f0; */
-  border-left: 3px solid #ffffff38;
-  background: #ffffff0a;
+/*
+.rst-content dl:not(.docutils) dl:not(.field-list) > dt, 
+.rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) dl:not(.field-list) > dt {
+  border-left: none !important;
+  background: none !important;
+  color: inherit !important;
+}*/
+
+.rst-content dl:not(.docutils) .descclassname, 
+.rst-content dl:not(.docutils) .descname, 
+.rst-content dl:not(.docutils) .sig-name, 
+.rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) .descclassname, 
+.rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) .descname, 
+.rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) .sig-name {
+    color: #ddd !important;
 }
 
