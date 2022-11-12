@@ -22,6 +22,8 @@ def test_i8():
 		if a.owner is not last:
 			buffs[(3,j)] = last = a.owner
 			
+	del a[1000:2000]
+	
 	buffs[4] = deepcopy(a[:]).owner
 	buffs[5] = (a + b).owner
 	c = typedlist(np.array([1,2,3], dtype='i8'), dtype='l')
@@ -49,9 +51,11 @@ def test_uvec3():
 		if a.owner is not last:
 			buffs[(3,j)] = last = a.owner
 			
+	del a[1000:2000]
+			
 	buffs[4] = deepcopy(a[:]).owner
 	buffs[5] = (a + b).owner
-	c = typedlist(np.array([1,2,3], dtype='i8'), dtype='l')
+	c = typedlist(np.array([1,2,3,4], dtype='i8'), dtype='l')
 	buffs[6] = c.owner
 	buffs[7] = (a + c).owner
 	c.extend(a)
