@@ -22,6 +22,7 @@ list
 	.. automethod:: __mul__
 	.. automethod:: __getitem__
 	.. automethod:: __setitem__
+	.. automethod:: __delitem__
 	.. automethod:: __iter__
 	.. automethod:: __copy__
 	.. automethod:: __deepcopy__

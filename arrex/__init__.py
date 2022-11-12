@@ -15,12 +15,12 @@
 	
 	in that example, `myclass` can be a primitive numpy type, like `np.float64`
 	
-		>>> import typedlist.numpy		# this is enabling numpy dtypes for arrex
+		>>> import arrex.numpy		# this is enabling numpy dtypes for arrex
 		>>> typedlist(dtype=np.float64)
 		
 	it can be a more complex type, from module `pyglm` for instance
 	
-		>>> import typedlist.glm		# this is enabling glm dtypes for arrex
+		>>> import arrex.glm		# this is enabling glm dtypes for arrex
 		>>> typedlist(dtype=glm.vec4)
 		
 		>>> a = typedlist(dtype=vec3)
