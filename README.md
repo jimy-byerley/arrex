@@ -150,7 +150,6 @@ execution time (s) for 10k elements (dvec3)
 	  arrex:        8.0111e-04 s   (2x faster than numpy)
 
 
-​	
 ## Roadmap
 
 There is additionnal features planned, but no precise schedul yet:

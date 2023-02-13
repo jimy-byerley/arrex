@@ -37,7 +37,7 @@ setup(
 	url = 'https://github.com/jimy-byerley/arrex',
 	license = "GNU LGPL v3",
 	description = "typed arrays using any custom type as element type",
-	long_description = open('README.md').read(),
+	long_description = open('README.md', encoding='utf-8').read(),
 	long_description_content_type = 'text/markdown',
 	keywords='buffer array list dynamic dtype serialization numeric',
 	classifiers=[
