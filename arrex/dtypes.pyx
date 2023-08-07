@@ -297,7 +297,7 @@ cdef class DDTypeExtension(DDType):
 		memcpy(place, self._raw(obj), self.dsize)
 		
 	cdef object _ext_unpack(self, void* place):
-		new = (<PyTypeObject*>self.type).tp_new(self.type, _empty, None)
+		new = (<PyTypeObject*>self.type).tp_new(self.type, <PyObject*>_empty, <PyObject*>None)
 		memcpy(self._raw(new), place, self.dsize)
 		return new
 	
