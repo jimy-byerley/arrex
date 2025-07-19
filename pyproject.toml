@@ -1,6 +1,6 @@
 [project]
 name = "arrex"
-version = "0.5.2"
+version = "0.5.3"
 description = "typed arrays using any custom type as element type"
 authors = [{ name = "jimy-byerley",email = "jimy.byerley@gmail.com" }]
 license = {text = "GNU LGPL v3"}
