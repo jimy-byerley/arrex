@@ -1,0 +1,38 @@
+[project]
+name = "arrex"
+version = "0.5.2"
+description = "typed arrays using any custom type as element type"
+authors = [{ name = "jimy-byerley",email = "jimy.byerley@gmail.com" }]
+license = {text = "GNU LGPL v3"}
+readme = "README.md"
+classifiers = [
+    'Topic :: Software Development :: Libraries',
+    'Topic :: Utilities',
+    ]
+requires-python = ">=3.8"
+dependencies = []
+
+[tool.poetry.group.test.dependencies]
+pnprint = "~=1.1"
+pyglm = "~=2.5"
+numpy = ">=1.1,<3"
+
+[project.urls]
+repository = "https://github.com/jimy-byerley/arrex"
+documentation = "https://arrex.readthedocs.io"
+
+[build-system]
+requires = [
+    "poetry-core>=2.0.0,<3.0.0",
+    "setuptools>=40",
+    "cython~=3.0",
+    ]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+include = [
+    { path = "arrex/**/*.so", format = "wheel" },
+    { path = "arrex/**/*.pyx", format = "sdist" },
+    ]
+[tool.poetry.build]
+script = "build.py"
