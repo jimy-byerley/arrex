@@ -1,6 +1,6 @@
 [project]
 name = "arrex"
-version = "0.5.3"
+version = "0.5.4"
 description = "typed arrays using any custom type as element type"
 authors = [{ name = "jimy-byerley",email = "jimy.byerley@gmail.com" }]
 license = {text = "GNU LGPL v3"}
@@ -33,6 +33,12 @@ build-backend = "poetry.core.masonry.api"
 include = [
     { path = "arrex/**/*.so", format = "wheel" },
     { path = "arrex/**/*.pyx", format = "sdist" },
+    ]
+exclude = [
+    "arrex/**/*.c",
+    "arrex/**/*.html",
+    "arrex/**/*.so",
+    "arrex/**/*.pyx",
     ]
 [tool.poetry.build]
 script = "build.py"
