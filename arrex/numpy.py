@@ -1,4 +1,4 @@
-import numpy.core as np
+import numpy as np
 from .dtypes import declare, DDTypeExtension
 
 f16 = np.float16

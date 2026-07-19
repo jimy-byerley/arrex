@@ -90,7 +90,7 @@ def test_slicing():
 	assert len(array) == n+5
 
 def test_conversion():
-	import numpy.core as np
+	import numpy as np
 	array = arrex.typedlist(range(n), dtype=glm.dvec4)
 	cvt = np.array(array)
 	assert cvt.shape[0] == len(array)

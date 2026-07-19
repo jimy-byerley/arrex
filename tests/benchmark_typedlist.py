@@ -1,4 +1,4 @@
-import numpy.core as np
+import numpy as np
 import arrex as nx
 from glm import fvec3, dvec3, dmat4
 from time import perf_counter
